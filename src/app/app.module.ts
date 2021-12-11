@@ -24,7 +24,7 @@ import { IntroPage } from './intro/intro.page';
   ],
     
   imports: [ 
-    MbscModule, 
+    MbscModule,  
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
