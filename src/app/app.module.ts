@@ -1,5 +1,5 @@
 import { MbscModule } from '@mobiscroll/angular';
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID  } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
@@ -16,6 +16,9 @@ import { AuthService } from './services/auth.service';
 import { IntroPage } from './intro/intro.page';
 import { ReservaDiaPage } from './tabs/reservas-dia/reservas-dia.page';
 
+import es from '@angular/common/locales/es';
+import { registerLocaleData } from '@angular/common';
+registerLocaleData(es);
 @NgModule({
   declarations: [
     AppComponent, 
@@ -37,6 +40,7 @@ import { ReservaDiaPage } from './tabs/reservas-dia/reservas-dia.page';
     
   ],
   providers: [
+    { provide: LOCALE_ID, useValue: 'es-ES' },
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     AuthService
   ],

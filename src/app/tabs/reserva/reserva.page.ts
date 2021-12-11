@@ -11,7 +11,7 @@ import { Reserva } from '../../models/reservas';
   styleUrls: ['reserva.page.scss']
 })
 export class ReservaPage implements OnInit {
-
+   
   eventSource;
     
   viewTitle;
