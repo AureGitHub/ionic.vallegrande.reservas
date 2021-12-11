@@ -2,12 +2,18 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { IntroPage } from './intro/intro.page';
 import { LoginPage } from './login/login.page';
+import { ReservaDiaPage } from './tabs/reservas-dia/reservas-dia.page';
 
 const routes: Routes = [
    {
     path: '',
     component: IntroPage,
   },
+  {
+    path: 'reservas-dia',
+    component: ReservaDiaPage,
+  },
+  
   {
     path: 'login',
     component: LoginPage,

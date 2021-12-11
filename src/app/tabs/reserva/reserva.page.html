@@ -2,14 +2,14 @@
 
   <ion-toolbar>
     <ion-buttons slot="start">
-      <button ion-button [disabled]="isToday" (click)="today()">Today</button>
+      <!-- <button ion-button [disabled]="isToday" (click)="today()">Today</button>
           <button ion-button (click)="changeMode('month')">M</button>
           <button ion-button (click)="changeMode('week')">W</button>
-          <button ion-button (click)="changeMode('day')">D</button>
-          <button ion-button (click)="loadEvents()">Load Events</button>
-          <button ion-button (click)="addReserva()">Añadir</button>
+          <button ion-button (click)="changeMode('day')">D</button> -->
+          <!-- <button ion-button (click)="loadEvents()">Load Events</button> -->
+          <button ion-button (click)="addReserva()"><ion-icon name="calendar-outline"></ion-icon> {{titleAdd}}</button>
     </ion-buttons>
-    <ion-title>My Navigation Bar</ion-title>
+    <ion-title>{{viewTitle}}</ion-title>
   </ion-toolbar>
 
 </ion-header>

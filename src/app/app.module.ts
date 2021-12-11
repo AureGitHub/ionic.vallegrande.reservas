@@ -14,13 +14,15 @@ import { LoginPage } from './login/login.page';
 import { getAuth, provideAuth } from '@angular/fire/auth';
 import { AuthService } from './services/auth.service';
 import { IntroPage } from './intro/intro.page';
+import { ReservaDiaPage } from './tabs/reservas-dia/reservas-dia.page';
 
 @NgModule({
   declarations: [
     AppComponent, 
     NewContactPage,
     LoginPage,
-    IntroPage
+    IntroPage,
+    ReservaDiaPage
   ],
     
   imports: [ 

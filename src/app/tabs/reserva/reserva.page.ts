@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { CalendarMode, Step } from 'ionic2-calendar/calendar';
 import { DataService } from 'src/app/services/data.service';
@@ -9,10 +10,13 @@ import { Reserva } from '../../models/reservas';
   templateUrl: 'reserva.page.html',
   styleUrls: ['reserva.page.scss']
 })
-export class ReservaPage {
+export class ReservaPage implements OnInit {
 
   eventSource;
-    viewTitle;
+    
+  viewTitle;
+
+  titleAdd: string='';
 
     isToday:boolean;
     calendar = {
@@ -50,8 +54,12 @@ export class ReservaPage {
     constructor(
       private navController:NavController,
       private dataService: DataService,
+      private router: Router
       ) {
 
+    }
+    ngOnInit(): void {
+        this.loadEvents();
     }
 
     loadEvents() {
@@ -77,13 +85,14 @@ export class ReservaPage {
     }
 
     addReserva(){
-      let reserva: Reserva = {
-        nombre: 'Aure',
-        usuario: 'usu',
-        fecha : new Date(),
-      }
+        this.router.navigateByUrl('/reservas-dia', { replaceUrl: true });
+    //   let reserva: Reserva = {
+    //     nombre: 'Aure',
+    //     usuario: 'usu',
+    //     fecha : new Date(),
+    //   }
       
-      this.dataService.createReserva(reserva);
+    //   this.dataService.createReserva(reserva);
     }
 
     onViewTitleChanged(title) {
@@ -91,6 +100,7 @@ export class ReservaPage {
     }
 
     onEventSelected(event) {
+        
         console.log('Event selected:' + event.startTime + '-' + event.endTime + ',' + event.title);
     }
 
@@ -103,6 +113,7 @@ export class ReservaPage {
     }
 
     onTimeSelected(ev) {
+        this.titleAdd = 'Añadir ' + ev.selectedTime.getDate() + '/' +  (ev.selectedTime.getMonth()+1);
         console.log('Selected time: ' + ev.selectedTime + ', hasEvents: ' +
             (ev.events !== undefined && ev.events.length !== 0) + ', disabled: ' + ev.disabled);
     }
