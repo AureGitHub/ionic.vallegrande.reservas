@@ -19,7 +19,7 @@ export class HomePage {
     public modalController: ModalController,
     private routerOutlet: IonRouterOutlet
   ) {
-    this.reservas = this.dataService.getContacts();
+    this.reservas = this.dataService.getReservas();
   }
 
   async openNewContactModal() {

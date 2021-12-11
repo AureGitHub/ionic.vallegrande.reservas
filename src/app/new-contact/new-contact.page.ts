@@ -39,8 +39,8 @@ export class NewContactPage implements OnInit {
 
   createContact(values: any) {
     // copy all the form values into the new contact
-    let newContact: Contact = { ...values };
-    this.dataService.createContact(newContact);
-    this.dismissModal();
+    // let newContact: Contact = { ...values };
+    // this.dataService.createContact(newContact);
+    // this.dismissModal();
   }
 }

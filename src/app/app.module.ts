@@ -1,3 +1,4 @@
+import { MbscModule } from '@mobiscroll/angular';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
@@ -22,7 +23,8 @@ import { IntroPage } from './intro/intro.page';
     IntroPage
   ],
     
-  imports: [
+  imports: [ 
+    MbscModule, 
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,

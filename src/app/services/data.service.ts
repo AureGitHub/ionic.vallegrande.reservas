@@ -13,7 +13,7 @@ export class DataService {
 
   constructor(private firestore: Firestore) {}
 
-  getContacts(): Observable<Reserva[]> {
+  getReservas(): Observable<Reserva[]> {
     const contactsCollection = collection(this.firestore, 'reservas');
     // this method returns a stream of documents mapped to their payload and id
     return collectionData(contactsCollection, {idField: 'id'})
@@ -34,9 +34,9 @@ export class DataService {
     );
   }
 
-  createContact(contact: Contact): Promise<void> {
-    const document = doc(collection(this.firestore, 'contacts'));
-    return setDoc(document, contact);
+  createReserva(reserva: Reserva): Promise<void> {
+    const document = doc(collection(this.firestore, 'reservas'));
+    return setDoc(document, reserva);
   }
 
   updateContact(contact: Contact): Promise<void> {
