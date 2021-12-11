@@ -1,0 +1,33 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Reservas
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-content>
+    <ion-slides pager="true"> 
+      <!-- Slide 1 -->
+      <ion-slide>
+        <ion-item>
+          <ion-label position="floating">MM/DD/YYYY</ion-label>
+          <ion-calendar 
+       (change)="onChange($event)" 
+       [(ngModel)]="date" 
+       [type]="type" 
+       [format]="'YYYY-MM-DD'">
+    </ion-calendar>
+        </ion-item>
+      </ion-slide>
+   
+      <!-- Slide 2 -->
+      <ion-slide>
+       
+      </ion-slide>
+   
+    </ion-slides>
+  </ion-content>
+
+</ion-content>

@@ -1,0 +1,30 @@
+.error-message
+{
+ color: var(--ion-color-danger);
+}
+
+.go-to-register
+{
+  text-align: center;
+  margin-top: 20px;
+}
+
+.submit-btn
+{
+  margin-top: 40px;
+}
+
+.vertical-center {
+  .fixed-content,
+  .scroll-content {
+      display: flex;
+      align-items: center;
+
+      ion-list {
+          max-width: 300px; 
+          width:100%; 
+          margin: auto; 
+          text-align: center;
+      }
+  }
+}
