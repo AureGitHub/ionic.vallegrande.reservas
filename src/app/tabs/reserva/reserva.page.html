@@ -1,16 +1,19 @@
 <ion-header>
+  <ion-title>
 
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <!-- <button ion-button [disabled]="isToday" (click)="today()">Today</button>
-          <button ion-button (click)="changeMode('month')">M</button>
-          <button ion-button (click)="changeMode('week')">W</button>
-          <button ion-button (click)="changeMode('day')">D</button> -->
-          <!-- <button ion-button (click)="loadEvents()">Load Events</button> -->
-          <button ion-button (click)="addReserva()"><ion-icon name="calendar-outline"></ion-icon> {{titleAdd}}</button>
-    </ion-buttons>
-    <ion-title>{{viewTitle}}</ion-title>
-  </ion-toolbar>
+    <ion-grid>
+      <ion-row>
+        <ion-col class="ion-align-self-start">         
+            {{viewTitle}}         
+        </ion-col>
+        <ion-col class="ion-align-self-end hand buttonAdd"  (click)="addReserva()">              
+          <ion-icon name="calendar-outline"></ion-icon> {{titleAdd}}          
+      </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    </ion-title>
+
 
 </ion-header>
 

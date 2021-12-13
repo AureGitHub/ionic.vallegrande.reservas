@@ -4,7 +4,7 @@ import { Contact } from '../models/contact';
 import { ModalController, IonRouterOutlet } from '@ionic/angular';
 import { NewContactPage } from '../new-contact/new-contact.page';
 import { Observable } from 'rxjs';
-import { Reserva } from '../models/reservas';
+import { Reserva } from '../models/reserva';
 
 @Component({
   selector: 'app-home',

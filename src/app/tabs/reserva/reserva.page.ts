@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { NavigationExtras, Router } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { CalendarMode, Step } from 'ionic2-calendar/calendar';
 import { DataService } from 'src/app/services/data.service';
-import { Reserva } from '../../models/reservas';
+import { Reserva } from '../../models/reserva';
 
 @Component({
   selector: 'app-reserva',
@@ -50,6 +50,7 @@ export class ReservaPage implements OnInit {
             }
         }
     };
+    selectedTime: Date;
 
     constructor(
       private navController:NavController,
@@ -85,7 +86,22 @@ export class ReservaPage implements OnInit {
     }
 
     addReserva(){
-        this.router.navigateByUrl('/reservas-dia', { replaceUrl: true });
+        
+
+    let navigationExtras: NavigationExtras = {
+        state: {
+            selectedTime : this.selectedTime
+        }
+        };
+
+    this.router.navigate(['/reservas-dia'],navigationExtras);
+
+
+          
+    // this.router.navigate(['/reservas-dia', { currentDate : this.calendar.currentDate}]);
+
+        //this.router.navigateByUrl('/reservas-dia', { replaceUrl: true });
+        //this.router.navigate(['/reservas-dia', {replaceUrl: true, currentDate : this.calendar.currentDate}]);
     //   let reserva: Reserva = {
     //     nombre: 'Aure',
     //     usuario: 'usu',
@@ -113,7 +129,8 @@ export class ReservaPage implements OnInit {
     }
 
     onTimeSelected(ev) {
-        this.titleAdd = 'Añadir ' + ev.selectedTime.getDate() + '/' +  (ev.selectedTime.getMonth()+1);
+        this.selectedTime = ev.selectedTime;
+        this.titleAdd = 'Añadir día ' + ev.selectedTime.getDate();
         console.log('Selected time: ' + ev.selectedTime + ', hasEvents: ' +
             (ev.events !== undefined && ev.events.length !== 0) + ', disabled: ' + ev.disabled);
     }

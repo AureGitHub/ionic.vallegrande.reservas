@@ -5,7 +5,7 @@
     "homepage": "https://ionicthemes.com/",
     "scripts": {
         "ng": "ng",
-        "start": "ng serve",
+        "start": "ionic serve --address 192.168.224.234",
         "build": "ng build",
         "test": "ng test",
         "lint": "ng lint",

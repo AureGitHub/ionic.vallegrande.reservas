@@ -13,6 +13,8 @@ export class LoginPage implements OnInit {
   validations_form: FormGroup;
   errorMessage: string = '';
 
+  loading: boolean;
+
   validation_messages = {
    'email': [
      { type: 'required', message: 'El email es obligatorio.' },
@@ -42,16 +44,23 @@ export class LoginPage implements OnInit {
       ])),
     });
 
-    this.validations_form.controls['email'].setValue('a@a.es');
-    this.validations_form.controls['password'].setValue('a@a.es');
+    this.validations_form.controls['email'].setValue('reservas@vallegrande.es');
+    this.validations_form.controls['password'].setValue('vallegrandeZZ');
   }
 
   tryLogin(value){
+    this.loading = true;
      this.authService.login(value.email, value.password)
      .then(data=>
       {
-        this.router.navigateByUrl('/tabs', { replaceUrl: true });
+        setTimeout(() => {                           
+          this.router.navigateByUrl('/tabs', { replaceUrl: true })
+        }, 100);
+        
       })
-      .catch(error => alert(error));
+      .catch(error => {
+        this.loading = false;
+        alert(error);
+      });
   }
 }

@@ -18,6 +18,8 @@ import { ReservaDiaPage } from './tabs/reservas-dia/reservas-dia.page';
 
 import es from '@angular/common/locales/es';
 import { registerLocaleData } from '@angular/common';
+import { RolGuard } from './guard/rol.guard';
+
 registerLocaleData(es);
 @NgModule({
   declarations: [
@@ -40,9 +42,10 @@ registerLocaleData(es);
     
   ],
   providers: [
+    RolGuard,
     { provide: LOCALE_ID, useValue: 'es-ES' },
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    AuthService
+    AuthService,
   ],
   bootstrap: [AppComponent]
 })

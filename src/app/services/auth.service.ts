@@ -27,29 +27,33 @@ import { Observable } from 'rxjs';
 @Injectable()
 export class AuthService {
 
-    user$: Observable<User | null>;
+  userData: any;
 
   constructor(
    private auth: Auth) {
+
+    authState(this.auth).subscribe(user => {
+      if (user) {
+        this.userData = user;
+        localStorage.setItem('user', JSON.stringify(this.userData));
+      } else {
+        localStorage.setItem('user', null);
+      }
+    })
+
+     
    }
 
 
+  get isLoggedIn(): boolean {
+    const user = JSON.parse(localStorage.getItem('user'));
+    //return (user !== null && user.emailVerified !== false) ? true : false;
+    return (user !== null);
+  }
+
+
  login(email: string, password: string): Promise<any> {
-
-
-  return new Promise<any>((resolve, reject) => {
-    signInWithEmailAndPassword(this.auth, email, password)
-    .then(
-      res => {
-        this.user$ = authState(this.auth);
-        this.user$.subscribe(user=> {
-          console.log(user);
-          resolve(res);
-        })
-        
-      },
-      err => reject(err))
-  })
+  return  signInWithEmailAndPassword(this.auth, email, password);
 }
 
 logout(): Promise<any>{
