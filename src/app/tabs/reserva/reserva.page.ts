@@ -3,7 +3,7 @@ import { NavigationExtras, Router } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { CalendarMode, Step } from 'ionic2-calendar/calendar';
 import { DataService } from 'src/app/services/data.service';
-import { Reserva } from '../../models/reserva';
+import { Reserva, Totales } from '../../models/reserva';
 
 @Component({
   selector: 'app-reserva',
@@ -11,7 +11,26 @@ import { Reserva } from '../../models/reserva';
   styleUrls: ['reserva.page.scss']
 })
 export class ReservaPage implements OnInit {
+
+    servicio  = {
+        comida : new  Totales(),
+        cena  : new  Totales(),
+    
+      }
+
+      Totales  = {
+        comida : {
+            Adultos : 0,
+            ninos : 0
+        },
+        cena  : {
+            Adultos : 0,
+            ninos : 0
+        }
+    
+      };
    
+
   eventSource;
     
   viewTitle;
@@ -23,37 +42,13 @@ export class ReservaPage implements OnInit {
         mode: 'month' as CalendarMode,
         step: 30 as Step,
         currentDate: new Date(),
-        dateFormatter: {
-            formatMonthViewDay: function(date:Date) {
-                return date.getDate().toString();
-            },
-            formatMonthViewDayHeader: function(date:Date) {
-                return 'MonMH';
-            },
-            formatMonthViewTitle: function(date:Date) {
-                return 'testMT';
-            },
-            formatWeekViewDayHeader: function(date:Date) {
-                return 'MonWH';
-            },
-            formatWeekViewTitle: function(date:Date) {
-                return 'testWT';
-            },
-            formatWeekViewHourColumn: function(date:Date) {
-                return 'testWH';
-            },
-            formatDayViewHourColumn: function(date:Date) {
-                return 'testDH';
-            },
-            formatDayViewTitle: function(date:Date) {
-                return 'testDT';
-            }
-        }
+       
     };
     selectedTime: Date;
 
+    public lstReservas: Reserva[];
+
     constructor(
-      private navController:NavController,
       private dataService: DataService,
       private router: Router
       ) {
@@ -70,7 +65,6 @@ export class ReservaPage implements OnInit {
       this.dataService.getReservas().subscribe(data =>{
         this.eventSource  = [];
         data.forEach(reserva=>{
-          var miFecha = new Date(reserva.fecha);
           this.eventSource.push({
             title: reserva.nombre,
             startTime:reserva.fecha.toDate(),
@@ -129,11 +123,59 @@ export class ReservaPage implements OnInit {
     }
 
     onTimeSelected(ev) {
-        this.selectedTime = ev.selectedTime;
-        this.titleAdd = 'Añadir día ' + ev.selectedTime.getDate();
-        console.log('Selected time: ' + ev.selectedTime + ', hasEvents: ' +
-            (ev.events !== undefined && ev.events.length !== 0) + ', disabled: ' + ev.disabled);
+
+
+
+        this.dataService.getReservasByDate(ev.selectedTime).subscribe(lst=>{
+          this.resumen(lst);
+          this.lstReservas = lst.sort(function (a, b) {
+            if (a.servicio > b.servicio) {
+              return 1;
+            }}); 
+        });
+
+
+        
+        // this.selectedTime = ev.selectedTime;
+        this.titleAdd =  ev.selectedTime;
+        // console.log('Selected time: ' + ev.selectedTime + ', hasEvents: ' +
+
+        // (ev.events !== undefined && ev.events.length !== 0) + ', disabled: ' + ev.disabled);
+
+
+
     }
+
+
+    resumen(lst: Reserva[]) {
+
+        this.servicio  = {
+            comida : new  Totales(),
+            cena  : new  Totales(),
+        
+          }
+
+
+          this.Totales.comida.Adultos = 0;
+          this.Totales.comida.ninos = 0;
+
+          this.Totales.cena.Adultos = 0;
+          this.Totales.cena.ninos = 0;
+
+        lst.forEach(reserva => {
+            for (const property in this.servicio.comida) { //comida es igual que cena...mismos campos
+            if(reserva[property]){
+              this.servicio[reserva['servicio']][property]+=parseInt(reserva[property]);
+
+            }
+
+            // this.Totales[reserva['servicio']].Adultos +=  this.servicio[reserva['servicio']].Adultos;
+            //   this.Totales[reserva['servicio']].Ninos +=  this.servicio[reserva['servicio']].ninos;
+
+          }
+        });
+      }
+
 
     onCurrentDateChanged(event:Date) {
         var today = new Date();
@@ -142,42 +184,7 @@ export class ReservaPage implements OnInit {
         this.isToday = today.getTime() === event.getTime();
     }
 
-    createRandomEvents() {
-        var events = [];
-        for (var i = 0; i < 50; i += 1) {
-            var date = new Date();
-            var eventType = Math.floor(Math.random() * 2);
-            var startDay = Math.floor(Math.random() * 90) - 45;
-            var endDay = Math.floor(Math.random() * 2) + startDay;
-            var startTime;
-            var endTime;
-            if (eventType === 0) {
-                startTime = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate() + startDay));
-                if (endDay === startDay) {
-                    endDay += 1;
-                }
-                endTime = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate() + endDay));
-                events.push({
-                    title: 'All Day - ' + i,
-                    startTime: startTime,
-                    endTime: endTime,
-                    allDay: true
-                });
-            } else {
-                var startMinute = Math.floor(Math.random() * 24 * 60);
-                var endMinute = Math.floor(Math.random() * 180) + startMinute;
-                startTime = new Date(date.getFullYear(), date.getMonth(), date.getDate() + startDay, 0, date.getMinutes() + startMinute);
-                endTime = new Date(date.getFullYear(), date.getMonth(), date.getDate() + endDay, 0, date.getMinutes() + endMinute);
-                events.push({
-                    title: 'Event - ' + i,
-                    startTime: startTime,
-                    endTime: endTime,
-                    allDay: false
-                });
-            }
-        }
-        return events;
-    }
+   
 
     onRangeChanged(ev) {
         console.log('range changed: startTime: ' + ev.startTime + ', endTime: ' + ev.endTime);

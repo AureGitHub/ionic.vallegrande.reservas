@@ -1,5 +1,5 @@
 export class Reserva{
-  tipo : string;  //comida / cena
+  servicio : string;  //comida / cena
   fecha: any;
   hora: number;
   nombre: string;
@@ -18,6 +18,11 @@ export class Reserva{
 
   observaciones: string;
   usuario: string;
+
+  get Adultos():number{
+    return  this.dia +  this.mercado +  this.degustacion +  this.cochinillo;
+  }
+
 }
 
 export class Totales {
@@ -33,11 +38,16 @@ export class Totales {
   this.dia=0;
   this.mercado=0;
   this.degustacion=0;
+  this.cochinillo=0;
+
   this.ninos=0;
   this.boda=0;
   this.comunion=0;
   this.bautizo=0;
-  this.cochinillo=0;
+ }
+
+  get Adultos():number{
+   return  this.dia +    this.mercado +    this.degustacion +    this.cochinillo;
  }
 
 }

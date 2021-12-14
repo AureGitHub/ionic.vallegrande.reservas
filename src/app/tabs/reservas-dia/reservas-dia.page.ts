@@ -25,7 +25,7 @@ export class ReservaDiaPage implements OnInit {
 
 
   validation_messages = {
-    'tipo': [
+    'servicio': [
       { type: 'required', message: 'El tipo servicio  es obligatorio.' },
      
     ],
@@ -43,7 +43,8 @@ export class ReservaDiaPage implements OnInit {
   }
 
 
-  
+  checkComida : boolean;
+  checkCena : boolean;
 
 
   public lstReservas: Reserva[];
@@ -72,11 +73,11 @@ export class ReservaDiaPage implements OnInit {
     ngOnInit(): void {
 
       this.formGroup = this.formBuilder.group({
-        tipo: new FormControl('', Validators.compose([
+        servicio: new FormControl('', Validators.compose([
           Validators.required,
         ])),
         nombre: new FormControl('', Validators.compose([
-          Validators.required
+          Validators.required, Validators.minLength(5)
         ])),
         telefono: new FormControl('', ),
 
@@ -89,10 +90,21 @@ export class ReservaDiaPage implements OnInit {
         comunion: new FormControl('', ),
         bautizo: new FormControl('', ),
 
-        observaciones: new FormControl('', ),
-
+        observaciones: new FormControl('', ),            
       });
 
+
+      this.formGroup.controls['dia'].setValue(0);
+      this.formGroup.controls['mercado'].setValue(0);
+      this.formGroup.controls['degustacion'].setValue(0);
+      this.formGroup.controls['cochinillo'].setValue(0);
+      this.formGroup.controls['ninos'].setValue(0);
+      this.formGroup.controls['boda'].setValue(0);
+      this.formGroup.controls['comunion'].setValue(0);
+      this.formGroup.controls['bautizo'].setValue(0);
+
+
+    
        
     }
 
@@ -106,7 +118,7 @@ export class ReservaDiaPage implements OnInit {
       for (const property in this.servicio.comida) { //comida es igual que cena...mismos campos
         
         if(reserva[property]){
-          this.servicio[reserva['tipo']].comida[property]+=parseInt(reserva[property]);
+          this.servicio[reserva['servicio']].comida[property]+=parseInt(reserva[property]);
         }
       }
     });
@@ -118,13 +130,34 @@ export class ReservaDiaPage implements OnInit {
     }
 
     tryLogin(value){
-      // this.authService.doLogin(value)
-      // .then(res => {
-      //   this.router.navigate(["/home"]);
-      // }, err => {
-      //   this.errorMessage = err.message;
-      //   console.log(err)
-      // })
+     if(this.formGroup.valid){
+
+     }
+    }
+
+    checkServicio(servicio){
+      if(servicio == 'comida'){
+        if(this.checkComida){
+          this.checkCena = false;
+          this.formGroup.controls['servicio'].setValue('comida');
+        }
+        else{
+          this.checkCena = true;
+          this.formGroup.controls['servicio'].setValue('cena');
+        }
+      }
+      else  if(servicio == 'cena'){
+        if(this.checkCena){
+          this.checkComida = false;
+          this.formGroup.controls['servicio'].setValue('cena');
+        }
+        else{
+          this.checkComida = true;
+          this.formGroup.controls['servicio'].setValue('comida');
+        }
+      }
+      
+
     }
 
 }

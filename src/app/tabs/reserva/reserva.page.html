@@ -6,9 +6,6 @@
         <ion-col class="ion-align-self-start">         
             {{viewTitle}}         
         </ion-col>
-        <ion-col class="ion-align-self-end hand buttonAdd"  (click)="addReserva()">              
-          <ion-icon name="calendar-outline"></ion-icon> {{titleAdd}}          
-      </ion-col>
       </ion-row>
     </ion-grid>
 
@@ -18,13 +15,110 @@
 </ion-header>
 
 <ion-content>
-    <calendar [eventSource]="eventSource"
-              [calendarMode]="calendar.mode"
-              [currentDate]="calendar.currentDate"
-              (onCurrentDateChanged)="onCurrentDateChanged($event)"
-              (onEventSelected)="onEventSelected($event)"
-              (onTitleChanged)="onViewTitleChanged($event)"
-              (onTimeSelected)="onTimeSelected($event)"
-              [step]="calendar.step">
-    </calendar>
+
+
+
+<ion-grid >
+
+  <ion-row class="calendario">
+    <ion-col>
+      <calendar
+      [showEventDetail]=false
+      [startingDayMonth]="1"
+      [startingDayWeek]="1"
+      [eventSource]="eventSource"
+      [calendarMode]="calendar.mode"
+      [currentDate]="calendar.currentDate"
+      (onCurrentDateChanged)="onCurrentDateChanged($event)"
+      (onEventSelected)="onEventSelected($event)"
+      (onTitleChanged)="onViewTitleChanged($event)"
+      (onTimeSelected)="onTimeSelected($event)"
+      [step]="calendar.step">
+      </calendar>
+    </ion-col>
+
+  </ion-row>
+
+  <ion-row> 
+
+    <ion-col>
+      <ion-button (click)="addReserva()" color="danger" expand="block" >Añadir servicio {{titleAdd  | date:'dd/MM/yyyy'}} </ion-button>
+    </ion-col>
+  </ion-row>
+
+  <ion-row class="resumen"> 
+    <ion-col >día</ion-col>
+    <ion-col>mer</ion-col>
+    <ion-col>deg</ion-col>
+    <ion-col>coc</ion-col>
+    <ion-col>niños</ion-col>
+    <ion-col>bod</ion-col>
+    <ion-col>com</ion-col>
+    <ion-col>bau</ion-col>
+  </ion-row>
+
+
+  <ion-row class="resumen">
+    <ion-col>{{servicio?.comida?.dia}}</ion-col>
+    <ion-col>{{servicio?.comida?.mercado}}</ion-col>
+    <ion-col>{{servicio?.comida?.degustacion}}</ion-col>
+    <ion-col>{{servicio?.comida?.cochinillo}}</ion-col>
+    <ion-col>{{servicio?.comida?.ninos}}</ion-col>
+    <ion-col>{{servicio?.comida?.boda}}</ion-col>
+    <ion-col>{{servicio?.comida?.comunion}}</ion-col>
+    <ion-col>{{servicio?.comida?.bautizo}}</ion-col>
+  </ion-row>
+
+  <ion-row class="resumen">
+    <ion-col>{{servicio?.cena?.dia}}</ion-col>
+    <ion-col>{{servicio?.cena?.mercado}}</ion-col>
+    <ion-col>{{servicio?.cena?.degustacion}}</ion-col>
+    <ion-col>{{servicio?.comida?.cochinillo}}</ion-col>
+    <ion-col>{{servicio?.cena?.ninos}}</ion-col>
+    <ion-col>{{servicio?.cena?.boda}}</ion-col>
+    <ion-col>{{servicio?.cena?.comunion}}</ion-col>
+    <ion-col>{{servicio?.cena?.bautizo}}</ion-col>
+  </ion-row>
+  <ion-row class="resumen"> 
+    <ion-col>Reservas: {{lstReservas?.length}}</ion-col>
+    <ion-col>Comida: {{servicio?.comida?.Adultos}} ({{servicio?.comida?.ninos}}) </ion-col>
+    <ion-col>Cena: {{servicio?.cena?.Adultos}} ({{servicio?.cena?.ninos}}) </ion-col>
+  </ion-row>
+  
+  <ion-row>
+    <ion-grid>
+      <ion-row *ngFor="let reserva of lstReservas">
+        <ion-col>
+          <ion-grid class="itemReserva" [ngClass]="{'comida': reserva?.servicio === 'comida', 'cena' : reserva?.servicio === 'cena' }">
+            <ion-row>
+              <ion-col>{{reserva?.servicio}}</ion-col>  
+              <ion-col size="6">{{reserva?.nombre}}</ion-col>  
+              <ion-col><a href="tel:{{reserva?.telefono}}">{{reserva?.telefono}}</a></ion-col>  
+            </ion-row>
+
+            <ion-row>
+              <ion-col>dia {{reserva?.dia}}</ion-col>  
+              <ion-col>mer {{reserva?.mercado}}</ion-col>  
+              <ion-col>deg {{reserva?.degustacion}}</ion-col>  
+              <ion-col>coc {{reserva?.cochinillo}}</ion-col>  
+              <ion-col>niños {{reserva?.ninos}}</ion-col>  
+              <ion-col>bod {{reserva?.boda}}</ion-col>  
+              <ion-col>com {{reserva?.comunion}}</ion-col>  
+              <ion-col>bau {{reserva?.bautizo}}</ion-col>
+            </ion-row>
+
+          </ion-grid>
+        </ion-col>
+       
+      </ion-row>
+    </ion-grid>
+  </ion-row>
+
+    <ion-row>
+
+
+   
+  </ion-row>
+
+</ion-grid>
 </ion-content>

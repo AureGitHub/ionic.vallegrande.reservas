@@ -17,69 +17,7 @@
 
 
 <ion-content>
-  <ion-slides pager="true">
-    <ion-slide>  <!-- Resumen -->
-      <ion-grid>
-
-        <ion-row>
-          <ion-col>día</ion-col>
-          <ion-col>mer</ion-col>
-          <ion-col>deg</ion-col>
-          <ion-col>coc</ion-col>
-          <ion-col>niños</ion-col>
-          <ion-col>bod</ion-col>
-          <ion-col>com</ion-col>
-          <ion-col>bau</ion-col>
-        </ion-row>
-
-
-        <ion-row>
-          <ion-col>{{servicio?.comida?.dia}}</ion-col>
-          <ion-col>{{servicio?.comida?.mercado}}</ion-col>
-          <ion-col>{{servicio?.comida?.degustacion}}</ion-col>
-          <ion-col>{{servicio?.comida?.cochinollo}}</ion-col>
-          <ion-col>{{servicio?.comida?.ninos}}</ion-col>
-          <ion-col>{{servicio?.comida?.boda}}</ion-col>
-          <ion-col>{{servicio?.comida?.comunion}}</ion-col>
-          <ion-col>{{servicio?.comida?.bautizo}}</ion-col>
-        </ion-row>
-
-        <ion-row>
-          <ion-col>{{servicio?.cena?.dia}}</ion-col>
-          <ion-col>{{servicio?.cena?.mercado}}</ion-col>
-          <ion-col>{{servicio?.cena?.degustacion}}</ion-col>
-          <ion-col>{{servicio?.comida?.cochinollo}}</ion-col>
-          <ion-col>{{servicio?.cena?.ninos}}</ion-col>
-          <ion-col>{{servicio?.cena?.boda}}</ion-col>
-          <ion-col>{{servicio?.cena?.comunion}}</ion-col>
-          <ion-col>{{servicio?.cena?.bautizo}}</ion-col>
-        </ion-row>
-
-        <ion-row>
-          <ion-col>
-            <ion-button (click)="addReserva()" color="success" expand="block">
-              <ion-icon name="add-circle-outline"></ion-icon>&nbsp;Nueva reserva
-            </ion-button>
-          </ion-col>
-        </ion-row>
-
-
-
-        <ion-row>
-        </ion-row>
-        <br>
-        <ion-row>
-          <ion-list>
-            <ion-item *ngFor="let reserva of lstReservas">
-              <ion-label>{{ reserva.fecha.toDate() | date:'dd/MM/yyyy HH:mm' }} {{ reserva.nombre }}</ion-label>
-            </ion-item>
-          </ion-list>
-        </ion-row>
-
-      </ion-grid>
-    </ion-slide>
-
-    <ion-slide> <!-- Nuevo -->
+ 
     
         <form class="form" [formGroup]="formGroup" (ngSubmit)="tryLogin(formGroup.value)">
 
@@ -87,49 +25,88 @@
           <ion-grid>
 
             <ion-row>
-              <ion-item>
+              <ion-col>
+                  <ion-item>
+                    <ion-label  color="primary">Servicio</ion-label>
+                </ion-item>      
+               
+              </ion-col>
+             
+              <ion-col>
+
+                <ion-item>
+                  <ion-checkbox  color="primary" [(ngModel)] = "checkComida" [ngModelOptions]="{standalone: true}" (ionChange)="checkServicio('comida')"></ion-checkbox>
+                  <ion-label>&nbsp;Comida</ion-label>
+                </ion-item>           
+              </ion-col>     
+              <ion-col>
+                <ion-item>
+                  <ion-checkbox  color="primary" [(ngModel)] = "checkCena" [ngModelOptions]="{standalone: true}" (ionChange)="checkServicio('cena')"></ion-checkbox>
+                  <ion-label>&nbsp;Cena</ion-label>
+                </ion-item>           
+
+              </ion-col>     
+
+              <!-- <ion-item>
                 <ion-label position="floating" color="primary">Servicio</ion-label>
                 <ion-select placeholder="Servicio"  formControlName="tipo"  interface="popover">
                   <ion-select-option value="comida">Comida</ion-select-option>
                   <ion-select-option value="cena">Cena</ion-select-option>
                 </ion-select>
-              </ion-item>
+              </ion-item> -->
             </ion-row>
-
+            <div class="validation-errors">
+              <ng-container *ngFor="let validation of validation_messages.servicio">
+                <div class="error-message" *ngIf="formGroup.get('servicio').hasError(validation.type)">
+                  {{ validation.message }}
+                </div>
+              </ng-container>
+            </div>
             <ion-row>
+               <ion-col>
               <ion-item>
                 <ion-label position="floating" color="primary">Nombre</ion-label>
                 <ion-input type="text" formControlName="nombre"></ion-input>
               </ion-item>
+              <div class="validation-errors">
+                <ng-container *ngFor="let validation of validation_messages.nombre">
+                  <div class="error-message" *ngIf="formGroup.get('nombre').hasError(validation.type)">
+                    {{ validation.message }}
+                  </div>
+                </ng-container>
+              </div>
+            </ion-col>
             </ion-row>
-
+          
             <ion-row>
+              <ion-col>
               <ion-item>
                 <ion-label position="floating" color="primary">Teléfono</ion-label>
                 <ion-input type="text" formControlName="telefono"></ion-input>
               </ion-item>
+            </ion-col>
             </ion-row>
-
+          
             <ion-row>
               <ion-col> <ion-item>
                 <ion-label position="floating" color="primary">día</ion-label>
-                <ion-input type="number" formControlName="dia"></ion-input>
+                <ion-input type="number" formControlName="dia" (click)="$event.target.select()"></ion-input>
               </ion-item></ion-col>
               <ion-col> <ion-item>
                 <ion-label position="floating" color="primary">mer</ion-label>
-                <ion-input type="number" formControlName="mercado"></ion-input>
+                <ion-input type="number" formControlName="mercado" (click)="$event.target.select()"></ion-input>
               </ion-item></ion-col>
               <ion-col> <ion-item>
                 <ion-label position="floating" color="primary">deg</ion-label>
-                <ion-input type="number" formControlName="degustacion"></ion-input>
+                <ion-input type="number" formControlName="degustacion" (click)="$event.target.select()"></ion-input>
               </ion-item></ion-col>
               <ion-col> <ion-item>
                 <ion-label position="floating" color="primary">coc</ion-label>
-                <ion-input type="number" formControlName="cochinillo"></ion-input>
+                <ion-input type="number" formControlName="cochinillo" (click)="$event.target.select()"></ion-input>
               </ion-item></ion-col>
               <ion-col> <ion-item>
                 <ion-label position="floating" color="primary">Niños</ion-label>
-                <ion-input type="number" formControlName="ninos"></ion-input>
+                <ion-input type="number" formControlName="ninos" (click)="$event.target.select()"></ion-input>
               </ion-item></ion-col>
             
             </ion-row>
@@ -138,15 +115,15 @@
             <ion-row>
               <ion-col> <ion-item>
                 <ion-label position="floating" color="primary">Boda</ion-label>
-                <ion-input type="number" formControlName="boda"></ion-input>
+                <ion-input type="number" formControlName="boda" (click)="$event.target.select()"></ion-input>
               </ion-item></ion-col>
               <ion-col> <ion-item>
                 <ion-label position="floating" color="primary">Bautizo</ion-label>
-                <ion-input type="number" formControlName="bautizo"></ion-input>
+                <ion-input type="number" formControlName="bautizo" (click)="$event.target.select()"></ion-input>
               </ion-item></ion-col>
               <ion-col> <ion-item>
                 <ion-label position="floating" color="primary">Comunion</ion-label>
-                <ion-input type="number" formControlName="comunion"></ion-input>
+                <ion-input type="number" formControlName="comunion" (click)="$event.target.select()"></ion-input>
               </ion-item></ion-col>
             
             </ion-row>
@@ -156,7 +133,7 @@
               <ion-col> 
                 <ion-item>
                   <ion-label>Observaciones</ion-label>
-                  <ion-textarea rows="6" cols="20"  formControlName="observaciones"></ion-textarea>
+                  <ion-textarea position="stacked" rows="6" cols="20"  formControlName="observaciones"></ion-textarea>
                 </ion-item>
               </ion-col>
             
@@ -166,38 +143,25 @@
 
 
             <ion-row>
-              <ion-button  expand="block"  color="success" type="submit" [disabled]="!formGroup.valid">
-                <ion-label > <ion-spinner *ngIf="loading"></ion-spinner> Guardar</ion-label>
-                
-              </ion-button>
-              <label class="error-message">{{errorMessage}}</label>
+              <ion-col>
+                <ion-button  expand="block"  color="success" type="submit" [disabled]="!formGroup.valid">
+                  <ion-label > <ion-spinner *ngIf="loading"></ion-spinner> Guardar</ion-label>                
+                </ion-button>
+                <label class="error-message">{{errorMessage}}</label>
+              </ion-col>
+             
             </ion-row>
 
           </ion-grid>
 
-
-
-
-
-
-
-
-         
         
          
          
           <br>
-          <!-- <ion-button  size="large" color="success" type="submit" [disabled]="!validations_form.valid">
-            <ion-label > <ion-spinner ></ion-spinner> Guardar</ion-label>
-            
-          </ion-button>
-          <label class="error-message">{{errorMessage}}</label> -->
         </form>
   
    
-    </ion-slide>
-
-  </ion-slides>
+   
 
 
 </ion-content>
