@@ -17,73 +17,7 @@
 
 
 <ion-content>
-<<<<<<< HEAD
  
-=======
-  <ion-slides pager="true">
-    <ion-slide>  <!-- Resumen -->
-      <ion-grid>
-
-        <ion-row>
-          <ion-col>día</ion-col>
-          <ion-col>mer</ion-col>
-          <ion-col>deg</ion-col>
-          <ion-col>coc</ion-col>
-          <ion-col>niños</ion-col>
-          <ion-col>bod</ion-col>
-          <ion-col>com</ion-col>
-          <ion-col>bau</ion-col>
-        </ion-row>
-
-
-        <ion-row>
-          <ion-col>{{servicio?.comida?.dia}}</ion-col>
-          <ion-col>{{servicio?.comida?.mercado}}</ion-col>
-          <ion-col>{{servicio?.comida?.degustacion}}</ion-col>
-          <ion-col>{{servicio?.comida?.cochinillo}}</ion-col>
-          <ion-col>{{servicio?.comida?.ninos}}</ion-col>
-          <ion-col>{{servicio?.comida?.boda}}</ion-col>
-          <ion-col>{{servicio?.comida?.comunion}}</ion-col>
-          <ion-col>{{servicio?.comida?.bautizo}}</ion-col>
-        </ion-row>
-
-        <ion-row>
-          <ion-col>{{servicio?.cena?.dia}}</ion-col>
-          <ion-col>{{servicio?.cena?.mercado}}</ion-col>
-          <ion-col>{{servicio?.cena?.degustacion}}</ion-col>
-          <ion-col>{{servicio?.comida?.cochinillo}}</ion-col>
-          <ion-col>{{servicio?.cena?.ninos}}</ion-col>
-          <ion-col>{{servicio?.cena?.boda}}</ion-col>
-          <ion-col>{{servicio?.cena?.comunion}}</ion-col>
-          <ion-col>{{servicio?.cena?.bautizo}}</ion-col>
-        </ion-row>
-
-        <ion-row>
-          <ion-col>
-            <ion-button (click)="addReserva()" color="success" expand="block">
-              <ion-icon name="add-circle-outline"></ion-icon>&nbsp;Nueva reserva
-            </ion-button>
-          </ion-col>
-        </ion-row>
-
-
-
-        <ion-row>
-        </ion-row>
-        <br>
-        <ion-row>
-          <ion-list>
-            <ion-item *ngFor="let reserva of lstReservas">
-              <ion-label>{{ reserva.fecha.toDate() | date:'dd/MM/yyyy HH:mm' }} {{ reserva.nombre }}</ion-label>
-            </ion-item>
-          </ion-list>
-        </ion-row>
-
-      </ion-grid>
-    </ion-slide>
-
-    <ion-slide> <!-- Nuevo -->
->>>>>>> 26ca8426c90b379de5189cd77cf689b7e3404d2f
     
         <form class="form" [formGroup]="formGroup" (ngSubmit)="tryLogin(formGroup.value)">
 
@@ -226,8 +160,6 @@
           <br>
         </form>
   
-   
-   
 
 
 </ion-content>
