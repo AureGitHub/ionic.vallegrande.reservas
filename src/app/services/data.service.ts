@@ -30,6 +30,9 @@ export class DataService {
     //const q = query(citiesRef, where("regions", "array-contains", "west_coast"));
     //const q = query(citiesRef, where('country', 'in', ['USA', 'Japan']));
 
+    if(!fecha){
+      return;
+    }
 
     var startDay = new Date(fecha.getFullYear(),fecha.getMonth(), fecha.getDate());
 

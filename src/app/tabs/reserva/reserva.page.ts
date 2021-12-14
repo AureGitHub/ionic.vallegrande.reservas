@@ -12,6 +12,10 @@ import { Reserva, Totales } from '../../models/reserva';
 })
 export class ReservaPage implements OnInit {
 
+  openAltaEdit = false;
+
+  reserva : Reserva;
+
     servicio  = {
         comida : new  Totales(),
         cena  : new  Totales(),
@@ -80,7 +84,11 @@ export class ReservaPage implements OnInit {
     }
 
     addReserva(){
-        
+
+      this.reserva=null;
+      this.openAltaEdit = true;
+
+      return;
 
     let navigationExtras: NavigationExtras = {
         state: {
@@ -88,21 +96,8 @@ export class ReservaPage implements OnInit {
         }
         };
 
-    this.router.navigate(['/reservas-dia'],navigationExtras);
+    this.router.navigate(['/tabs/reserva-update'],navigationExtras);
 
-
-          
-    // this.router.navigate(['/reservas-dia', { currentDate : this.calendar.currentDate}]);
-
-        //this.router.navigateByUrl('/reservas-dia', { replaceUrl: true });
-        //this.router.navigate(['/reservas-dia', {replaceUrl: true, currentDate : this.calendar.currentDate}]);
-    //   let reserva: Reserva = {
-    //     nombre: 'Aure',
-    //     usuario: 'usu',
-    //     fecha : new Date(),
-    //   }
-      
-    //   this.dataService.createReserva(reserva);
     }
 
     onViewTitleChanged(title) {
@@ -164,9 +159,8 @@ export class ReservaPage implements OnInit {
 
         lst.forEach(reserva => {
             for (const property in this.servicio.comida) { //comida es igual que cena...mismos campos
-            if(reserva[property]){
-              this.servicio[reserva['servicio']][property]+=parseInt(reserva[property]);
-
+              if(reserva[property]){
+                this.servicio[reserva['servicio']][property]+=parseInt(reserva[property]);
             }
 
             // this.Totales[reserva['servicio']].Adultos +=  this.servicio[reserva['servicio']].Adultos;

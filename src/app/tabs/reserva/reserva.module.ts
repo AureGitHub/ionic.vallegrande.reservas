@@ -5,6 +5,8 @@ import { FormsModule } from '@angular/forms';
 import { ReservaPageRoutingModule } from './reserva-routing.module';
 import { ReservaPage } from './reserva.page';
 import { NgCalendarModule } from 'ionic2-calendar';
+import { ReservaUpdatePageModule } from '../reserva-update/reserva-update.module';
+import { ReservaUpdatePage } from '../reserva-update/reserva-update.page';
 
 @NgModule({
   imports: [
@@ -12,8 +14,8 @@ import { NgCalendarModule } from 'ionic2-calendar';
     CommonModule,
     FormsModule,
     ReservaPageRoutingModule,
-    NgCalendarModule
+    NgCalendarModule,
   ],
-  declarations: [ReservaPage]
+  declarations: [ReservaPage,ReservaUpdatePage]
 })
 export class ReservaPageModule {}

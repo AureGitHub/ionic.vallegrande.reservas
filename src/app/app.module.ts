@@ -14,7 +14,6 @@ import { LoginPage } from './login/login.page';
 import { getAuth, provideAuth } from '@angular/fire/auth';
 import { AuthService } from './services/auth.service';
 import { IntroPage } from './intro/intro.page';
-import { ReservaDiaPage } from './tabs/reservas-dia/reservas-dia.page';
 
 import es from '@angular/common/locales/es';
 import { registerLocaleData } from '@angular/common';
@@ -27,7 +26,6 @@ registerLocaleData(es);
     NewContactPage,
     LoginPage,
     IntroPage,
-    ReservaDiaPage
   ],
     
   imports: [ 

@@ -3,7 +3,6 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { RolGuard } from './guard/rol.guard';
 import { IntroPage } from './intro/intro.page';
 import { LoginPage } from './login/login.page';
-import { ReservaDiaPage } from './tabs/reservas-dia/reservas-dia.page';
 
 const routes: Routes = [
   {
@@ -17,11 +16,6 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginPage,
-  },
-  {
-    path: 'reservas-dia',
-    component: ReservaDiaPage,
-    canActivate: [RolGuard]
   },
   {
     path: 'tabs',

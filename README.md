@@ -14,3 +14,5 @@ If you are looking for an Ionic Starter App with Firestore integration ready to 
 - [TUTORIAL](https://ionicthemes.com/tutorials/add-a-firebase-database-to-your-ionic-app) 
 
 ![](https://static.ionicthemes.com/freebies/add-a-firebase-database-to-your-ionic-app-freebie.png)
+
+ // "@ionic/angular": "^5.5.2",

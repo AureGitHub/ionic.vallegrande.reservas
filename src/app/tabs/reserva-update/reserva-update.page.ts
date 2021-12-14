@@ -1,27 +1,31 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { IonSlides } from '@ionic/angular';
+import { Reserva } from 'src/app/models/reserva';
 import { DataService } from 'src/app/services/data.service';
-import { Reserva, Totales } from '../../models/reserva';
 
 @Component({
-  selector: 'app-reservas-dia',
-  templateUrl: 'reservas-dia.page.html',
-  styleUrls: ['reservas-dia.page.scss']
+  selector: 'reserva-update',
+  templateUrl: 'reserva-update.page.html',
+  styleUrls: ['reserva-update.page.scss']
 })
 
 
-export class ReservaDiaPage implements OnInit {
+export class ReservaUpdatePage implements OnInit {
 
-  @ViewChild(IonSlides) slides: IonSlides;
 
-  selectedTime: Date;
+  @Output() EventEmitterForm: EventEmitter<any> = new EventEmitter();
 
   formGroup: FormGroup;
   errorMessage: string = '';
 
   loading: boolean;
+
+
+  @Input() set getReserva(value: Reserva) {
+    this.reserva = value;
+    this.updateForm();
+}
+  @Input() reserva: any;
 
 
   validation_messages = {
@@ -36,42 +40,29 @@ export class ReservaDiaPage implements OnInit {
   };
 
 
-  servicio  = {
-    comida : new  Totales(),
-    cena  : new  Totales(),
 
-  }
+  checkComida =false;
+  checkCena =true;
 
 
-  checkComida : boolean;
-  checkCena : boolean;
-
-
-  public lstReservas: Reserva[];
+ 
 
     constructor(
-      private route: ActivatedRoute, private router: Router,
       private dataService: DataService,
       private formBuilder: FormBuilder,
      
       ) {
 
-        this.route.queryParams.subscribe(params => {
-          if (this.router.getCurrentNavigation().extras.state) {
-            this.selectedTime = this.router.getCurrentNavigation().extras.state.selectedTime;       
-
-            this.dataService.getReservasByDate(this.selectedTime).subscribe(lst=>{
-              this.resumen(lst);
-              this.lstReservas = lst;
-            });
-
-          }
-        });
-
+       
+  
     }
 
     ngOnInit(): void {
+     
+      this.crearForm();
+    }
 
+    crearForm(){
       this.formGroup = this.formBuilder.group({
         servicio: new FormControl('', Validators.compose([
           Validators.required,
@@ -93,6 +84,14 @@ export class ReservaDiaPage implements OnInit {
         observaciones: new FormControl('', ),            
       });
 
+      this.clearForm();
+    }
+
+    clearForm(){
+      if(!this.formGroup) return;
+      this.formGroup.controls['servicio'].setValue('');
+      this.formGroup.controls['nombre'].setValue('');
+      this.formGroup.controls['telefono'].setValue('');
 
       this.formGroup.controls['dia'].setValue(0);
       this.formGroup.controls['mercado'].setValue(0);
@@ -102,38 +101,31 @@ export class ReservaDiaPage implements OnInit {
       this.formGroup.controls['boda'].setValue(0);
       this.formGroup.controls['comunion'].setValue(0);
       this.formGroup.controls['bautizo'].setValue(0);
-
-
-    
-       
     }
 
-    addReserva(){
-      this.slides.slideNext();
-    }
-
-  resumen(lst: Reserva[]) {
-
-    lst.forEach(reserva => {
-      for (const property in this.servicio.comida) { //comida es igual que cena...mismos campos
-        
-        if(reserva[property]){
-          this.servicio[reserva['servicio']].comida[property]+=parseInt(reserva[property]);
+    updateForm() {
+      this.crearForm();
+      if(this.reserva){
+        for (const property in this.reserva) { //comida es igual que cena...mismos campos
+          this.formGroup.controls[property].setValue(this.reserva[property]);
         }
       }
-    });
-  }
-    
-
-    volver(){
-        this.router.navigateByUrl('/tabs', { replaceUrl: true });
+      else{
+        this.clearForm();
+      }
     }
+
+
+ 
 
     tryLogin(value){
      if(this.formGroup.valid){
 
+       this.EventEmitterForm.emit(this.formGroup.value);
+
      }
     }
+    
 
     checkServicio(servicio){
       if(servicio == 'comida'){

@@ -73,7 +73,7 @@
     <ion-col>{{servicio?.cena?.dia}}</ion-col>
     <ion-col>{{servicio?.cena?.mercado}}</ion-col>
     <ion-col>{{servicio?.cena?.degustacion}}</ion-col>
-    <ion-col>{{servicio?.comida?.cochinillo}}</ion-col>
+    <ion-col>{{servicio?.cena?.cochinillo}}</ion-col>
     <ion-col>{{servicio?.cena?.ninos}}</ion-col>
     <ion-col>{{servicio?.cena?.boda}}</ion-col>
     <ion-col>{{servicio?.cena?.comunion}}</ion-col>
@@ -121,4 +121,20 @@
   </ion-row>
 
 </ion-grid>
+
+<ion-modal [isOpen]="openAltaEdit">
+  <ng-template>
+
+    <ion-grid>
+      <ion-row class="ion-align-items-center ion-no-padding">
+        <ion-col>
+          <button (click)="openAltaEdit=false" >Cerrar</button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    
+   
+    <reserva-update [getReserva]="reserva"></reserva-update>
+  </ng-template>
+</ion-modal>
 </ion-content>

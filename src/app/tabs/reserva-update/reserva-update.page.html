@@ -1,14 +1,9 @@
 <ion-header>
   <ion-title>
     <ion-grid>
-      <ion-row style="width: 100%;" (click)="volver()">
-        <ion-col class="ion-align-self-start">
-          Reservas {{selectedTime | date: 'dd/MM/yyyy'}}
-        </ion-col>
-        <ion-col class="ion-align-items-end">
-
-          <ion-icon (click)="volver()" name="arrow-back-outline"></ion-icon>
-
+      <ion-row class="ion-align-items-end">
+        <ion-col>
+          Reserva alta/modificación
         </ion-col>
       </ion-row>
     </ion-grid>
@@ -35,13 +30,13 @@
               <ion-col>
 
                 <ion-item>
-                  <ion-checkbox  color="primary" [(ngModel)] = "checkComida" [ngModelOptions]="{standalone: true}" (ionChange)="checkServicio('comida')"></ion-checkbox>
+                  <ion-checkbox checked="{{checkComida}}"  color="primary"   (ionChange)="checkServicio('comida')"></ion-checkbox>
                   <ion-label>&nbsp;Comida</ion-label>
                 </ion-item>           
               </ion-col>     
               <ion-col>
                 <ion-item>
-                  <ion-checkbox  color="primary" [(ngModel)] = "checkCena" [ngModelOptions]="{standalone: true}" (ionChange)="checkServicio('cena')"></ion-checkbox>
+                  <ion-checkbox checked="{{checkCena}}"   color="primary"  (ionChange)="checkServicio('cena')"></ion-checkbox>
                   <ion-label>&nbsp;Cena</ion-label>
                 </ion-item>           
 
