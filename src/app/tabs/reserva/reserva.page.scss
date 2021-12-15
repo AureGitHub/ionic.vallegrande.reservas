@@ -1,3 +1,7 @@
+.tituloServicio{
+    font-size:25px;
+    font-weight: bold;
+}
 .buttonAdd{
     background-color: navy;
     color: white; 
@@ -5,25 +9,23 @@
 }
 
 
-.itemReserva{
-    
-    font-weight: bold;
-    border-radius: 10px;
-}
+
 
 .comida{
-    background-color: lightgray;
+    background-color: rgb(192, 229, 247);
     color: black;
+    font-weight: bold;
 }
 
 .cena{
-    background-color: lightslategray;
-    color: white;
+    background-color: rgb(157, 202, 248);
+    color: black;
+    font-weight: bold;
 }
 
 .resumen{
     font-weight: bold;
-    background-color: lightgreen;
+    background-color: rgb(188, 192, 188);
     color : black;
 }
 

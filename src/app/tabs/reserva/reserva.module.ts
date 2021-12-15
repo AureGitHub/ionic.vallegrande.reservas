@@ -5,6 +5,8 @@ import { FormsModule } from '@angular/forms';
 import { ReservaPageRoutingModule } from './reserva-routing.module';
 import { ReservaPage } from './reserva.page';
 import { NgCalendarModule } from 'ionic2-calendar';
+import { MyFilterPipe } from 'src/app/pipe/pipe.reserva.servicio';
+import { ReservaComponent } from './reserva.component/reserva.component';
 
 @NgModule({
   imports: [
@@ -14,6 +16,10 @@ import { NgCalendarModule } from 'ionic2-calendar';
     ReservaPageRoutingModule,
     NgCalendarModule,
   ],
-  declarations: [ReservaPage]
+  declarations: [
+    ReservaPage,
+    MyFilterPipe ,
+    ReservaComponent
+  ]
 })
 export class ReservaPageModule {}

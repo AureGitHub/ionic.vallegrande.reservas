@@ -52,6 +52,14 @@ export class AuthService {
   }
 
 
+  get userLogged(): any {
+    const user = JSON.parse(localStorage.getItem('user'));
+    //return (user !== null && user.emailVerified !== false) ? true : false;
+    return user;
+  }
+
+
+
  login(email: string, password: string): Promise<any> {
   return  signInWithEmailAndPassword(this.auth, email, password);
 }
