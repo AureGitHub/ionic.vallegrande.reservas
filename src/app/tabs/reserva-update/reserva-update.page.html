@@ -191,28 +191,36 @@
 
       </ion-row>
 
-      <ion-row>
-        <ion-col>
-          <ion-button expand="block" color="warning" (click)="volver()">
-            <ion-label>
-               Cancelar
-            </ion-label>
-          </ion-button>
-        </ion-col>
-
-      </ion-row>
+     
 
 
       <ion-row *ngIf="isUpdate">
         <ion-col>
           <ion-button expand="block" color="danger" (click)="borrar()">
             <ion-label>
-              <ion-spinner *ngIf="loadingBorrar"></ion-spinner> Borrar
+              <ion-spinner *ngIf="loadingBorrar"></ion-spinner> Cancelar
             </ion-label>
           </ion-button>
         </ion-col>
 
       </ion-row>
+
+      <ion-row>
+        <ion-col>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <ion-button expand="block" color="warning" (click)="volver()">
+            <ion-label>
+               Volver
+            </ion-label>
+          </ion-button>
+        </ion-col>
+
+      </ion-row>
+
 
     </ion-grid>
   </form>

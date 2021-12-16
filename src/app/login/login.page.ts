@@ -53,9 +53,16 @@ export class LoginPage implements OnInit {
      this.authService.login(value.email, value.password)
      .then(data=>
       {
-        setTimeout(() => {                           
-          this.router.navigateByUrl('/tabs', { replaceUrl: true })
-        }, 100);
+
+        this.authService.getExtradata(this.authService.userData.uid).subscribe(extra => {
+          this.authService.saveExtra(extra);
+          setTimeout(() => {   
+            this.loading = false;                        
+            this.router.navigateByUrl('/tabs', { replaceUrl: true })
+          }, 100);
+        })
+
+       
         
       })
       .catch(error => {
@@ -63,4 +70,6 @@ export class LoginPage implements OnInit {
         alert(error);
       });
   }
+
+
 }

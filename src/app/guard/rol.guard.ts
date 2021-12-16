@@ -23,7 +23,7 @@ export class RolGuard implements CanActivate {
     //   return false;
     // }
 
-    if (!this.authService.isLoggedIn) {
+    if (!this.authService.isAdmin) {
       this._router.navigate(['/login']);
       return false;
     }

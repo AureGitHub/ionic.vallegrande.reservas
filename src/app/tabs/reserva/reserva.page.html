@@ -40,8 +40,10 @@
     <ion-row>
 
       <ion-col>
-        <ion-button (click)="addReserva()" color="danger" expand="block">Añadir servicio {{selectedTime |
-          date:'dd/MM/yyyy'}} </ion-button>
+        <ion-button  (click)="addReserva()" color="danger" expand="block">         
+           Añadir servicio {{selectedTime | date:'dd/MM/yyyy'}}
+          </ion-button>
+          
       </ion-col>
     </ion-row>
 
@@ -84,13 +86,13 @@
       <ion-col size="12"></ion-col>
     </ion-row>
     <ion-row class="comida">
-      <ion-col size="12"><span  class="tituloServicio">Comida</span>: {{servicio?.comida?.mesas}} Mesa(s). {{servicio?.comida?.Adultos}} y
+      <ion-col size="12"><span  class="tituloServicio"><ion-icon style="background-color: yellow;" name="{{shareService.icon.comida}}"></ion-icon> Comida</span>: {{servicio?.comida?.mesas}} Mesa(s). {{servicio?.comida?.Adultos}} y
         {{servicio?.comida?.ninos}} pax </ion-col>
       <ion-col size="12">
         <ion-grid>
           <ng-container *ngFor="let reserva of lstReservas | myfilter:filtercomida; let i = index">
             <ion-row >
-              <ion-col>mesa {{i+1}} ==> {{reserva?.Adultos}} y {{reserva?.ninos}} pax</ion-col>            
+              <ion-col><ion-icon style="background-color: yellow;" name="{{shareService.icon.mesa}}"></ion-icon> mesa {{i+1}} ==> {{reserva?.Adultos}} y {{reserva?.ninos}} pax</ion-col>            
             </ion-row>
             <ion-row>
               <ion-col (click)="updateReserva(reserva)"> 
@@ -108,13 +110,13 @@
     </ion-row>
 
     <ion-row class="cena">
-      <ion-col size="12"><span class="tituloServicio">Cena</span>: {{servicio?.cena?.mesas}} Mesa(s). {{servicio?.cena?.Adultos}} y
+      <ion-col size="12"><span class="tituloServicio"><ion-icon style="background-color: rgb(156, 151, 151);"  name="{{shareService.icon.cena}}"></ion-icon> Cena</span>: {{servicio?.cena?.mesas}} Mesa(s). {{servicio?.cena?.Adultos}} y
         {{servicio?.cena?.ninos}} pax </ion-col>
       <ion-col size="12">
         <ion-grid>
           <ng-container *ngFor="let reserva of lstReservas | myfilter:filtercena; let i = index">
             <ion-row>
-              <ion-col>mesa {{i+1}} ==> {{reserva?.Adultos}} y {{reserva?.ninos}} pax</ion-col>
+              <ion-col><ion-icon style="background-color: rgb(156, 151, 151);"  name="{{shareService.icon.mesa}}"></ion-icon> mesa {{i+1}} ==> {{reserva?.Adultos}} y {{reserva?.ninos}} pax</ion-col>
             </ion-row>
             <ion-row>
               <ion-col (click)="updateReserva(reserva)">

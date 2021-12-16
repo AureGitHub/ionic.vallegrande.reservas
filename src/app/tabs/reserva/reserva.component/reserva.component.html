@@ -2,6 +2,7 @@
   <ion-row >
     <ion-col size="8">{{reserva?.nombre}}</ion-col>
     <ion-col><a href="tel:{{reserva?.telefono}}">{{reserva?.telefono}}</a></ion-col>
+    <ion-col *ngIf="reserva?.observaciones"><ion-icon name="{{shareService.icon.information}}"></ion-icon></ion-col>
   </ion-row>    
   <ion-row>
     <ion-col *ngIf="reserva?.dia && reserva?.dia > 0">dia<br>{{reserva?.dia}}</ion-col>

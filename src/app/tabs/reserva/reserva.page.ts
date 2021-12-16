@@ -2,6 +2,7 @@ import { Component, OnInit} from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 import { CalendarMode, Step } from 'ionic2-calendar/calendar';
 import { DataService } from 'src/app/services/data.service';
+import { ShareService } from 'src/app/services/share.servies';
 import { Reserva, Totales } from '../../models/reserva';
 
 
@@ -49,7 +50,8 @@ export class ReservaPage implements OnInit {
 
   constructor(
     private dataService: DataService,
-    private router: Router
+    private router: Router,
+    private shareService : ShareService
   ) {
 
     this.filtercomida=new Reserva();

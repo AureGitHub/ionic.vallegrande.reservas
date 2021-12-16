@@ -43,6 +43,13 @@ export class Reserva{
 
 }
 
+export class Reserva_audit{
+  IdReserva : string;
+  cuando : any;
+  quien : string;
+  operacion : string;  // A, M, B
+}
+
 export class Totales {
   mesas : 0;
   dia : number;

@@ -18,6 +18,7 @@ import { IntroPage } from './intro/intro.page';
 import es from '@angular/common/locales/es';
 import { registerLocaleData } from '@angular/common';
 import { RolGuard } from './guard/rol.guard';
+import { ShareService } from './services/share.servies';
 
 registerLocaleData(es);
 @NgModule({
@@ -45,6 +46,7 @@ registerLocaleData(es);
     { provide: LOCALE_ID, useValue: 'es-ES' },
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     AuthService,
+    ShareService
   ],
   bootstrap: [AppComponent]
 })

@@ -44,7 +44,7 @@ export class ReservaUpdatePage implements OnInit {
     ],
     'nombre': [
       { type: 'required', message: 'El nombre es obligatoria.' },
-      { type: 'minlength', message: 'El nombre debe ser mayor de 5 caracteres.' }
+      { type: 'minlength', message: 'El nombre debe ser mayor de 3 caracteres.' }
     ]
   };
 
@@ -105,7 +105,7 @@ export class ReservaUpdatePage implements OnInit {
           Validators.required,
         ])),
         nombre: new FormControl('', Validators.compose([
-          Validators.required, Validators.minLength(5)
+          Validators.required, Validators.minLength(3)
         ])),
         telefono: new FormControl('', ),
 
@@ -178,18 +178,18 @@ export class ReservaUpdatePage implements OnInit {
 
     async borrar(){
       const alert = await this.alertController.create({
-        header: '¿Desea borrar el servicio?',
+        header: '¿Desea cancelar el servicio?',
         message: 'El servicio se borrará de forma permanente',
         buttons: [ {
-          text: 'Cancelar',
+          text: 'No',
           role: 'Cancelar',
           cssClass: 'secondary',
         },
         {
-          text: 'Borrar',
+          text: 'Cancelar',
           handler: () => {
             this.loadingBorrar = true;
-            this.dataService.borrar(this.formGroup.value.id)
+            this.dataService.borrar(this.formGroup.value)
             .then(
               ()=>this.volver(),
               error => {
@@ -210,7 +210,9 @@ export class ReservaUpdatePage implements OnInit {
 
       this.dataService.management(this.formGroup.value)
       .then(
-        ()=>this.volver(),
+        (data)=>{
+          this.volver()
+        },        
         error => {
           this.loadingSubmit = false;
         }
@@ -254,32 +256,6 @@ export class ReservaUpdatePage implements OnInit {
       let value = this.checkComida ? 'comida' : 'cena';
 
       this.formGroup.controls['servicio'].setValue(value);
-    }
-
-
-    checkServicio(servicio){
-      if(servicio == 'comida'){
-        if(this.checkComida){
-          this.checkCena = false;
-          this.formGroup.controls['servicio'].setValue('comida');
-        }
-        else{
-          this.checkCena = true;
-          this.formGroup.controls['servicio'].setValue('cena');
-        }
-      }
-      else  if(servicio == 'cena'){
-        if(this.checkCena){
-          this.checkComida = false;
-          this.formGroup.controls['servicio'].setValue('cena');
-        }
-        else{
-          this.checkComida = true;
-          this.formGroup.controls['servicio'].setValue('comida');
-        }
-      }
-      
-
     }
 
     clickSelect($event){
