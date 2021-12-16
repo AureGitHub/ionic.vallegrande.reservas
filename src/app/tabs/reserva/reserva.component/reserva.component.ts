@@ -12,10 +12,14 @@ export class ReservaComponent  implements OnInit {
 
   @Input() reserva: Reserva;
 
+
+  icon : any;
+
+
   constructor(
     private shareService : ShareService
    ) {
-     
+    this.icon = this.shareService.icon;
     }
 
   ngOnInit() {

@@ -48,11 +48,16 @@ export class ReservaPage implements OnInit {
 
   public lstReservas: Reserva[];
 
+  icon : any;
+
   constructor(
     private dataService: DataService,
     private router: Router,
     private shareService : ShareService
   ) {
+
+
+    this.icon = this.shareService.icon;
 
     this.filtercomida=new Reserva();
     this.filtercomida.servicio ='comida';
