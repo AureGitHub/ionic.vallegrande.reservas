@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgCalendarModule } from 'ionic2-calendar';
 import { ReservaUpdatePage } from './reserva-update.page';
 import { ReservaUpdatePageRoutingModule } from './reserva-update.routing.module';
+import { ShareModule } from '../share.module';
 
 @NgModule({
   imports: [
@@ -13,8 +14,10 @@ import { ReservaUpdatePageRoutingModule } from './reserva-update.routing.module'
     FormsModule,
     ReactiveFormsModule,
     ReservaUpdatePageRoutingModule,
-    NgCalendarModule
+    NgCalendarModule,
+    ShareModule
+    
   ],
-  declarations: [ReservaUpdatePage]
+  declarations: [ReservaUpdatePage],
 })
 export class ReservaUpdatePageModule {}

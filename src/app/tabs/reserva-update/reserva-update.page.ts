@@ -2,9 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
+import { cerrarServicio } from 'src/app/models/cerrarServicio';
 import { Reserva } from 'src/app/models/reserva';
 import { AuthService } from 'src/app/services/auth.service';
 import { DataService } from 'src/app/services/data.service';
+
 
 @Component({
   selector: 'reserva-update',
@@ -15,6 +17,12 @@ import { DataService } from 'src/app/services/data.service';
 
 export class ReservaUpdatePage implements OnInit {
 
+  servicio : string ='aure;' 
+  copiarAwhatsapp: string;
+
+  comidaCerrada : cerrarServicio;
+  cenaCerrada : cerrarServicio;
+  
   formGroup: FormGroup;
   errorMessage: string = '';
 
@@ -63,7 +71,7 @@ export class ReservaUpdatePage implements OnInit {
       private dataService: DataService,
       private formBuilder: FormBuilder,
       private authService: AuthService,
-      public alertController: AlertController
+      public alertController: AlertController,
      
       ) {
 
@@ -71,6 +79,8 @@ export class ReservaUpdatePage implements OnInit {
           if (this.router.getCurrentNavigation().extras.state) {
             this.selectedTime = this.router.getCurrentNavigation().extras.state.selectedTime;
             this.reserva = this.router.getCurrentNavigation().extras.state.reserva;
+            this.comidaCerrada = this.router.getCurrentNavigation().extras.state.comidaCerrada;
+            this.cenaCerrada = this.router.getCurrentNavigation().extras.state.cenaCerrada;
           }
         });
   
@@ -85,10 +95,6 @@ export class ReservaUpdatePage implements OnInit {
       this.router.navigateByUrl('/tabs', { replaceUrl: true })
     }
 
-    public SetFormData(data) {
-      this.reserva = data;
-    this.updateForm();
-    }
 
     crearForm(){
       this.formGroup = this.formBuilder.group({
@@ -138,9 +144,15 @@ export class ReservaUpdatePage implements OnInit {
       this.formGroup.controls['boda'].setValue(0);
       this.formGroup.controls['comunion'].setValue(0);
       this.formGroup.controls['bautizo'].setValue(0);
+
+      this.checkCena = false;
+      this.checkComida = false;
     }
 
     updateForm() {
+      // if(!this.selectedTime){
+      //   this.volver();
+      // }
       this.crearForm();
       if(this.reserva){
         this.isUpdate= true;
@@ -261,6 +273,29 @@ export class ReservaUpdatePage implements OnInit {
     clickSelect($event){
       var obj=$event.target as HTMLInputElement;
       obj.select();
+    }
+
+    async clickCopy(){
+
+      let cadena=this.formGroup.controls['fecha']?.value.toLocaleDateString() + ' - ' 
+      +  this.formGroup.controls['servicio'].value + ' - ' 
+      +  this.formGroup.controls['nombre'].value + ' - ' 
+      +  this.formGroup.controls['telefono'].value  + ' - ' 
+      +  (this.formGroup.controls['dia'].value ==0 ? '' : 'dia:' + this.formGroup.controls['dia'].value) + ' - ' 
+      +  (this.formGroup.controls['mercado'].value ==0 ? '' : 'mercado:' + this.formGroup.controls['mercado'].value) + ' - ' 
+      +  (this.formGroup.controls['degustacion'].value ==0 ? '' : 'degustacion:' + this.formGroup.controls['degustacion'].value) + ' - ' 
+      +  (this.formGroup.controls['cochinillo'].value ==0 ? '' : 'cochinillo:' + this.formGroup.controls['cochinillo'].value) + ' - ' 
+      +  (this.formGroup.controls['ninos'].value ==0 ? '' : 'niños:' + this.formGroup.controls['ninos'].value) + ' - ' 
+      +  (this.formGroup.controls['boda'].value ==0 ? '' : 'boda:' + this.formGroup.controls['boda'].value) + ' - ' 
+      +  (this.formGroup.controls['bautizo'].value ==0 ? '' : 'bautizo:' + this.formGroup.controls['bautizo'].value) + ' - ' 
+      +  (this.formGroup.controls['comunion'].value ==0 ? '' : 'comunion:' + this.formGroup.controls['comunion'].value) ;
+
+
+      if (navigator.clipboard) {
+        try {
+          await navigator.clipboard.writeText(cadena);
+        } catch (err) {}
+      }
     }
 
 }

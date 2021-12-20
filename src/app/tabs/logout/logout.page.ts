@@ -46,12 +46,6 @@ export class LogoutPage {
    
   }
 
-  crear(){
-    this.authService.create('a@a.es','1111111','pepito','A')
-    .then(
-      () =>{alert('creado')},
-      error => alert(error)
-      );
-  }
+ 
 
 }

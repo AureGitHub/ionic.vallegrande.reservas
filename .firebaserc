@@ -1,14 +1,15 @@
 {
   "targets": {
-    "ionic-contacts-app": {
+    "vallegrande-reservas": {
       "hosting": {
         "app": [
-          "ionic-contacts-app"
+          "vallegrande-reservas"
         ]
       }
     }
   },
   "projects": {
-    "demo": "ionic-contacts-app"
+    "demo": "vallegrande-reservas",
+    "default": "vallegrande-reservas"
   }
 }

@@ -1,4 +1,3 @@
-import { MbscModule } from '@mobiscroll/angular';
 import { NgModule, LOCALE_ID  } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
@@ -19,6 +18,7 @@ import es from '@angular/common/locales/es';
 import { registerLocaleData } from '@angular/common';
 import { RolGuard } from './guard/rol.guard';
 import { ShareService } from './services/share.servies';
+import { CookieService } from './services/cookie.servie';
 
 registerLocaleData(es);
 @NgModule({
@@ -30,7 +30,6 @@ registerLocaleData(es);
   ],
     
   imports: [ 
-    MbscModule,  
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
@@ -46,7 +45,9 @@ registerLocaleData(es);
     { provide: LOCALE_ID, useValue: 'es-ES' },
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     AuthService,
-    ShareService
+    ShareService,
+    CookieService,
+    
   ],
   bootstrap: [AppComponent]
 })

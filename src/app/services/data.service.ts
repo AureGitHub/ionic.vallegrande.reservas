@@ -2,11 +2,12 @@ import { Injectable } from '@angular/core';
 import { Contact } from '../models/contact';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Firestore, collectionData, collection, doc, setDoc, deleteDoc, docSnapshots, CollectionReference, query, where, DocumentReference 
+import { Firestore, collectionData, collection, doc, setDoc, deleteDoc, docSnapshots, CollectionReference, query, where, DocumentReference, getDocs 
 } from '@angular/fire/firestore';
 import { Reserva } from '../models/reserva';
 import { AuthService } from './auth.service';
 import { ShareService } from './share.servies';
+import { cerrarServicio } from '../models/cerrarServicio';
 
 
 @Injectable({
@@ -89,6 +90,43 @@ export class DataService {
         return { id, ...data } as Contact;
       })
     );
+  }
+
+
+  cerrarServicio(cerrar : any){
+    const document = doc(collection(this.firestore, 'cerrar_servicio'));     
+    return setDoc(document, cerrar);
+    
+  }
+
+
+  abrirServicio(cerrar : any){
+    const document = doc(this.firestore, 'cerrar_servicio', cerrar.id);   
+    return deleteDoc(document);
+  }
+
+
+
+  async getCerrados(fecha: Date): Promise<cerrarServicio[]> {
+
+    var fechaSinTime = new Date(fecha.getFullYear(),fecha.getMonth(), fecha.getDate());
+
+
+    return new Promise<cerrarServicio[]>(async (resolve, reject) => {
+      const userRef = collection(this.firestore, 'cerrar_servicio');
+      const q = query(userRef,where("fecha", "==", fechaSinTime ));
+      const querySnapshot = await getDocs(q);
+      let cerrados: cerrarServicio[] = [];
+
+      querySnapshot.forEach((doc) => {
+        let user = doc.data() as cerrarServicio;
+        user['id']=doc.id
+        cerrados.push(user);
+      });
+      resolve(cerrados);
+    });
+
+
   }
 
 

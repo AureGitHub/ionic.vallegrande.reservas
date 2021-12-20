@@ -22,16 +22,7 @@ const routes: Routes = [
     loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule),
     canActivate: [RolGuard]
   },
-  // { path: '', redirectTo: 'home', pathMatch: 'full' },
-  { path: 'home', loadChildren: () => import('./home/home.module').then(m => m.HomePageModule)},
-  // {
-  //   path: 'contact-details/:id',
-  //   loadChildren: () => import('./contact-details/contact-details.module').then(m => m.ContactDetailsPageModule)
-  // },
-  // {
-  //   path: 'update-contact/:id',
-  //   loadChildren: () => import('./update-contact/update-contact.module').then(m => m.UpdateContactPageModule)
-  // }
+ 
 ];
 
 @NgModule({

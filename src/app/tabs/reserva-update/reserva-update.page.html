@@ -3,7 +3,7 @@
     <ion-grid>
       <ion-row>
         <ion-col size="10">
-          Reserva  {{selectedTime  | date:'dd/MM/yyyy'}}
+          Reserva {{selectedTime | date:'dd/MM/yyyy'}}
         </ion-col>
         <ion-col>
           <ion-icon (click)="volver()" color="danger" name="close-circle-outline"></ion-icon>
@@ -48,6 +48,12 @@
 
       <ion-row>
         <ion-col>
+          <cerrado-component [cerrado]="comidaCerrada"></cerrado-component>
+          <cerrado-component [cerrado]="cenaCerrada"></cerrado-component>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
           <ion-item>
             <ion-label color="primary">Servicio</ion-label>
           </ion-item>
@@ -55,7 +61,7 @@
         </ion-col>
 
         <ion-col>
-          <ion-item>
+          <ion-item [disabled]="comidaCerrada">
             <span *ngIf="checkComida" (click)="clickComida()">
               <ion-icon name="checkbox-outline"></ion-icon>&nbsp;Comida
             </span>
@@ -65,7 +71,7 @@
           </ion-item>
         </ion-col>
         <ion-col>
-          <ion-item>
+          <ion-item [disabled]="cenaCerrada">
             <span *ngIf="checkCena" (click)="clickCena()">
               <ion-icon name="checkbox-outline"></ion-icon>&nbsp;Cena
             </span>
@@ -158,13 +164,13 @@
         <ion-col>
           <ion-item>
             <ion-label position="floating" color="primary">Bautizo</ion-label>
-            <ion-input type="number" formControlName="bautizo"  (click)="clickSelect($event)"></ion-input>
+            <ion-input type="number" formControlName="bautizo" (click)="clickSelect($event)"></ion-input>
           </ion-item>
         </ion-col>
         <ion-col>
           <ion-item>
-            <ion-label position="floating" color="primary" >Comunion</ion-label>
-            <ion-input type="number" formControlName="comunion"  (click)="clickSelect($event)"></ion-input>
+            <ion-label position="floating" color="primary">Comunion</ion-label>
+            <ion-input type="number" formControlName="comunion" (click)="clickSelect($event)"></ion-input>
             <!-- (click)="$event.target?.select()" -->
           </ion-item>
         </ion-col>
@@ -179,6 +185,19 @@
         </ion-col>
       </ion-row>
 
+
+      <ion-row>
+      <ion-col (click)="clickCopy()" style="font-size: 12px; color: green;"> 
+        <ion-icon name="copy-outline" ></ion-icon> Pulsa para copiar información y pegar en el whatsapp del grupo  
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col> 
+      
+      </ion-col>
+    </ion-row>
+
+
       <ion-row>
         <ion-col>
           <ion-button expand="block" color="success" type="submit" [disabled]="!formGroup.valid">
@@ -188,38 +207,35 @@
           </ion-button>
           <label class="error-message">{{errorMessage}}</label>
         </ion-col>
-
       </ion-row>
 
-     
 
+        <ion-row *ngIf="isUpdate">
+          <ion-col>
+            <ion-button expand="block" color="danger" (click)="borrar()">
+              <ion-label>
+                <ion-spinner *ngIf="loadingBorrar"></ion-spinner> Cancelar
+              </ion-label>
+            </ion-button>
+          </ion-col>
 
-      <ion-row *ngIf="isUpdate">
-        <ion-col>
-          <ion-button expand="block" color="danger" (click)="borrar()">
-            <ion-label>
-              <ion-spinner *ngIf="loadingBorrar"></ion-spinner> Cancelar
-            </ion-label>
-          </ion-button>
-        </ion-col>
+        </ion-row>
 
-      </ion-row>
+        <ion-row>
+          <ion-col>
+          </ion-col>
+        </ion-row>
 
-      <ion-row>
-        <ion-col>
-        </ion-col>
-      </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-button expand="block" color="warning" (click)="volver()">
+              <ion-label>
+                Volver
+              </ion-label>
+            </ion-button>
+          </ion-col>
 
-      <ion-row>
-        <ion-col>
-          <ion-button expand="block" color="warning" (click)="volver()">
-            <ion-label>
-               Volver
-            </ion-label>
-          </ion-button>
-        </ion-col>
-
-      </ion-row>
+        </ion-row>
 
 
     </ion-grid>

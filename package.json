@@ -71,5 +71,5 @@
         "ts-node": "~8.3.0",
         "typescript": "~4.2.4"
     },
-    "description": "A Contacts App CRUD with Firebase"
+    "description": "Gestión de reservas para restaurante"
 }

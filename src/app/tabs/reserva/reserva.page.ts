@@ -1,6 +1,10 @@
 import { Component, OnInit} from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
+import { AlertController } from '@ionic/angular';
 import { CalendarMode, Step } from 'ionic2-calendar/calendar';
+import { error } from 'protractor';
+import { cerrarServicio } from 'src/app/models/cerrarServicio';
+import { AuthService } from 'src/app/services/auth.service';
 import { DataService } from 'src/app/services/data.service';
 import { ShareService } from 'src/app/services/share.servies';
 import { Reserva, Totales } from '../../models/reserva';
@@ -13,6 +17,13 @@ import { Reserva, Totales } from '../../models/reserva';
 })
 export class ReservaPage implements OnInit {
 
+
+  isAdmin : boolean = false;
+
+  visibleCierreServicio : boolean = false;
+
+  comidaCerrada : cerrarServicio;
+  cenaCerrada : cerrarServicio;
   
 
   filtercomida: Reserva;
@@ -49,13 +60,18 @@ export class ReservaPage implements OnInit {
   public lstReservas: Reserva[];
 
   icon : any;
+  servicioCierre: string;
+  motivoCierre: string = 'Servicio lleno';
 
   constructor(
     private dataService: DataService,
     private router: Router,
-    private shareService : ShareService
+    private shareService : ShareService,
+    public alertController: AlertController,
+    private authService: AuthService
   ) {
 
+    this.isAdmin = this.authService.isAdmin;
 
     this.icon = this.shareService.icon;
 
@@ -67,10 +83,28 @@ export class ReservaPage implements OnInit {
   }
   ngOnInit(): void {
     this.prueba = new Reserva();
-    this.prueba.dia = 15;
-
-    
+    this.prueba.dia = 15;    
     this.loadEvents();
+
+   
+
+  }
+  refreshCerrados() {
+  
+    this.dataService.getCerrados(this.selectedTime).then(lst=>{
+      this.comidaCerrada = null;
+      this.cenaCerrada = null;
+      lst.forEach(cerrado =>{
+        if(cerrado.servicio == 'comida'){
+          this.comidaCerrada = cerrado;
+        }
+        else  if(cerrado.servicio == 'cena'){
+          this.cenaCerrada = cerrado;
+        }
+      })
+
+      var ls = lst;
+    })
   }
 
   loadEvents() {
@@ -100,7 +134,10 @@ export class ReservaPage implements OnInit {
     let navigationExtras: NavigationExtras = {
       state: {
         selectedTime: this.selectedTime,
-        reserva: null
+        reserva: null,
+        comidaCerrada: this.comidaCerrada,
+        cenaCerrada: this.cenaCerrada
+        
       }
     };
 
@@ -112,7 +149,9 @@ export class ReservaPage implements OnInit {
     let navigationExtras: NavigationExtras = {
       state: {
         selectedTime: null,
-        reserva
+        reserva,
+        comidaCerrada: this.comidaCerrada,
+        cenaCerrada: this.cenaCerrada
       }
     };
 
@@ -138,6 +177,10 @@ export class ReservaPage implements OnInit {
 
   onTimeSelected(ev) {
 
+    this.selectedTime = ev.selectedTime;
+
+    this.refreshCerrados();
+
     this.dataService.getReservasByDate(ev.selectedTime).subscribe(lst => {
 
       this.lstReservas = lst.sort(function (a, b) {
@@ -153,7 +196,7 @@ export class ReservaPage implements OnInit {
 
 
 
-    this.selectedTime = ev.selectedTime;
+    
 
   }
 
@@ -206,4 +249,61 @@ export class ReservaPage implements OnInit {
     current.setHours(0, 0, 0);
     return date < current;
   };
+
+
+
+  async abrirServicio(servicioCerrado: cerrarServicio){
+
+
+    const alert1 = await this.alertController.create({
+      header: `¿Desea abrir el servicio de ${servicioCerrado.servicio}?`,
+      message: `El servicio de ${servicioCerrado.servicio} se abrirá`,
+      buttons: [ {
+        text: 'No',
+        role: 'Cancelar',
+        cssClass: 'secondary',
+      },
+      {
+        text: 'Si',
+        handler: () => {
+          this.dataService.abrirServicio(servicioCerrado).then(
+            ()=>{
+              this.refreshCerrados();          
+            },
+            error => alert(error)
+          )
+          
+        },
+      },],
+    });
+
+    await alert1.present();
+
+  }
+
+  preCerrarServicio(servicio: string){
+    this.visibleCierreServicio = true;
+    this.servicioCierre = servicio;
+  }
+
+  cerrarServicio(){
+    let cerrar = {    
+    
+      fecha : new Date(this.selectedTime.getFullYear(), this.selectedTime.getMonth(),this.selectedTime.getDate()),
+      servicio :  this.servicioCierre,
+      motivo : this.motivoCierre
+    }
+
+    this.dataService.cerrarServicio(cerrar)
+    .then(
+      ()=>{
+      this.visibleCierreServicio = false;    
+      this.refreshCerrados();
+      },
+      error => alert(error)
+    );
+
+    
+
+  }
 }

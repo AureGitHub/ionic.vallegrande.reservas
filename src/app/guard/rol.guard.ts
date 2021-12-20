@@ -17,13 +17,13 @@ export class RolGuard implements CanActivate {
 
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
 
-
+   
     // if (currentUser==-1) {
     //   this._router.navigate(['/expired']);
     //   return false;
     // }
 
-    if (!this.authService.isAdmin) {
+    if (!this.authService.isLoggedIn) {
       this._router.navigate(['/login']);
       return false;
     }

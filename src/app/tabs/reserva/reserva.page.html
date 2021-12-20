@@ -37,10 +37,31 @@
 
     </ion-row>
 
+    <ion-row *ngIf="isAdmin" class="ion-justify-content-center">
+
+      <ion-col *ngIf="!comidaCerrada"  class="comida hand" (click)="preCerrarServicio('comida')">
+        <ion-icon style="background-color: yellow;"  name="{{icon.comida}}"></ion-icon> <span style="color: red;"> Cerrar comidas</span> 
+      </ion-col>
+
+      <ion-col *ngIf="comidaCerrada"  class="comida hand" (click)="abrirServicio(comidaCerrada)">
+        <ion-icon style="background-color: yellow;"  name="{{icon.comida}}"></ion-icon> <span style="color: green;"> Abrir comidas</span> 
+      </ion-col>
+
+      <ion-col *ngIf="!cenaCerrada"  class="comida hand" (click)="preCerrarServicio('cena')">
+        <ion-icon style="background-color: rgb(156, 151, 151);"  name="{{icon.cena}}"></ion-icon> <span style="color: red;"> Cerrar cenas</span> 
+      </ion-col>
+
+      <ion-col *ngIf="cenaCerrada"  class="comida hand" (click)="abrirServicio(cenaCerrada)">
+        <ion-icon style="background-color: rgb(156, 151, 151);"  name="{{icon.cena}}"></ion-icon> <span style="color: green;"> Abrir cenas</span> 
+      </ion-col>
+
+    
+    </ion-row>
+
     <ion-row>
 
       <ion-col>
-        <ion-button  (click)="addReserva()" color="danger" expand="block">         
+        <ion-button *ngIf="!comidaCerrada || !cenaCerrada" (click)="addReserva()" color="danger" expand="block">         
            Añadir servicio {{selectedTime | date:'dd/MM/yyyy'}}
           </ion-button>
           
@@ -85,7 +106,10 @@
     <ion-row>
       <ion-col size="12"></ion-col>
     </ion-row>
-    <ion-row class="comida">
+      <ion-row class="comida">
+      <ion-col>
+        <cerrado-component [cerrado]="comidaCerrada"></cerrado-component>
+      </ion-col>
       <ion-col size="12"><span  class="tituloServicio"><ion-icon style="background-color: yellow;" name="{{icon.comida}}"></ion-icon> Comida</span>: {{servicio?.comida?.mesas}} Mesa(s). {{servicio?.comida?.Adultos}} y
         {{servicio?.comida?.ninos}} pax </ion-col>
       <ion-col size="12">
@@ -110,6 +134,9 @@
     </ion-row>
 
     <ion-row class="cena">
+        <ion-col >        
+          <cerrado-component [cerrado]="cenaCerrada"></cerrado-component>
+        </ion-col>
       <ion-col size="12"><span class="tituloServicio"><ion-icon style="background-color: rgb(156, 151, 151);"  name="{{icon.cena}}"></ion-icon> Cena</span>: {{servicio?.cena?.mesas}} Mesa(s). {{servicio?.cena?.Adultos}} y
         {{servicio?.cena?.ninos}} pax </ion-col>
       <ion-col size="12">
@@ -138,4 +165,31 @@
   
   
   </ion-grid>
+
+
+  <ion-modal [isOpen]="visibleCierreServicio">
+    <ng-template>
+        <ion-header translucent>
+          <ion-toolbar>
+            <ion-title>Cierre de servicio</ion-title>
+            <ion-buttons slot="end">
+              <ion-button (click)="visibleCierreServicio=false">Cerrar</ion-button>
+            </ion-buttons>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content   padding class="vertical-center">
+          <div style="padding: 20px;">
+            <h3>Se va a cerrar el servicio de {{servicioCierre}}</h3>
+            <ion-item>
+              <ion-label position="floating" color="primary">Motivo</ion-label>
+              <ion-input type="text" [(ngModel)]="motivoCierre"></ion-input>
+            </ion-item>
+            <ion-button  (click)="cerrarServicio()" color="danger" expand="block">         
+              Cerrar servicio {{servicioCierre}} {{selectedTime | date:'dd/MM/yyyy'}}
+             </ion-button>
+          </div>
+        </ion-content>
+    </ng-template>
+  </ion-modal>
+
 </ion-content>

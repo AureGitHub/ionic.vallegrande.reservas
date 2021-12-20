@@ -25,8 +25,8 @@
         <div class="ion-text-center " >
           <form class="form" [formGroup]="validations_form" (ngSubmit)="tryLogin(validations_form.value)">
             <ion-item>
-              <ion-label position="floating" color="primary">Email</ion-label>
-              <ion-input type="text" formControlName="email"></ion-input>
+              <ion-label position="floating" color="primary">Nombre</ion-label>
+              <ion-input type="text" formControlName="email"   (click)="clickSelect($event)"></ion-input>
             </ion-item>
             <div class="validation-errors">
               <ng-container *ngFor="let validation of validation_messages.email">
@@ -37,7 +37,7 @@
             </div>
             <ion-item>
               <ion-label position="floating" color="primary">Contraseña</ion-label>
-              <ion-input type="password" formControlName="password"></ion-input>
+              <ion-input type="password" formControlName="password"   (click)="clickSelect($event)"></ion-input>
             </ion-item>
             <div class="validation-errors">
               <ng-container *ngFor="let validation of validation_messages.password">
@@ -47,7 +47,7 @@
               </ng-container>
             </div>
             <br>
-            <ion-button  size="large" color="success" type="submit" [disabled]="!validations_form.valid">
+            <ion-button  expand="block" size="large" color="primary" type="submit" [disabled]="!validations_form.valid">
               <ion-label > <ion-spinner *ngIf="loading"></ion-spinner> Conectar</ion-label>
               
             </ion-button>

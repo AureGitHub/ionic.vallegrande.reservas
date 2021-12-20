@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-tabs',
@@ -6,7 +7,14 @@ import { Component } from '@angular/core';
   styleUrls: ['tabs.page.scss']
 })
 export class TabsPage {
+  isAdmin : boolean = false;
+  nombre : string = 'usuario';
+  constructor(
+    private authService: AuthService
 
-  constructor() {}
+  ) {
+    this.isAdmin = this.authService.isAdmin;
+    this.nombre =this.authService.email ? this.authService.email.split('@')[0] : 'usuario';
+  }
 
 }

@@ -16,6 +16,10 @@ const routes: Routes = [
         loadChildren: () => import('./reserva-update/reserva-update.module').then(m => m.ReservaUpdatePageModule)
       },
       {
+        path: 'users',
+        loadChildren: () => import('./users/users.module').then(m => m.UsersPageModule)
+      },
+      {
         path: 'logout',
         loadChildren: () => import('./logout/logout.module').then(m => m.LogoutPageModule)
       },

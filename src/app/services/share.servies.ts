@@ -17,8 +17,12 @@ public icon = {
   cena: 'moon-outline',
   herramientas: 'construct-outline',
   information: 'megaphone-outline',
-  information_i: 'information-outline'
+  information_i: 'information-outline',
+  baja_user : 'thumbs-down-outline',
+  alta_user : 'thumbs-up-outline',
+
   };
+
 
   public operacion_audit = {  
     alta: 'A',

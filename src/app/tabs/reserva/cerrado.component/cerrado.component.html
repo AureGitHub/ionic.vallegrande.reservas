@@ -1,0 +1,10 @@
+<ion-grid *ngIf="cerrado" class="cerrado" >
+  <ion-row >
+    <ion-col>        
+      <ion-icon  name="{{icon.warning}}"></ion-icon> {{cerrado.servicio}}  CERRADO
+    </ion-col>
+    <ion-col>        
+      {{cerrado.motivo}}
+    </ion-col>
+  </ion-row>      
+</ion-grid>
