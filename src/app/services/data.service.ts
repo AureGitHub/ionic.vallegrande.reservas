@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Contact } from '../models/contact';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Firestore, collectionData, collection, doc, setDoc, deleteDoc, docSnapshots, CollectionReference, query, where, DocumentReference, getDocs 
@@ -80,17 +79,7 @@ export class DataService {
     );
   }
 
-  getContactById(id: string): Observable<Contact> {
-    const document = doc(this.firestore, `contacts/${id}`);
-    return docSnapshots(document)
-    .pipe(
-      map(doc => {
-        const id = doc.id;
-        const data = doc.data();
-        return { id, ...data } as Contact;
-      })
-    );
-  }
+
 
 
   cerrarServicio(cerrar : any){

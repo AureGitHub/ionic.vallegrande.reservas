@@ -10,6 +10,7 @@ export class Reserva{
   mercado: number;
   degustacion: number;
   cochinillo: number;
+  carta: number;
 
   ninos : number;
 
@@ -26,6 +27,7 @@ export class Reserva{
    this.mercado=0;
    this.degustacion=0;
    this.cochinillo=0;
+   this.carta=0;
  
    this.ninos=0;
    this.boda=0;
@@ -56,25 +58,27 @@ export class Totales {
   mercado : number;
   degustacion : number;
   cochinillo: number;
+  carta: number;
   ninos : number;
-  boda: number;
-  comunion : number;
-  bautizo : number;
+  // boda: number;
+  // comunion : number;
+  // bautizo : number;
  constructor(){
    this.mesas = 0;
   this.dia=0;
   this.mercado=0;
   this.degustacion=0;
   this.cochinillo=0;
+  this.carta=0;
 
   this.ninos=0;
-  this.boda=0;
-  this.comunion=0;
-  this.bautizo=0;
+  // this.boda=0;
+  // this.comunion=0;
+  // this.bautizo=0;
  }
 
   get Adultos():number{
-   return  this.dia +    this.mercado +    this.degustacion +    this.cochinillo;
+   return  this.dia +    this.mercado +    this.degustacion +  this.cochinillo +  this.carta;
  }
 
 }

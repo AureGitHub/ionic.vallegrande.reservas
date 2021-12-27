@@ -119,6 +119,7 @@ export class ReservaUpdatePage implements OnInit {
         mercado: new FormControl('', ),
         degustacion: new FormControl('', ),
         cochinillo: new FormControl('', ),
+        carta: new FormControl('', ),
         ninos: new FormControl('', ),
         boda: new FormControl('', ),
         comunion: new FormControl('', ),
@@ -140,6 +141,7 @@ export class ReservaUpdatePage implements OnInit {
       this.formGroup.controls['mercado'].setValue(0);
       this.formGroup.controls['degustacion'].setValue(0);
       this.formGroup.controls['cochinillo'].setValue(0);
+      this.formGroup.controls['carta'].setValue(0);
       this.formGroup.controls['ninos'].setValue(0);
       this.formGroup.controls['boda'].setValue(0);
       this.formGroup.controls['comunion'].setValue(0);
@@ -285,6 +287,7 @@ export class ReservaUpdatePage implements OnInit {
       +  (this.formGroup.controls['mercado'].value ==0 ? '' : 'mercado:' + this.formGroup.controls['mercado'].value) + ' - ' 
       +  (this.formGroup.controls['degustacion'].value ==0 ? '' : 'degustacion:' + this.formGroup.controls['degustacion'].value) + ' - ' 
       +  (this.formGroup.controls['cochinillo'].value ==0 ? '' : 'cochinillo:' + this.formGroup.controls['cochinillo'].value) + ' - ' 
+      +  (this.formGroup.controls['carta'].value ==0 ? '' : 'carta:' + this.formGroup.controls['carta'].value) + ' - ' 
       +  (this.formGroup.controls['ninos'].value ==0 ? '' : 'niños:' + this.formGroup.controls['ninos'].value) + ' - ' 
       +  (this.formGroup.controls['boda'].value ==0 ? '' : 'boda:' + this.formGroup.controls['boda'].value) + ' - ' 
       +  (this.formGroup.controls['bautizo'].value ==0 ? '' : 'bautizo:' + this.formGroup.controls['bautizo'].value) + ' - ' 
