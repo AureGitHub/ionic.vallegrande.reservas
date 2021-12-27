@@ -18,4 +18,6 @@ If you are looking for an Ionic Starter App with Firestore integration ready to 
  // "@ionic/angular": "^5.5.2",
 
 
- //firebase deploy --only hosting
+ firebase deploy --only hosting
+ ionic cordova run  android --device -l --debug
+ionic cordova build android

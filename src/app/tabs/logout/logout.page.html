@@ -9,4 +9,11 @@
 <ion-content [fullscreen]="true">
   <ion-button expand="full" (click)="logout()">Salir</ion-button>
 
+
+
+  <ion-button expand="full" (click)="startListening()" >Iniciar escucha</ion-button>
+
+
+  <h2><span [style.background-color]="message">Tu mensaje:</span>  {{message}}</h2>
+
 </ion-content>

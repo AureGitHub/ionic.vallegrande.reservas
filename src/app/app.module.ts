@@ -1,4 +1,4 @@
-import { NgModule, LOCALE_ID  } from '@angular/core';
+import { NgModule, LOCALE_ID, ErrorHandler  } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
@@ -18,6 +18,8 @@ import { registerLocaleData } from '@angular/common';
 import { RolGuard } from './guard/rol.guard';
 import { ShareService } from './services/share.servies';
 import { CookieService } from './services/cookie.servie';
+
+import { SpeechRecognition } from '@ionic-native/speech-recognition/ngx';
 
 registerLocaleData(es);
 @NgModule({
@@ -45,6 +47,7 @@ registerLocaleData(es);
     AuthService,
     ShareService,
     CookieService,
+    SpeechRecognition,
     
   ],
   bootstrap: [AppComponent]
