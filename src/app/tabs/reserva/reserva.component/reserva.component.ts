@@ -11,6 +11,8 @@ import { ShareService } from 'src/app/services/share.servies';
 export class ReservaComponent  implements OnInit {
 
   @Input() reserva: Reserva;
+  @Input() verServicio: boolean;
+  
 
 
   icon : any;

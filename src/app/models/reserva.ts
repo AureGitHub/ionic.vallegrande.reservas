@@ -39,9 +39,15 @@ export class Reserva{
   //   return  this.dia +  this.mercado +  this.degustacion +  this.cochinillo;
   // }
 
-  //  get Adultos():number{
-  //   return  this.dia +  this.mercado +  this.degustacion +  this.cochinillo;
-  // }
+  public getAdultos():number{
+    return  (this.dia ? this.dia : 0)  +  
+            (this.mercado ? this.mercado : 0) +  
+            (this.degustacion ? this.degustacion : 0)  +  
+            (this.cochinillo ? this.cochinillo : 0) +  
+            (this.carta ? this.carta : 0);
+  }
+
+
 
 }
 

@@ -27,8 +27,8 @@
               {{ user.email}} <br>{{ user.contrasena }}
             </ion-col>
             <ion-col>
-              <ion-icon (click)="cambiarEstado(user,'B')" *ngIf="user?.perfil!='A' && user?.perfil!='B'" color="warning"  name="{{icon.baja_user}}"></ion-icon>
-              <ion-icon (click)="cambiarEstado(user,'C')" *ngIf="user?.perfil!='A' && user?.perfil=='B'" color="success" name="{{icon.alta_user}}"></ion-icon>
+              <ion-icon (click)="cambiarEstado(user,'B')" *ngIf="user?.perfil!='A' && user?.perfil!='B'" color="success"  name="{{icon.baja_user}}"></ion-icon>
+              <ion-icon (click)="cambiarEstado(user,'C')" *ngIf="user?.perfil!='A' && user?.perfil=='B'" color="warning" name="{{icon.alta_user}}"></ion-icon>
             </ion-col>            
             <ion-col>              
               <ion-icon *ngIf="user?.perfil!='A'" color="danger" name="{{icon.borrar}}"></ion-icon>

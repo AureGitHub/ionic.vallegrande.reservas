@@ -11,6 +11,12 @@ const routes: Routes = [
         path: 'reserva',
         loadChildren: () => import('./reserva/reserva.module').then(m => m.ReservaPageModule)
       },
+
+        {
+        path: 'resumen',
+        loadChildren: () => import('./resumen/resumen.module').then(m => m.ResumenModule)
+      },
+
       {
         path: 'reserva-update',
         loadChildren: () => import('./reserva-update/reserva-update.module').then(m => m.ReservaUpdatePageModule)
