@@ -20,6 +20,7 @@ import { ShareService } from './services/share.servies';
 import { CookieService } from './services/cookie.servie';
 
 import { SpeechRecognition } from '@ionic-native/speech-recognition/ngx';
+import { ShareCommunicationService } from './services/share-communication.servies';
 
 registerLocaleData(es);
 @NgModule({
@@ -48,6 +49,7 @@ registerLocaleData(es);
     ShareService,
     CookieService,
     SpeechRecognition,
+    ShareCommunicationService
     
   ],
   bootstrap: [AppComponent]

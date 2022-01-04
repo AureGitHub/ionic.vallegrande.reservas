@@ -4,6 +4,7 @@ import { cerrarServicio } from 'src/app/models/cerrarServicio';
 import { Reserva } from 'src/app/models/reserva';
 import { Tarea } from 'src/app/models/tareas';
 import { DataService } from 'src/app/services/data.service';
+import { ShareCommunicationService } from 'src/app/services/share-communication.servies';
 import { ShareService } from 'src/app/services/share.servies';
 
 
@@ -50,6 +51,7 @@ export class TareaPage implements OnInit {
     private dataService: DataService,
     private shareService: ShareService,
     public alertController: AlertController,
+    private shareCommunicationService: ShareCommunicationService,
   ) {
     this.icon = this.shareService.icon;
   }
@@ -73,6 +75,11 @@ export class TareaPage implements OnInit {
 
   async loadTareas() {
     this.lsTareas = await this.dataService.getTareas(this.chEstado ? 1 : null);
+
+    this.shareCommunicationService.TareasCountSend(this.lsTareas.length);
+
+
+
   }
 
   TareaChange(tarea: Tarea, event) {
