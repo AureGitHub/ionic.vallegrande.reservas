@@ -1,0 +1,67 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Tareas&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<ion-checkbox  [(ngModel)]="chEstado"  color="primary" (ionChange)="loadTareas()"></ion-checkbox>
+      &nbsp;<ion-label>Sólo pendientes</ion-label>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <ion-grid >
+
+    <ion-row>
+      <ion-col size="10">
+
+        <ion-item>
+          <ion-label position="floating" color="primary">Nueva Tarea</ion-label>
+          <ion-textarea position="stacked" rows="2" cols="20" [(ngModel)]="newTarea"></ion-textarea>
+        </ion-item>
+      </ion-col>
+
+
+      <ion-col>
+
+        <ion-button (click)="addTarea()" [disabled]="!newTarea" color="success">+</ion-button>
+
+      </ion-col>
+
+
+    </ion-row>
+
+    <ion-row *ngIf="lsTareas && lsTareas.length==0">
+      <ion-col size="12">       
+        No hay tareas
+      </ion-col>
+    </ion-row>
+    
+
+
+    <ng-container *ngFor="let tarea of lsTareas ">
+      <ion-row >
+       
+        <ion-col size="9">
+          <ion-textarea style="background-color: rgb(230, 239, 248);" position="stacked" rows="2" cols="20" value=" {{tarea.texto}}" (change)="TareaChange(tarea, $event)" ></ion-textarea>
+        </ion-col>
+
+        <ion-col size="1">
+        </ion-col>
+
+        <ion-col size="1">
+          <br>
+          <ion-icon *ngIf="tarea.estado==1" style="background-color: yellow;"  name="alarm-outline" (click)="CambiarEstado(tarea, 2)"></ion-icon>
+          <ion-icon *ngIf="tarea.estado==2" style="background-color: rgb(211, 211, 207);"  name="alarm-outline" (click)="CambiarEstado(tarea, 1)"></ion-icon>
+        </ion-col>
+
+        <ion-col size="1">
+          <br>
+          <ion-icon style="background-color: red;" name="{{icon.borrar}}" (click)="Borrar(tarea)"> </ion-icon>
+        </ion-col>
+
+      </ion-row>
+    </ng-container>
+  
+  </ion-grid>
+</ion-content>
+

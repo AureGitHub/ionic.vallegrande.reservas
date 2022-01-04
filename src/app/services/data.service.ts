@@ -8,6 +8,7 @@ import { Reserva } from '../models/reserva';
 import { AuthService } from './auth.service';
 import { ShareService } from './share.servies';
 import { cerrarServicio } from '../models/cerrarServicio';
+import { Tarea } from '../models/tareas';
 
 
 @Injectable({
@@ -110,10 +111,10 @@ export class DataService {
 
 
 
-  
+
   async getCerradosResumen(): Promise<cerrarServicio[]> {
 
-    var hoy= new Date();
+    var hoy = new Date();
     var fechaSinTime = new Date(hoy.getFullYear(), hoy.getMonth(), hoy.getDate());
 
 
@@ -134,9 +135,42 @@ export class DataService {
 
   }
 
+  async getTareas(estado: number): Promise<Tarea[]> {
+
+
+
+    return new Promise<Tarea[]>(async (resolve, reject) => {
+      const tareasRef = collection(this.firestore, 'tareas');     
+
+      let querySnapshot = null;
+
+      if(!estado){
+        querySnapshot = await getDocs(tareasRef);
+      }
+      else{
+        const q = query(tareasRef, where("estado", "==", estado));
+        querySnapshot = await getDocs(q);
+      }
+
+       
+      let tareas: Tarea[] = [];
+
+      querySnapshot.forEach((doc) => {
+        let tarea = doc.data() as Tarea;
+        tarea['id'] = doc.id;
+        tareas.push(tarea);
+      });
+      resolve(tareas);
+    });
+
+
+  }
+
+
+
   getReservasResumen(): Promise<Reserva[]> {
 
-    
+
     var hoy = new Date();
 
     var startDay = new Date(hoy.getFullYear(), hoy.getMonth(), hoy.getDate());
@@ -191,6 +225,55 @@ export class DataService {
     }
 
 
+
+  }
+
+  managemenTarea(tarea: Tarea) {
+
+    const { id, ...tarea_audit } = tarea;
+    tarea_audit['cuando'] = new Date();
+    tarea_audit['quien'] = this.authService.userLogged.email;
+
+    if (tarea.id == 'new') {
+      tarea.id = '';
+      const document = doc(collection(this.firestore, 'tareas'));
+      tarea_audit['IdTarea'] = document.id;
+      tarea_audit['operacion'] = this.shareService.operacion_audit.alta;
+
+      const document_audit = doc(collection(this.firestore, 'tareas_audit'));
+
+      return Promise.all([setDoc(document, tarea), setDoc(document_audit, tarea_audit)]);
+
+
+    }
+    else {
+      const document = doc(this.firestore, 'tareas', tarea?.id);
+      const document_audit = doc(collection(this.firestore, 'tareas_audit'));
+      tarea_audit['IdTarea'] = document.id;
+      tarea_audit['operacion'] = this.shareService.operacion_audit.modificacion;
+      const { id, ...data } = tarea; // we don't want to save the id inside the document
+
+      return Promise.all([setDoc(document, tarea), setDoc(document_audit, tarea_audit)]);
+    }
+
+
+
+  }
+
+
+
+  
+  borrarTarea(tarea: Tarea) {
+    const document = doc(this.firestore, 'tareas', tarea.id);
+    const document_audit = doc(collection(this.firestore, 'tareas_audit'));
+
+    const { id, ...tarea_audit } = tarea;
+    tarea_audit['cuando'] = new Date();
+    tarea_audit['quien'] = this.authService.userLogged.email;
+    tarea_audit['IdTarea'] = document.id;
+    tarea_audit['operacion'] = this.shareService.operacion_audit.borrado;
+
+    return Promise.all([deleteDoc(document), setDoc(document_audit, tarea_audit)]);
 
   }
 

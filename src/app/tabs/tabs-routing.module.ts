@@ -12,9 +12,14 @@ const routes: Routes = [
         loadChildren: () => import('./reserva/reserva.module').then(m => m.ReservaPageModule)
       },
 
-        {
+      {
         path: 'resumen',
         loadChildren: () => import('./resumen/resumen.module').then(m => m.ResumenModule)
+      },
+
+      {
+        path: 'tarea',
+        loadChildren: () => import('./tarea/tarea.module').then(m => m.TareaModule)
       },
 
       {
@@ -42,4 +47,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class TabsPageRoutingModule {}
+export class TabsPageRoutingModule { }
