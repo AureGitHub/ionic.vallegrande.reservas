@@ -63,7 +63,6 @@ export class TareaPage implements OnInit {
     let tarea: any = { id: 'new', texto: this.newTarea, estado: 1 };
     this.dataService.managemenTarea(tarea).then(() => {
       this.newTarea = '';
-      alert('Tarea creada');
       this.loadTareas();
     })
   }
@@ -76,7 +75,9 @@ export class TareaPage implements OnInit {
   async loadTareas() {
     this.lsTareas = await this.dataService.getTareas(this.chEstado ? 1 : null);
 
-    this.shareCommunicationService.TareasCountSend(this.lsTareas.length);
+    const lsTareasPdte = this.lsTareas.filter(a=> a.estado==1);
+
+    this.shareCommunicationService.TareasCountSend(lsTareasPdte.length);
 
 
 
