@@ -1,6 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { cerrarServicio } from 'src/app/models/cerrarServicio';
-import { Reserva } from 'src/app/models/reserva';
+import { CerradoModel } from 'src/app/services/bd/models/cerrado.model';
 import { ShareService } from 'src/app/services/share.servies';
 
 
@@ -11,7 +10,7 @@ import { ShareService } from 'src/app/services/share.servies';
 })
 export class CerradoComponent  implements OnInit {
 
-  @Input() cerrado: cerrarServicio;
+  @Input() cerrado: CerradoModel;
 
 
   icon : any;

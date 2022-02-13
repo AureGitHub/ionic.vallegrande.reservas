@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { SpeechRecognition } from '@ionic-native/speech-recognition/ngx';
 import { AlertController } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth.service';
+import { NgZone } from '@angular/core';
 
 @Component({
   selector: 'app-logout',
@@ -14,6 +15,7 @@ export class LogoutPage {
   message:string;
 
   constructor( 
+    private _ngZone: NgZone,
     private authService: AuthService,
     private router: Router,
     public alertController: AlertController,
@@ -33,12 +35,20 @@ export class LogoutPage {
         //si ponemos otra cantidad, nos dará una variante de la palabra/frase que le hemos dicho
       }
       try{
-        this.speechRecognition.startListening(options).subscribe(matches=>{
-          this.message = matches[0]; //Guarda la primera frase que ha interpretado en nuestra variable
 
-          this.speechRecognition.stopListening();
+
+        this.speechRecognition.startListening(options).subscribe((pharases: string[]) => {
+          this._ngZone.run(() => {
+            this.message = (pharases.length > 0)? pharases[0] : "";
+          });
+      });
+
+        // this.speechRecognition.startListening(options).subscribe(matches=>{
+        //   this.message = matches[0]; //Guarda la primera frase que ha interpretado en nuestra variable
+
+        //   this.speechRecognition.stopListening();
     
-        })
+        // })
       }
       catch(err){
         alert(err);

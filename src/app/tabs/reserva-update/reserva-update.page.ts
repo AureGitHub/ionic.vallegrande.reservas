@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
-import { cerrarServicio } from 'src/app/models/cerrarServicio';
 import { Reserva } from 'src/app/models/reserva';
 import { AuthService } from 'src/app/services/auth.service';
+import { CerradoModel } from 'src/app/services/bd/models/cerrado.model';
 import { DataService } from 'src/app/services/data.service';
 
 
@@ -20,8 +20,8 @@ export class ReservaUpdatePage implements OnInit {
   servicio : string ='aure;' 
   copiarAwhatsapp: string;
 
-  comidaCerrada : cerrarServicio;
-  cenaCerrada : cerrarServicio;
+  comidaCerrada : CerradoModel;
+  cenaCerrada : CerradoModel;
   
   formGroup: FormGroup;
   errorMessage: string = '';

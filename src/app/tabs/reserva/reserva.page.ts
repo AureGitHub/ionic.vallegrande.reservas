@@ -5,9 +5,11 @@ import { CalendarMode, Step } from 'ionic2-calendar/calendar';
 import { error } from 'protractor';
 import { cerrarServicio } from 'src/app/models/cerrarServicio';
 import { AuthService } from 'src/app/services/auth.service';
+import { DataServiceCerrado } from 'src/app/services/bd/dataservice/data.service.cerrado';
 import { DataService } from 'src/app/services/data.service';
 import { ShareService } from 'src/app/services/share.servies';
 import { Reserva, Totales } from '../../models/reserva';
+import { CerradoModel } from '../../services/bd/models/cerrado.model';
 
 
 @Component({
@@ -65,6 +67,7 @@ export class ReservaPage implements OnInit {
 
   constructor(
     private dataService: DataService,
+    private dataServiceCerrado: DataServiceCerrado,
     private router: Router,
     private shareService : ShareService,
     public alertController: AlertController,
@@ -91,7 +94,7 @@ export class ReservaPage implements OnInit {
   }
   refreshCerrados() {
   
-    this.dataService.getCerrados(this.selectedTime).then(lst=>{
+    this.dataServiceCerrado.getCerrados(this.selectedTime).then(lst=>{
       this.comidaCerrada = null;
       this.cenaCerrada = null;
       lst.forEach(cerrado =>{
@@ -266,7 +269,7 @@ export class ReservaPage implements OnInit {
       {
         text: 'Si',
         handler: () => {
-          this.dataService.abrirServicio(servicioCerrado).then(
+          this.dataServiceCerrado.abrirServicio(servicioCerrado).then(
             ()=>{
               this.refreshCerrados();          
             },
@@ -287,14 +290,15 @@ export class ReservaPage implements OnInit {
   }
 
   cerrarServicio(){
-    let cerrar = {    
+    let cerrar: CerradoModel = {    
     
+      id: null,
       fecha : new Date(this.selectedTime.getFullYear(), this.selectedTime.getMonth(),this.selectedTime.getDate()),
       servicio :  this.servicioCierre,
       motivo : this.motivoCierre
     }
 
-    this.dataService.cerrarServicio(cerrar)
+    this.dataServiceCerrado.cerrarServicio(cerrar)
     .then(
       ()=>{
       this.visibleCierreServicio = false;    

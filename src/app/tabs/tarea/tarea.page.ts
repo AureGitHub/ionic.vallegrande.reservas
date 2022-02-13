@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AlertController } from '@ionic/angular';
 import { cerrarServicio } from 'src/app/models/cerrarServicio';
 import { Reserva } from 'src/app/models/reserva';
-import { Tarea } from 'src/app/models/tareas';
-import { DataService } from 'src/app/services/data.service';
+import { DataServiceTarea } from 'src/app/services/bd/dataservice/data.service.tarea';
+import { TareaModel } from 'src/app/services/bd/models/tarea.model';
 import { ShareCommunicationService } from 'src/app/services/share-communication.servies';
 import { ShareService } from 'src/app/services/share.servies';
 
@@ -43,12 +43,12 @@ export class TareaPage implements OnInit {
   chEstado: boolean = true;
   newTarea: string;
 
-  lsTareas: Tarea[];
+  lsTareas: TareaModel[];
 
   icon: any;
 
   constructor(
-    private dataService: DataService,
+    private dataServiceTarea: DataServiceTarea,
     private shareService: ShareService,
     public alertController: AlertController,
     private shareCommunicationService: ShareCommunicationService,
@@ -61,7 +61,7 @@ export class TareaPage implements OnInit {
 
   addTarea() {
     let tarea: any = { id: 'new', texto: this.newTarea, estado: 1 };
-    this.dataService.managemenTarea(tarea).then(() => {
+    this.dataServiceTarea.managemenTarea(tarea).then(() => {
       this.newTarea = '';
       this.loadTareas();
     })
@@ -73,7 +73,7 @@ export class TareaPage implements OnInit {
   }
 
   async loadTareas() {
-    this.lsTareas = await this.dataService.getTareas(this.chEstado ? 1 : null);
+    this.lsTareas = await this.dataServiceTarea.getTareas(this.chEstado ? 1 : null);
 
     const lsTareasPdte = this.lsTareas.filter(a=> a.estado==1);
 
@@ -83,12 +83,12 @@ export class TareaPage implements OnInit {
 
   }
 
-  TareaChange(tarea: Tarea, event) {
+  TareaChange(tarea: TareaModel, event) {
     var obj = event.target as HTMLInputElement;
 
     tarea.texto = obj.value;
 
-    this.dataService.managemenTarea(tarea).then(() => {
+    this.dataServiceTarea.managemenTarea(tarea).then(() => {
       this.newTarea = '';
       this.loadTareas();
     })
@@ -98,7 +98,7 @@ export class TareaPage implements OnInit {
   }
 
 
-  async CambiarEstado(tarea: Tarea, newEstado: number) {
+  async CambiarEstado(tarea: TareaModel, newEstado: number) {
 
 
     if(newEstado == 2){  // a finalizada
@@ -114,7 +114,7 @@ export class TareaPage implements OnInit {
           text: 'Sí',
           handler: () => {
             tarea.estado = newEstado;
-            this.dataService.managemenTarea(tarea).then(() => {
+            this.dataServiceTarea.managemenTarea(tarea).then(() => {
               this.newTarea = '';
               this.loadTareas();
             })
@@ -126,7 +126,7 @@ export class TareaPage implements OnInit {
     }
     else{ // a pendiente de nuevo
       tarea.estado = newEstado;
-      this.dataService.managemenTarea(tarea).then(() => {
+      this.dataServiceTarea.managemenTarea(tarea).then(() => {
         this.newTarea = '';
         this.loadTareas();
       })
@@ -144,7 +144,7 @@ export class TareaPage implements OnInit {
 
   }
 
-  async Borrar(tarea: Tarea) {
+  async Borrar(tarea: TareaModel) {
 
     const alert = await this.alertController.create({
       header: '¿Desea borrar la tarea?',
@@ -157,7 +157,7 @@ export class TareaPage implements OnInit {
       {
         text: 'Sí',
         handler: () => {
-          this.dataService.borrarTarea(tarea).then(() => {
+          this.dataServiceTarea.borrarTarea(tarea).then(() => {
             this.newTarea = '';
             this.loadTareas();
           })
