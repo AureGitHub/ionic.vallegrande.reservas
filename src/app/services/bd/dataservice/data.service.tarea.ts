@@ -29,7 +29,7 @@ import { DataService } from "./data.service";
     }
 
 
-    managemenTarea(tarea: TareaModel) {
+    management(tarea: TareaModel) {
         if (tarea.id == 'new') {
             return this.AddWithAudit(tarea,this.collectionName,'IdTarea');
         }
@@ -39,7 +39,7 @@ import { DataService } from "./data.service";
       
     }
 
-    borrarTarea(tarea: TareaModel) {
+    borrar(tarea: TareaModel) {
         return this.removeWithAudit(tarea,this.collectionName,'IdTarea');
     
       }

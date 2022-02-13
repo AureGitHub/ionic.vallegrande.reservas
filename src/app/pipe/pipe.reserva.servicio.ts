@@ -1,12 +1,12 @@
 import { Pipe, PipeTransform } from "@angular/core";
-import { Reserva } from "../models/reserva";
+import { ReservaModel } from "../services/bd/models/reserva.model";
 
 @Pipe({
     name: 'myfilter',
     pure: false
   })
   export class MyFilterPipe implements PipeTransform {
-    transform(items: Reserva[], filter: Reserva): any {
+    transform(items: ReservaModel[], filter: ReservaModel): any {
         if (!items || !filter) {
             return items;
         }

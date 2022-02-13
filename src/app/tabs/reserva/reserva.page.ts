@@ -2,13 +2,11 @@ import { Component, OnInit} from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { CalendarMode, Step } from 'ionic2-calendar/calendar';
-import { error } from 'protractor';
-import { cerrarServicio } from 'src/app/models/cerrarServicio';
 import { AuthService } from 'src/app/services/auth.service';
 import { DataServiceCerrado } from 'src/app/services/bd/dataservice/data.service.cerrado';
-import { DataService } from 'src/app/services/data.service';
+import { DataServiceReserva } from 'src/app/services/bd/dataservice/data.service.reserva';
+import { ReservaModel, Totales } from 'src/app/services/bd/models/reserva.model';
 import { ShareService } from 'src/app/services/share.servies';
-import { Reserva, Totales } from '../../models/reserva';
 import { CerradoModel } from '../../services/bd/models/cerrado.model';
 
 
@@ -24,12 +22,12 @@ export class ReservaPage implements OnInit {
 
   visibleCierreServicio : boolean = false;
 
-  comidaCerrada : cerrarServicio;
-  cenaCerrada : cerrarServicio;
+  comidaCerrada : CerradoModel;
+  cenaCerrada : CerradoModel;
   
 
-  filtercomida: Reserva;
-  filtercena: Reserva;
+  filtercomida: ReservaModel;
+  filtercena: ReservaModel;
 
   openAltaEdit = false;
 
@@ -40,7 +38,7 @@ export class ReservaPage implements OnInit {
   }
 
 
-  prueba : Reserva;
+  prueba : ReservaModel;
 
   mesas: any[];
 
@@ -59,14 +57,14 @@ export class ReservaPage implements OnInit {
   };
   selectedTime: Date;
 
-  public lstReservas: Reserva[];
+  public lstReservas: ReservaModel[];
 
   icon : any;
   servicioCierre: string;
   motivoCierre: string = 'Servicio lleno';
 
   constructor(
-    private dataService: DataService,
+    private dataServiceReserva: DataServiceReserva,
     private dataServiceCerrado: DataServiceCerrado,
     private router: Router,
     private shareService : ShareService,
@@ -78,14 +76,14 @@ export class ReservaPage implements OnInit {
 
     this.icon = this.shareService.icon;
 
-    this.filtercomida=new Reserva();
+    this.filtercomida=new ReservaModel();
     this.filtercomida.servicio ='comida';
-    this.filtercena=new Reserva();
+    this.filtercena=new ReservaModel();
     this.filtercena.servicio ='cena';
 
   }
   ngOnInit(): void {
-    this.prueba = new Reserva();
+    this.prueba = new ReservaModel();
     this.prueba.dia = 15;    
     this.loadEvents();
 
@@ -114,7 +112,7 @@ export class ReservaPage implements OnInit {
     //this.eventSource = this.createRandomEvents();
 
 
-    this.dataService.getReservas().subscribe(data => {
+    this.dataServiceReserva.getReservasObs().subscribe(data => {
       this.eventSource = [];
       data.forEach(reserva => {
         this.eventSource.push({
@@ -148,7 +146,7 @@ export class ReservaPage implements OnInit {
 
   }
 
-  updateReserva(reserva: Reserva) {
+  updateReserva(reserva: ReservaModel) {
     let navigationExtras: NavigationExtras = {
       state: {
         selectedTime: null,
@@ -184,7 +182,7 @@ export class ReservaPage implements OnInit {
 
     this.refreshCerrados();
 
-    this.dataService.getReservasByDate(ev.selectedTime).subscribe(lst => {
+    this.dataServiceReserva.getReservasByDate(ev.selectedTime).then(lst => {
 
       this.lstReservas = lst.sort(function (a, b) {
 
@@ -255,7 +253,7 @@ export class ReservaPage implements OnInit {
 
 
 
-  async abrirServicio(servicioCerrado: cerrarServicio){
+  async abrirServicio(servicioCerrado: CerradoModel){
 
 
     const alert1 = await this.alertController.create({

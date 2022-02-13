@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
-import { Reserva } from 'src/app/models/reserva';
 import { AuthService } from 'src/app/services/auth.service';
+import { DataServiceReserva } from 'src/app/services/bd/dataservice/data.service.reserva';
 import { CerradoModel } from 'src/app/services/bd/models/cerrado.model';
-import { DataService } from 'src/app/services/data.service';
+import { ReservaModel } from 'src/app/services/bd/models/reserva.model';
 
 
 @Component({
@@ -30,7 +30,7 @@ export class ReservaUpdatePage implements OnInit {
   loadingBorrar: boolean;
 
 
-   reserva: Reserva;
+   reserva: ReservaModel;
 
 
   validation_messages = {
@@ -68,7 +68,7 @@ export class ReservaUpdatePage implements OnInit {
 
     constructor(
       private route: ActivatedRoute, private router: Router,
-      private dataService: DataService,
+      private dataServiceReserva: DataServiceReserva,
       private formBuilder: FormBuilder,
       private authService: AuthService,
       public alertController: AlertController,
@@ -203,7 +203,7 @@ export class ReservaUpdatePage implements OnInit {
           text: 'Cancelar',
           handler: () => {
             this.loadingBorrar = true;
-            this.dataService.borrar(this.formGroup.value)
+            this.dataServiceReserva.borrar(this.formGroup.value)
             .then(
               ()=>this.volver(),
               error => {
@@ -222,7 +222,7 @@ export class ReservaUpdatePage implements OnInit {
      if(this.formGroup.valid){
        this.loadingSubmit = true;
 
-      this.dataService.management(this.formGroup.value)
+      this.dataServiceReserva.management(this.formGroup.value)
       .then(
         (data)=>{
           this.volver()

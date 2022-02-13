@@ -1,4 +1,4 @@
-export class Reserva{
+export class ReservaModel{
   id : string;  
   servicio : string;  //comida / cena
   fecha: any;

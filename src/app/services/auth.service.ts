@@ -1,34 +1,15 @@
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 
 import {
   Auth,
   signOut,
-  signInWithPopup,
-  user,
   signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
-  updateProfile,
-  sendEmailVerification,
-  sendPasswordResetEmail,
-  getAdditionalUserInfo,
-  OAuthProvider,
-  linkWithPopup,
-  unlink,
-  updateEmail,
-  updatePassword,
-  User,
-  reauthenticateWithPopup,
-  authState,
-  onAuthStateChanged
-} from '@angular/fire/auth';
-import { Observable } from 'rxjs';
+  createUserWithEmailAndPassword} from '@angular/fire/auth';
 // import { collection, doc, Firestore, setDoc } from 'firebase/firestore';
 import {
-  Firestore, collectionData, collection, doc, setDoc, deleteDoc, docSnapshots, CollectionReference, query, where, DocumentReference, getDocs, getDoc
+  Firestore, collection, doc, setDoc, query, getDocs, getDoc
 } from '@angular/fire/firestore';
-import { map } from 'rxjs/operators';
-import { myUser } from '../models/myUser';
+import { UserModel } from './bd/models/user.model';
 
 @Injectable()
 export class AuthService {
@@ -129,17 +110,17 @@ export class AuthService {
     var aa = this.auth;
   }
 
-  async getUsers(): Promise<myUser[]> {
+  async getUsers(): Promise<UserModel[]> {
 
 
     return new Promise<any>(async (resolve, reject) => {
       const userRef = collection(this.firestore, 'users');
       const q = query(userRef);
       const querySnapshot = await getDocs(q);
-      let users: myUser[] = [];
+      let users: UserModel[] = [];
 
       querySnapshot.forEach((doc) => {
-        let user = doc.data() as myUser;
+        let user = doc.data() as UserModel;
         user['id']=doc.id
         users.push(user);
       });
@@ -166,7 +147,7 @@ export class AuthService {
   }
 
 
-  cambiarEstado(user : myUser,newEstado:string){
+  cambiarEstado(user : UserModel,newEstado:string){
     const document = doc(this.firestore, 'users', user?.id);
       const { id, ...data } = user; // we don't want to save the id inside the document
 

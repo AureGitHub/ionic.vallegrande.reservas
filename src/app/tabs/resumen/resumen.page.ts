@@ -1,17 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { cerrarServicio } from 'src/app/models/cerrarServicio';
-import { Reserva } from 'src/app/models/reserva';
-import { DataService } from 'src/app/services/data.service';
+import { DataServiceCerrado } from 'src/app/services/bd/dataservice/data.service.cerrado';
+import { DataServiceReserva } from 'src/app/services/bd/dataservice/data.service.reserva';
+import { CerradoModel } from 'src/app/services/bd/models/cerrado.model';
+import { ReservaModel } from 'src/app/services/bd/models/reserva.model';
 
 
 
 class ItemResumen{
   fecha : string;
 
-  CierreComidaDia: cerrarServicio;
-  lstComidas: Reserva[];  
-  CierreCenaDia: cerrarServicio;
-  lstCenas: Reserva[];
+  CierreComidaDia: CerradoModel;
+  lstComidas: ReservaModel[];  
+  CierreCenaDia: CerradoModel;
+  lstCenas: ReservaModel[];
   
 
   get fechaReal(): Date {
@@ -40,7 +41,8 @@ export class ResumenPage  implements OnInit {
   lstResumen : ItemResumen[];
 
   constructor(   
-    private dataService: DataService,
+    private dataServiceReserva: DataServiceReserva,
+    private dataServiceCerrado: DataServiceCerrado,
     ) {
    
     }
@@ -56,8 +58,8 @@ export class ResumenPage  implements OnInit {
 
       
       this.lstResumen = [];      
-      const lstCierres:cerrarServicio[] = await this.dataService.getCerradosResumen();       
-      const lstReservas:Reserva[]= await this.dataService.getReservasResumen();
+      const lstCierres:CerradoModel[] = await this.dataServiceCerrado.getCerradosResumen();       
+      const lstReservas:ReservaModel[]= await this.dataServiceReserva.getReservasResumen();
         
       const lstFechasReservas = [... new Set(lstReservas.map(a=> a.fecha.toDate().toLocaleDateString()))];
       const lstFechasCierres = [... new Set(lstCierres.map(a=> a.fecha.toDate().toLocaleDateString()))];

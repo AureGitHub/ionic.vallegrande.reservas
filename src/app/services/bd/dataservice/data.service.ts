@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import {
-  Firestore, collection, doc, setDoc, deleteDoc, query, getDocs, QueryConstraint, where
+  Firestore, collection, doc, setDoc, deleteDoc, query, getDocs, QueryConstraint, where, CollectionReference, collectionData, getDoc
 } from '@angular/fire/firestore';
+import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { ShareService } from 'src/app/services/share.servies';
 
@@ -18,6 +19,24 @@ export class DataService {
   ) { }
 
 
+  async get(collectionName: string, uid: any){
+    const objRef = doc(this.firestore, `${collectionName}/${uid}`);
+    // const q = query(userRef, where("id", "==", this.userData.uid));
+    const querySnapshot = await getDoc(objRef);
+    return querySnapshot.data();
+  }
+
+ //Con este método, al subcribirme a el es capaz de detectar los cambios de la colección
+    //en FireBase
+  getAllObs(collectionName: string): Observable<any[]> {
+
+    return collectionData<any>(
+      query<any>(
+        collection(this.firestore, collectionName) as CollectionReference<any>,
+      ),
+    );
+
+  }
 
   async getAll(collectionName: string, queryConstraints: QueryConstraint[] ): Promise<any[]> {
 

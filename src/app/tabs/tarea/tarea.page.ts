@@ -1,21 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertController } from '@ionic/angular';
-import { cerrarServicio } from 'src/app/models/cerrarServicio';
-import { Reserva } from 'src/app/models/reserva';
 import { DataServiceTarea } from 'src/app/services/bd/dataservice/data.service.tarea';
 import { TareaModel } from 'src/app/services/bd/models/tarea.model';
 import { ShareCommunicationService } from 'src/app/services/share-communication.servies';
 import { ShareService } from 'src/app/services/share.servies';
+import { CerradoModel } from 'src/app/services/bd/models/cerrado.model';
+import { ReservaModel } from 'src/app/services/bd/models/reserva.model';
 
 
 
 class ItemResumen {
   fecha: string;
 
-  CierreComidaDia: cerrarServicio;
-  lstComidas: Reserva[];
-  CierreCenaDia: cerrarServicio;
-  lstCenas: Reserva[];
+  CierreComidaDia: CerradoModel;
+  lstComidas: ReservaModel[];
+  CierreCenaDia: CerradoModel;
+  lstCenas: ReservaModel[];
 
 
   get fechaReal(): Date {
@@ -61,7 +61,7 @@ export class TareaPage implements OnInit {
 
   addTarea() {
     let tarea: any = { id: 'new', texto: this.newTarea, estado: 1 };
-    this.dataServiceTarea.managemenTarea(tarea).then(() => {
+    this.dataServiceTarea.management(tarea).then(() => {
       this.newTarea = '';
       this.loadTareas();
     })
@@ -88,7 +88,7 @@ export class TareaPage implements OnInit {
 
     tarea.texto = obj.value;
 
-    this.dataServiceTarea.managemenTarea(tarea).then(() => {
+    this.dataServiceTarea.management(tarea).then(() => {
       this.newTarea = '';
       this.loadTareas();
     })
@@ -114,7 +114,7 @@ export class TareaPage implements OnInit {
           text: 'Sí',
           handler: () => {
             tarea.estado = newEstado;
-            this.dataServiceTarea.managemenTarea(tarea).then(() => {
+            this.dataServiceTarea.management(tarea).then(() => {
               this.newTarea = '';
               this.loadTareas();
             })
@@ -126,7 +126,7 @@ export class TareaPage implements OnInit {
     }
     else{ // a pendiente de nuevo
       tarea.estado = newEstado;
-      this.dataServiceTarea.managemenTarea(tarea).then(() => {
+      this.dataServiceTarea.management(tarea).then(() => {
         this.newTarea = '';
         this.loadTareas();
       })
@@ -157,7 +157,7 @@ export class TareaPage implements OnInit {
       {
         text: 'Sí',
         handler: () => {
-          this.dataServiceTarea.borrarTarea(tarea).then(() => {
+          this.dataServiceTarea.borrar(tarea).then(() => {
             this.newTarea = '';
             this.loadTareas();
           })

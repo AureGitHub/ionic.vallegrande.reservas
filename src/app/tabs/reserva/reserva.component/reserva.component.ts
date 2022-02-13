@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Reserva } from 'src/app/models/reserva';
+import { ReservaModel } from 'src/app/services/bd/models/reserva.model';
 import { ShareService } from 'src/app/services/share.servies';
 
 
@@ -10,7 +10,7 @@ import { ShareService } from 'src/app/services/share.servies';
 })
 export class ReservaComponent  implements OnInit {
 
-  @Input() reserva: Reserva;
+  @Input() reserva: ReservaModel;
   @Input() verServicio: boolean;
   
 

@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
-import { myUser } from 'src/app/models/myUser';
 import { AuthService } from 'src/app/services/auth.service';
+import { UserModel } from 'src/app/services/bd/models/user.model';
 import { ShareService } from 'src/app/services/share.servies';
 
 @Component({
@@ -16,7 +16,7 @@ export class UsersPage  implements OnInit {
   formGroup: FormGroup;
   loadingSubmit: boolean;
 
-  users : myUser[];
+  users : UserModel[];
 
   validation_messages = {
     'nombre': [
