@@ -4,6 +4,7 @@ import { SpeechRecognition } from '@ionic-native/speech-recognition/ngx';
 import { AlertController } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth.service';
 import { NgZone } from '@angular/core';
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-logout',
@@ -40,21 +41,29 @@ export class LogoutPage {
         this.speechRecognition.startListening(options).subscribe((pharases: string[]) => {
           this._ngZone.run(() => {
             this.message = (pharases.length > 0)? pharases[0] : "";
+            var lstCadena = this.message.split(" ");
+
+            let nombre: string = this.GetNombre(lstCadena);
+            alert(nombre);
+            
+            
           });
       });
-
-        // this.speechRecognition.startListening(options).subscribe(matches=>{
-        //   this.message = matches[0]; //Guarda la primera frase que ha interpretado en nuestra variable
-
-        //   this.speechRecognition.stopListening();
-    
-        // })
       }
       catch(err){
         alert(err);
       }
       
     }
+  GetNombre(lstCadena: string[]): string {
+    const isNombre = (element: string) => element.toUpperCase() == 'NOMBRE'
+    let index = lstCadena.findIndex(isNombre);
+    if(index > -1 && index + 1 < lstCadena.length ){      
+      return lstCadena[index+1];
+    }
+    
+    return '-';
+  }
 
     getPermission(){
       //comprueba que la aplicación tiene permiso, de no ser así nos la pide

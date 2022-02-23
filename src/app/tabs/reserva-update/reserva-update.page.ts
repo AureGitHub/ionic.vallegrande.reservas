@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { SpeechRecognition } from '@ionic-native/speech-recognition/ngx';
 import { AlertController } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth.service';
 import { DataServiceReserva } from 'src/app/services/bd/dataservice/data.service.reserva';
@@ -72,6 +73,8 @@ export class ReservaUpdatePage implements OnInit {
       private formBuilder: FormBuilder,
       private authService: AuthService,
       public alertController: AlertController,
+      private speechRecognition: SpeechRecognition,
+      private _ngZone: NgZone,
      
       ) {
 
@@ -85,6 +88,181 @@ export class ReservaUpdatePage implements OnInit {
         });
   
     }
+
+
+
+
+    vocal(){
+      let options = {
+        language: "es-ES",//fijamos el lenguage
+        matches: 1,//Nos devuelve la primera opción de lo que ha escuchado
+        //si ponemos otra cantidad, nos dará una variante de la palabra/frase que le hemos dicho
+      }
+      try{
+
+
+        this.speechRecognition.startListening(options).subscribe((pharases: string[]) => {
+          this._ngZone.run(() => {
+            let cadenaHablada = (pharases.length > 0)? pharases[0] : "";
+          
+            
+            this.GestionFrase(cadenaHablada);
+
+           
+           
+            
+            
+          });
+      });
+      }
+      catch(err){
+        alert(err);
+      }
+      
+    }
+  GestionFrase(cadenaHablada: string) {
+    var lstPalabras = cadenaHablada.split(" ");
+
+    if(lstPalabras.length==1 && lstPalabras[0].toUpperCase()=='GUARDAR'){
+      this.submit();
+    }
+
+
+    let servicio: string = this.GetDato('SERVICIO',lstPalabras);
+
+
+    if(servicio){
+
+      if(servicio.toUpperCase() == 'COMIDA'){
+        this.formGroup.controls['servicio'].setValue('comida');     
+        this.checkCena = false;
+        this.checkComida=true;
+      }
+      else if(servicio.toUpperCase() == 'CENA'){
+        this.formGroup.controls['servicio'].setValue('cena');    
+        this.checkCena = true;
+        this.checkComida=false;
+      }
+     
+    }
+
+
+    let nombre: string = this.GetDato('NOMBRE',lstPalabras);
+    if(nombre){
+      this.formGroup.controls['nombre'].setValue(nombre);
+    }
+
+    let telf: string = this.GetDato('TELÉFONO',lstPalabras);
+    if(telf){
+      telf = telf.split('-').join('');
+      telf = telf.split(' ').join('');
+      this.formGroup.controls['telefono'].setValue(telf);
+    }
+
+
+    let lstPedidos = [
+      'DÍA',
+      'MERCADO',
+      'DEGUSTACIÓN',
+      'COCHINILLO',
+      'CARTA',
+      'NIÑOS',
+      'BODA',
+      'COMUNIÓN',
+      'BAUTIZO'
+    ];
+
+    lstPedidos.forEach(pedido => {
+      let dato: string = this.GetDato(pedido,lstPalabras);
+      
+    if(dato){    
+      let field =  this.getFieldForm(pedido);
+      this.formGroup.controls[field].setValue(dato);
+    }
+    });
+
+
+
+    let obs: string = this.GetDato('OBSERVACIONES',lstPalabras);
+    if(obs){
+      this.formGroup.controls['observaciones'].setValue(obs);
+    }
+
+    
+  }
+  getFieldForm(dato: string): string {
+    switch(dato){
+      case  'DÍA': return 'dia';
+      case  'MERCADO': return 'mercado';
+      case  'DEGUSTACIÓN': return 'degustacion';
+      case  'COCHINILLO': return 'cochinillo';
+      case  'CARTA': return 'carta';
+      case  'NIÑOS': return 'ninos';
+      case  'BODA': return 'boda';
+      case  'COMUNIÓN': return 'comunion';
+      case  'BAUTIZO': return 'bautizo';
+    }
+    return '';
+  }
+  GetDato(key: string, lstCadena: string[]): string {
+
+    let lstKeys = [
+      'SERVICIO',
+      'NOMBRE',
+      'TELÉFONO',
+      'DÍA',
+      'MERCADO',
+      'DEGUSTACIÓN',
+      'COCHINILLO',
+      'CARTA',
+      'NIÑOS',
+      'BODA',
+      'COMUNIÓN',
+      'BAUTIZO',
+      'OBSERVACIONES'
+    ];
+
+
+
+
+    const isElement = (element: string) => element.toUpperCase() == key;
+    let index = lstCadena.findIndex(isElement);
+    if(index > -1){      
+      let cadenaRet : string = '';
+      index++;
+      let noEncontadaClave: boolean = true;
+      while(index<lstCadena.length && noEncontadaClave){
+        let actual : string = lstCadena[index].toLocaleUpperCase();
+
+        let isKey = lstKeys.find(e=> e==lstCadena[index].toLocaleUpperCase());
+        if(isKey){
+          noEncontadaClave = false;
+        }
+        else{
+          cadenaRet+= actual + " " ; 
+        }
+
+        index++;
+        
+
+
+      }
+      return cadenaRet.trimLeft().trimRight();
+    }
+    
+    return null;
+  }
+
+    getPermission(){
+      //comprueba que la aplicación tiene permiso, de no ser así nos la pide
+      this.speechRecognition.hasPermission().
+        then((hasPermission:boolean)=>{
+          if(!hasPermission){
+            this.speechRecognition.requestPermission();
+          }
+        })
+    }
+
 
     ngOnInit(): void {
      
@@ -146,6 +324,10 @@ export class ReservaUpdatePage implements OnInit {
       this.formGroup.controls['boda'].setValue(0);
       this.formGroup.controls['comunion'].setValue(0);
       this.formGroup.controls['bautizo'].setValue(0);
+
+      this.formGroup.controls['observaciones'].setValue('');
+
+      
 
       this.checkCena = false;
       this.checkComida = false;
@@ -237,6 +419,9 @@ export class ReservaUpdatePage implements OnInit {
        
 
      }
+     else{
+       alert('Tiene que introducir todos los datos obligatorios');
+     }
     }
     
 
@@ -302,3 +487,5 @@ export class ReservaUpdatePage implements OnInit {
     }
 
 }
+
+
