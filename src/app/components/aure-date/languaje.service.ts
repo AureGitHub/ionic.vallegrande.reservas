@@ -4,6 +4,12 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class LanguageService {
 
+
+    FirstDayWeek = {
+        ES : 1,
+        EN : 0,
+    }
+
     today = {
         ES : {des : 'Hoy'},
         EN : {des : 'Today'},
@@ -21,13 +27,14 @@ export class LanguageService {
             {id : 0 , des :'Domingo', cor : 'Do'},
         ],
         EN:[
+            {id : 0 , des :'Sunday', cor : 'Su'},
             {id : 1 , des :'Monday', cor : 'Mo'},
             {id : 2 , des :'Tuesday', cor : 'Tu'},
             {id : 3 , des :'Wednesday', cor : 'We'},
             {id : 4 , des :'Thursday', cor : 'Th'},
             {id : 5 , des :'Friday', cor : 'Fr'},
             {id : 6 , des :'Saturday', cor : 'Sa'},
-            {id : 0 , des :'Sunday', cor : 'Su'},
+            
         ]
     }
 

@@ -38,14 +38,16 @@ export class AureDateComponent implements OnInit {
   
   // Lista de objetos que contienen los días del mes
   lstDiasMesinWeek = [];
+  days: any;
 
 
   constructor(private languageService: LanguageService) { }
 
   ngOnInit() {
+    this.setlanguaje();
     this.Setyears();
     this.getDiasMes();
-    this.setlanguaje();
+   
 
   }
   Setyears() {
@@ -83,6 +85,8 @@ export class AureDateComponent implements OnInit {
 
   setlanguaje() {
     this.months = this.languageService.MonthsName[this.lan];
+    this.days = this.languageService.daysName[this.lan];
+
   }
 
 
@@ -120,7 +124,28 @@ export class AureDateComponent implements OnInit {
 
     var indicePrimerDia =  new Date(anno, month - 1, 1).getDay();
 
-    if(indicePrimerDia==0){
+
+    var FirstDayWeek = this.languageService.FirstDayWeek[this.lan];
+
+
+    var dayInMonth = [];
+
+    for (var dia = 1; dia <= diasMes; dia++) {
+      // Ojo, hay que restarle 1 para obtener el mes correcto
+
+      var fecha = new Date(anno, month - 1, dia);
+      var indice = fecha.getDay();
+      
+      // indice 0 ==> Domingo
+      dayInMonth.push({fecha,dia, indice});
+    }
+
+    this.MakeWeek(dayInMonth);
+
+
+
+
+    if(indicePrimerDia==FirstDayWeek){
       //domingo
       for(var indice=1; indice <=6; indice++){
         
@@ -161,6 +186,33 @@ export class AureDateComponent implements OnInit {
       }
       this.lstDiasMesinWeek.push(lstWeek);
     }
+
+    this.OrderWeekByLanguaje();
+
+
+
+
+
+
+  }
+  MakeWeek(dayInMonth: any[]) {
+
+    /*
+    ES  1  2  3  4  5  6  0      (1,2,3,4) 5
+    EN  0  1  2  3  4  5  6       0,1,2,3,4) 5
+    */
+
+    var FirstDayWeek = this.languageService.FirstDayWeek[this.lan];
+
+    //lstDiasMes.push({fecha,dia, indice});
+  }
+  OrderWeekByLanguaje() {
+    var sortingArr = this.days.map(a=> a.id);
+    this.lstDiasMesinWeek.forEach(week => {
+      week.sort((a,b)=>{
+        return sortingArr.indexOf(a.id) - sortingArr.indexOf(b.id);
+      })
+    });
   }
 
   selectDay(item){

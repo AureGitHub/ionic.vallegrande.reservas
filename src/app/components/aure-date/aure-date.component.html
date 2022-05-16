@@ -16,13 +16,7 @@
     </ion-col>
   </ion-row>
   <ion-row>
-    <ion-col class="cabecera">Lu</ion-col>
-    <ion-col class="cabecera">Ma</ion-col>
-    <ion-col class="cabecera">Mi</ion-col>
-    <ion-col class="cabecera">Ju</ion-col>
-    <ion-col class="cabecera">Vi</ion-col>
-    <ion-col class="cabecera">Sa</ion-col>
-    <ion-col class="cabecera">Do</ion-col>
+    <ion-col *ngFor="let day of days" class="cabecera">{{day.cor}}</ion-col>
   </ion-row>
   <ion-row *ngFor="let week of lstDiasMesinWeek">
     <ion-col  *ngFor="let item of week"  class="dias" >
