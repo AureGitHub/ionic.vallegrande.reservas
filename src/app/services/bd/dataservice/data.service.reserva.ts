@@ -25,7 +25,7 @@ import { DataService } from "./data.service";
 
     
 
-    async getReservasByDate(fecha: Date): Promise<ReservaModel[]> {
+    getReservasByDate(fecha: Date): Promise<ReservaModel[]> {
 
         if (!fecha) {
             return;

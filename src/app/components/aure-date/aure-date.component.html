@@ -1,0 +1,34 @@
+<ion-grid>
+
+  <ion-row class="CabeceraDetalle" >
+    <ion-col size="3" class="CabeceraFilaDetalle"  >{{FormatShortDate(dateSelected)}}</ion-col>
+    <ion-col size="2" class="CabeceraFilaDetalle"  > <ion-button size="small" (click)="SetToday()"><span style="font-size: 10px; ">{{languageService['today'][lan]['des']}}</span></ion-button></ion-col>
+    <ion-col size="4" class="CabeceraFilaDetalle" >
+      <ion-select interface="popover" value="{{currentMonth}}" placeholder="Mes" (ionChange)="selectChangedMonth($event)">
+        <ion-select-option *ngFor="let month of months"  value="{{month?.id}}"  >{{month.des}}</ion-select-option>
+      </ion-select>
+    </ion-col>
+
+    <ion-col size="3" class="CabeceraFilaDetalle" >
+      <ion-select interface="popover" value="{{currentYear}}" placeholder="Año" (ionChange)="selectChangedYear($event)">
+        <ion-select-option *ngFor="let year of Years"  value="{{year}}"  >{{year}}</ion-select-option>
+      </ion-select>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col class="cabecera">Lu</ion-col>
+    <ion-col class="cabecera">Ma</ion-col>
+    <ion-col class="cabecera">Mi</ion-col>
+    <ion-col class="cabecera">Ju</ion-col>
+    <ion-col class="cabecera">Vi</ion-col>
+    <ion-col class="cabecera">Sa</ion-col>
+    <ion-col class="cabecera">Do</ion-col>
+  </ion-row>
+  <ion-row *ngFor="let week of lstDiasMesinWeek">
+    <ion-col  *ngFor="let item of week"  class="dias" >
+      <span (click)="selectDay(item)"  [ngClass]="{'diaActual': item?.fecha && item?.fecha.getTime() === today.getTime(), 'diaSeleccionado' : item?.fecha && item?.fecha.getTime() === dateSelected?.getTime()}" 
+      >{{item?.dia}}</span>
+      
+    </ion-col>
+  </ion-row>
+</ion-grid>

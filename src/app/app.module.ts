@@ -21,6 +21,7 @@ import { CookieService } from './services/cookie.servie';
 
 import { SpeechRecognition } from '@ionic-native/speech-recognition/ngx';
 import { ShareCommunicationService } from './services/share-communication.servies';
+import { ComponentsModule } from './components/components.module';
 
 registerLocaleData(es);
 @NgModule({
@@ -39,6 +40,7 @@ registerLocaleData(es);
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideFirestore(() => getFirestore()),
     provideAuth(() => getAuth()),
+    ComponentsModule
     
   ],
   providers: [

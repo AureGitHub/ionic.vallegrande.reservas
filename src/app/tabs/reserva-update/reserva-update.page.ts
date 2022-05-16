@@ -3,11 +3,12 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router';
 import { SpeechRecognition } from '@ionic-native/speech-recognition/ngx';
 import { AlertController } from '@ionic/angular';
+import { CalendarMode, Step } from 'ionic2-calendar/calendar';
 import { AuthService } from 'src/app/services/auth.service';
 import { DataServiceReserva } from 'src/app/services/bd/dataservice/data.service.reserva';
 import { CerradoModel } from 'src/app/services/bd/models/cerrado.model';
 import { ReservaModel } from 'src/app/services/bd/models/reserva.model';
-
+import { CustomValidator, isLess } from 'src/app/util/custom.validators';
 
 @Component({
   selector: 'reserva-update',
@@ -17,6 +18,14 @@ import { ReservaModel } from 'src/app/services/bd/models/reserva.model';
 
 
 export class ReservaUpdatePage implements OnInit {
+
+  isToday: boolean;
+  calendar = {
+    mode: 'month' as CalendarMode,
+    step: 30 as Step,
+    currentDate: new Date(),
+
+  };
 
   servicio : string ='aure;' 
   copiarAwhatsapp: string;
@@ -45,6 +54,7 @@ export class ReservaUpdatePage implements OnInit {
     ],
     'fecha': [
       { type: 'required', message: 'La fecha es obligatoria.' },
+      { type: 'IsLessToday', message: 'La fecha debe ser posterior a hoy.' },
      
     ],
     'servicio': [
@@ -62,9 +72,10 @@ export class ReservaUpdatePage implements OnInit {
   checkComida: boolean =false;
   checkCena: boolean =false;
 
-  selectedTime : Date;
 
   isUpdate: boolean =false;
+  viewTitle: any;
+  selectedTime: any;
  
 
     constructor(
@@ -78,10 +89,13 @@ export class ReservaUpdatePage implements OnInit {
      
       ) {
 
+
+        
         this.route.queryParams.subscribe(params => {
           if (this.router.getCurrentNavigation().extras.state) {
-            this.selectedTime = this.router.getCurrentNavigation().extras.state.selectedTime;
             this.reserva = this.router.getCurrentNavigation().extras.state.reserva;
+            this.isUpdate = this.reserva!=null;
+           
             this.comidaCerrada = this.router.getCurrentNavigation().extras.state.comidaCerrada;
             this.cenaCerrada = this.router.getCurrentNavigation().extras.state.cenaCerrada;
           }
@@ -90,7 +104,11 @@ export class ReservaUpdatePage implements OnInit {
     }
 
 
+    formatDate(value: string) {
+      //return format(parseISO(value), 'MMM dd yyyy');
 
+      return new Date(value);
+    }
 
     vocal(){
       let options = {
@@ -277,13 +295,13 @@ export class ReservaUpdatePage implements OnInit {
     crearForm(){
       this.formGroup = this.formBuilder.group({
         id: new FormControl('', Validators.compose([
-          Validators.required,
+          Validators.required
         ])),
         usuario: new FormControl('', Validators.compose([
           Validators.required,
         ])),
         fecha: new FormControl('', Validators.compose([
-          Validators.required,
+          Validators.required, CustomValidator.isLess
         ])),
         servicio: new FormControl('', Validators.compose([
           Validators.required,
@@ -359,14 +377,13 @@ export class ReservaUpdatePage implements OnInit {
         this.checkComida = this.formGroup.controls['servicio'].value == 'comida';
         this.checkCena = this.formGroup.controls['servicio'].value == 'cena';
 
-        this.selectedTime = this.formGroup.controls['fecha'].value;
 
       }
       else{        
         // si es null, establezco la fecha y el usuario
         this.isUpdate= false;
         this.formGroup.controls['id'].setValue('new');
-        this.formGroup.controls['fecha'].setValue(this.selectedTime);
+        this.formGroup.controls['fecha'].setValue(null);
         this.formGroup.controls['usuario'].setValue(this.authService.userLogged.email);
       }
     }
@@ -485,6 +502,26 @@ export class ReservaUpdatePage implements OnInit {
         } catch (err) {}
       }
     }
+
+    onCurrentDateChanged(event: Date) {
+      var today = new Date();
+      today.setHours(0, 0, 0, 0);
+      event.setHours(0, 0, 0, 0);
+      this.isToday = today.getTime() === event.getTime();
+    }
+
+    onViewTitleChanged(title) {
+      this.viewTitle = title;
+    }
+
+    async onTimeSelected(ev) {
+
+      this.selectedTime = ev.selectedTime;
+  
+    }
+  
+
+
 
 }
 

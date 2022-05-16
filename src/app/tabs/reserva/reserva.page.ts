@@ -38,8 +38,6 @@ export class ReservaPage implements OnInit {
   }
 
 
-  prueba : ReservaModel;
-
   mesas: any[];
 
 
@@ -56,6 +54,7 @@ export class ReservaPage implements OnInit {
 
   };
   selectedTime: Date;
+  TodayDate : Date;
 
   public lstReservas: ReservaModel[];
 
@@ -83,10 +82,8 @@ export class ReservaPage implements OnInit {
 
   }
   ngOnInit(): void {
-    this.prueba = new ReservaModel();
-    this.prueba.dia = 15;    
     this.loadEvents();
-
+    this.TodayDate= new Date(new Date().getFullYear(),new Date().getMonth() , new Date().getDate());
    
 
   }
@@ -176,28 +173,24 @@ export class ReservaPage implements OnInit {
     this.calendar.currentDate = new Date();
   }
 
-  onTimeSelected(ev) {
+  async onTimeSelected(ev) {
 
     this.selectedTime = ev.selectedTime;
 
     this.refreshCerrados();
 
-    this.dataServiceReserva.getReservasByDate(ev.selectedTime).then(lst => {
+    var lst:ReservaModel[]=  await  this.dataServiceReserva.getReservasByDate(ev.selectedTime);
 
-      this.lstReservas = lst.sort(function (a, b) {
+    this.lstReservas = lst.sort(function (a, b) {
 
-        if (a.servicio < b.servicio) { return 1; }
-        if (a.servicio > b.servicio) { return -1; }
-        return 0;
-      });
-
-      this.resumen();
-
+      if (a.servicio < b.servicio) { return 1; }
+      if (a.servicio > b.servicio) { return -1; }
+      return 0;
     });
 
+    this.resumen();
 
-
-    
+  
 
   }
 

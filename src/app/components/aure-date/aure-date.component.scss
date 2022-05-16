@@ -1,0 +1,35 @@
+.CabeceraDetalle{
+    border-style: solid;   
+    display: flex;
+    font-size: 13px; 
+    align-items: center;
+  justify-content: center;
+}
+.CabeceraFilaDetalle{
+}
+.cabecera {
+    border-style: solid;    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.dias {
+    border-style: solid;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+     min-height: 40px;
+}
+.detalleDay{
+    font-size: 10px;
+}
+
+.diaActual{
+    font-weight: bold;
+    color : green;
+}
+
+.diaSeleccionado{
+    font-weight: bold;
+    color : red;
+}

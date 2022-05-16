@@ -2,10 +2,14 @@
   <ion-title>
     <ion-grid>
       <ion-row>
-        <ion-col size="10">
-          Reserva {{selectedTime | date:'dd/MM/yyyy'}}
+        <ion-col size="2">
+          Reserva 
         </ion-col>
-        <ion-col>
+        <ion-col size="9">
+        
+
+        </ion-col>
+        <ion-col size="1">
           <ion-icon (click)="vocal()" color="success" name="volume-high-outline"></ion-icon>
         </ion-col>
       </ion-row>
@@ -30,13 +34,7 @@
         </ng-container>
       </div>
 
-      <div class="validation-errors">
-        <ng-container *ngFor="let validation of validation_messages.fecha">
-          <div class="error-message" *ngIf="formGroup.get('fecha').hasError(validation.type)">
-            {{ validation.message }}
-          </div>
-        </ng-container>
-      </div>
+     
 
       <div class="validation-errors">
         <ng-container *ngFor="let validation of validation_messages.usuario">
@@ -52,6 +50,47 @@
           <cerrado-component [cerrado]="cenaCerrada"></cerrado-component>
         </ion-col>
       </ion-row>
+
+      <ion-row>
+        <ion-col size="12">
+          <ion-item>
+            <ion-label color="primary">Fecha</ion-label>
+            <ion-input  value="{{ this.formGroup.controls['fecha'].value | date: 'dd/MM/yyyy' }}"  id="date"   class="ion-text-end"  ></ion-input>
+            <ion-popover trigger="date" size="cover">
+              <ng-template>
+                <ion-datetime
+                locale="es-ES" 
+                first-day-of-week="1"
+                #popoverDatetime2
+                value="{{formGroup.controls['fecha']?.value == null ? null : formGroup.controls['fecha']?.value.toISOString()}}"
+                presentation="date"
+                  (ionChange)="this.formGroup.controls['fecha'].setValue(formatDate(popoverDatetime2.value)); popoverDatetime2.confirm(true);"
+                ></ion-datetime>
+<!-- {{viewTitle}}
+                <calendar [showEventDetail]=false [startingDayMonth]="1" [startingDayWeek]="1" [eventSource]="eventSource"
+          [calendarMode]="calendar.mode" [currentDate]="calendar.currentDate"
+          (onCurrentDateChanged)="onCurrentDateChanged($event)" 
+          (onTitleChanged)="onViewTitleChanged($event)" (onTimeSelected)="onTimeSelected($event)"
+          [step]="calendar.step">
+        </calendar> -->
+
+              </ng-template>
+            </ion-popover>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <div class="validation-errors">
+        <ng-container *ngFor="let validation of validation_messages.fecha">
+          <div class="error-message" *ngIf="formGroup.get('fecha').hasError(validation.type)">
+            {{ validation.message }}
+          </div>
+        </ng-container>
+      </div>
+    
+
+
+
       <ion-row>
         <ion-col>
           <ion-item>
