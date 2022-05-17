@@ -95,7 +95,7 @@ export class ReservaUpdatePage implements OnInit {
           if (this.router.getCurrentNavigation().extras.state) {
             this.reserva = this.router.getCurrentNavigation().extras.state.reserva;
             this.isUpdate = this.reserva!=null;
-           
+           this.selectedTime = this.router.getCurrentNavigation().extras.state.selectedTime;
             this.comidaCerrada = this.router.getCurrentNavigation().extras.state.comidaCerrada;
             this.cenaCerrada = this.router.getCurrentNavigation().extras.state.cenaCerrada;
           }
@@ -383,7 +383,7 @@ export class ReservaUpdatePage implements OnInit {
         // si es null, establezco la fecha y el usuario
         this.isUpdate= false;
         this.formGroup.controls['id'].setValue('new');
-        this.formGroup.controls['fecha'].setValue(null);
+        this.formGroup.controls['fecha'].setValue(this.selectedTime);
         this.formGroup.controls['usuario'].setValue(this.authService.userLogged.email);
       }
     }

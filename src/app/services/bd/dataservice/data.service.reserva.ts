@@ -15,8 +15,7 @@ import { DataService } from "./data.service";
     getReservasObs(): Observable<any[]> {
 
         return this.getAllObs(this.collectionName);
-    
-      }
+    }
 
 
     async getReservas(): Promise<ReservaModel[]> {
@@ -24,11 +23,32 @@ import { DataService } from "./data.service";
     }
 
     
+    getReservasByMonth(fecha: Date): Promise<ReservaModel[]> {
+
+        if (!fecha) {                 
+            return new Promise(resolve => {
+                resolve([]);
+            });
+        }
+      
+        var startDay = new Date(fecha.getFullYear(), fecha.getMonth(), 1);
+        var endDay = new Date(fecha.getFullYear(), fecha.getMonth()+1, 1);
+
+        return this.getAll(this.collectionName,
+            [
+                where('fecha', '>=', startDay),
+                where('fecha', '<', endDay),
+            ]
+            );
+    }
+
 
     getReservasByDate(fecha: Date): Promise<ReservaModel[]> {
 
-        if (!fecha) {
-            return;
+        if (!fecha) {     
+            return new Promise(resolve => {
+                resolve([]);
+            });
         }
       
         var startDay = new Date(fecha.getFullYear(), fecha.getMonth(), fecha.getDate());

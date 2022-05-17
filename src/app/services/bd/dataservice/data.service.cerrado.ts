@@ -24,6 +24,12 @@ import { DataService } from "./data.service";
     
     
       async getCerrados(fecha: Date): Promise<CerradoModel[]> {
+
+        if (!fecha) {     
+          return new Promise(resolve => {
+              resolve([]);
+          });
+      }
     
         var fechaSinTime = new Date(fecha.getFullYear(), fecha.getMonth(), fecha.getDate());
 

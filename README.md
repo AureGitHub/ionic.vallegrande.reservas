@@ -19,7 +19,7 @@ If you are looking for an Ionic Starter App with Firestore integration ready to 
 
 
 
-ionic serve --host=192.168.1.2
+ionic serve --host=192.168.1.140
 
 
 

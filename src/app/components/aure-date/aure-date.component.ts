@@ -1,6 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { isToday } from 'date-fns';
-import { deflate } from 'zlib';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { LanguageService } from './languaje.service';
 
 @Component({
@@ -10,9 +8,17 @@ import { LanguageService } from './languaje.service';
 })
 export class AureDateComponent implements OnInit {
 
+
+  @Output() refreshEnvents = new EventEmitter<any>();
+
+  @Output() refreshSelectedDate = new EventEmitter<any>();
+
   @Input()  lan : string;
 
+  @Input() set eventSource(value) {
 
+    this.setEventosInCalendar(value);
+  }
 
   // Fecha seleccionada
   dateSelected : Date = new Date(new Date().getFullYear(), new Date().getMonth(),new Date().getDate());
@@ -47,9 +53,79 @@ export class AureDateComponent implements OnInit {
     this.setlanguaje();
     this.Setyears();
     this.getDiasMes();
-   
+    this.refreshEnvents.emit(this.dateParaMontarCalendar);
+    this.refreshSelectedDate.emit(this.dateSelected);
+  }
+
+
+  changeDate(op,cual){
+    if(cual=='month'){
+      if(op=='add'){
+        this.dateParaMontarCalendar.setMonth(this.dateParaMontarCalendar.getMonth() + 1);
+      }
+      else if(op=='sub'){
+        this.dateParaMontarCalendar.setMonth(this.dateParaMontarCalendar.getMonth() - 1);
+      }
+      
+      
+    }
+    else if(cual=='year'){
+
+      if(op=='add'){
+        this.dateParaMontarCalendar.setFullYear(this.dateParaMontarCalendar.getFullYear() + 1);
+      }
+      else if(op=='sub'){
+        this.dateParaMontarCalendar.setFullYear(this.dateParaMontarCalendar.getFullYear() - 1);
+      }
+    }
+
+    this.currentMonth = this.dateParaMontarCalendar.getMonth();
+    this.currentYear = this.dateParaMontarCalendar.getFullYear();
+
+    this.dateSelected = null;
+
+    this.refreshSelectedDate.emit(this.dateSelected);
+    
+      this.refreshEnvents.emit(this.dateParaMontarCalendar);
+      this.getDiasMes();
+
 
   }
+
+
+  setEventosInCalendar(value: any) {
+    if(value){
+      this.lstDiasMesinWeek.forEach(week=>{
+
+        week.forEach(day => {
+              
+          if(day.fecha){
+            day.TotalComidas = value.filter(a=> a.servicio=='comida').filter(a=> {      
+              if(a.fecha.getTime() === day.fecha.getTime()){        
+                return true;      
+              }      
+              return false;
+      
+            }).length;
+
+
+            day.TotalCenas = value.filter(a=> a.servicio=='cena').filter(a=> {      
+              if(a.fecha.getTime() === day.fecha.getTime()){        
+                return true;      
+              }      
+              return false;
+      
+            }).length;
+
+          }
+          
+
+        })
+
+      })
+    }
+  }
+
   Setyears() {
     this.Years = [];
     for(var i=1930; i < new Date().getFullYear() + 10; i++){
@@ -60,16 +136,19 @@ export class AureDateComponent implements OnInit {
   selectChangedMonth(item){
     this.currentMonth = parseInt(item.detail.value);
     this.dateParaMontarCalendar.setMonth(this.currentMonth);
-    this.getDiasMes();
     this.dateSelected = null;
+    this.refreshEnvents.emit(this.dateParaMontarCalendar);
+    this.getDiasMes();
+
   }
 
 
   selectChangedYear(item){
     this.currentYear = parseInt(item.detail.value);
     this.dateParaMontarCalendar.setFullYear(this.currentYear);
-    this.getDiasMes();
     this.dateSelected = null;
+    this.refreshEnvents.emit(this.dateParaMontarCalendar);
+    this.getDiasMes();
   }
 
   SetToday()
@@ -77,8 +156,9 @@ export class AureDateComponent implements OnInit {
     this.dateParaMontarCalendar= new Date(new Date().getFullYear(), new Date().getMonth(),new Date().getDate());
     this.currentMonth = this.dateParaMontarCalendar.getMonth();
     this.currentYear = this.dateParaMontarCalendar.getFullYear();
-    this.getDiasMes();
+   this.getDiasMes();
     this.dateSelected = null;
+    this.refreshEnvents.emit(this.dateParaMontarCalendar);
   }
 
   
@@ -109,12 +189,10 @@ export class AureDateComponent implements OnInit {
     return '-';
   }
 
-
-  cambiaMes(cuanto){
-
-
-  }
+ 
   getDiasMes(){
+
+
     var lstDiasMes=[];
     this.lstDiasMesinWeek=[];
 
@@ -125,39 +203,33 @@ export class AureDateComponent implements OnInit {
     var indicePrimerDia =  new Date(anno, month - 1, 1).getDay();
 
 
-    var FirstDayWeek = this.languageService.FirstDayWeek[this.lan];
-
-
-    var dayInMonth = [];
-
-    for (var dia = 1; dia <= diasMes; dia++) {
-      // Ojo, hay que restarle 1 para obtener el mes correcto
-
-      var fecha = new Date(anno, month - 1, dia);
-      var indice = fecha.getDay();
-      
-      // indice 0 ==> Domingo
-      dayInMonth.push({fecha,dia, indice});
+    switch(this.lan){
+      case 'EN':
+        for(var indice=1; indice <=indicePrimerDia; indice++){
+          lstDiasMes.push({dia, indice});
+        }
+      break;        
+      case 'ES':
+      default:
+        if(indicePrimerDia==0){
+          //domingo
+          for(var indice=1; indice <=6; indice++){
+    
+            lstDiasMes.push({dia, indice});
+          }
+    
+        }
+        else{
+          for(var indice=1; indice <indicePrimerDia; indice++){
+            lstDiasMes.push({dia, indice});
+          }
+        }
+          
+      break;
     }
 
-    this.MakeWeek(dayInMonth);
 
-
-
-
-    if(indicePrimerDia==FirstDayWeek){
-      //domingo
-      for(var indice=1; indice <=6; indice++){
-        
-        lstDiasMes.push({dia, indice});
-      }
-      
-    }
-    else{
-      for(var indice=1; indice <indicePrimerDia; indice++){
-        lstDiasMes.push({dia, indice});
-      }
-    }
+    
 
 
     for (var dia = 1; dia <= diasMes; dia++) {
@@ -165,9 +237,12 @@ export class AureDateComponent implements OnInit {
 
       var fecha = new Date(anno, month - 1, dia);
       var indice = fecha.getDay();
-      
+
+      var TotalEnventos = 0;
+
+
       // indice 0 ==> Domingo
-      lstDiasMes.push({fecha,dia, indice});
+      lstDiasMes.push({fecha,dia, indice, TotalEnventos});
     }
 
     var lstWeek = [];
@@ -187,37 +262,14 @@ export class AureDateComponent implements OnInit {
       this.lstDiasMesinWeek.push(lstWeek);
     }
 
-    this.OrderWeekByLanguaje();
-
-
-
-
-
-
   }
-  MakeWeek(dayInMonth: any[]) {
+  
 
-    /*
-    ES  1  2  3  4  5  6  0      (1,2,3,4) 5
-    EN  0  1  2  3  4  5  6       0,1,2,3,4) 5
-    */
-
-    var FirstDayWeek = this.languageService.FirstDayWeek[this.lan];
-
-    //lstDiasMes.push({fecha,dia, indice});
-  }
-  OrderWeekByLanguaje() {
-    var sortingArr = this.days.map(a=> a.id);
-    this.lstDiasMesinWeek.forEach(week => {
-      week.sort((a,b)=>{
-        return sortingArr.indexOf(a.id) - sortingArr.indexOf(b.id);
-      })
-    });
-  }
 
   selectDay(item){
     this.dateSelected = item && item.fecha ? item.fecha : this.dateSelected;
-    this.getDiasMes();
+    this.refreshSelectedDate.emit(this.dateSelected);
+    // this.getDiasMes();
   }
 
 }

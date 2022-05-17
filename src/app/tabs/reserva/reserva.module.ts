@@ -7,6 +7,7 @@ import { ReservaPage } from './reserva.page';
 import { NgCalendarModule } from 'ionic2-calendar';
 import { MyFilterPipe } from 'src/app/pipe/pipe.reserva.servicio';
 import { ShareModule } from '../share.module';
+import { ComponentsModule } from 'src/app/components/components.module';
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import { ShareModule } from '../share.module';
     FormsModule,
     ReservaPageRoutingModule,
     NgCalendarModule,
-    ShareModule
+    ShareModule,
+    ComponentsModule
     
   ],
   declarations: [

@@ -1,42 +1,22 @@
-<ion-header>
-  <ion-title>
-
-    <ion-grid>
-      <ion-row>
-        <ion-col size="5">
-          {{viewTitle}} 
-        </ion-col>
-        <ion-col size="2">
-        </ion-col>
-        <ion-col>
-          {{selectedTime | date:'dd/MM/yyyy'}} 
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-
-  </ion-title>
-
-
-</ion-header>
-
 <ion-content>
-
-
-
   <ion-grid>
-
-    <ion-row class="calendario">
+    <ion-row>
       <ion-col>
-        <calendar [showEventDetail]=false [startingDayMonth]="1" [startingDayWeek]="1" [eventSource]="eventSource"
-          [calendarMode]="calendar.mode" [currentDate]="calendar.currentDate"
-          (onCurrentDateChanged)="onCurrentDateChanged($event)" (onEventSelected)="onEventSelected($event)"
-          (onTitleChanged)="onViewTitleChanged($event)" (onTimeSelected)="onTimeSelected($event)"
-          [step]="calendar.step">
-        </calendar>
+        <aure-date [lan]="'ES'" [eventSource]="eventSourceNew" (refreshEnvents)="refreshEnvents($event)" (refreshSelectedDate)="refreshSelectedDate($event)"></aure-date>
       </ion-col>
-
     </ion-row>
+  </ion-grid>
 
+
+    <ion-grid *ngIf="!selectedTime">
+    <ion-row>
+      <ion-col size="2"></ion-col>
+      <ion-col size="8" class="NoHayReservas">No hay ningún día seleccionado</ion-col>
+      <ion-col size="2"></ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-grid *ngIf="selectedTime">
     <ion-row *ngIf="isAdmin" class="ion-justify-content-center">
 
       <ion-col *ngIf="!comidaCerrada"  class="comida hand" (click)="preCerrarServicio('comida')">
@@ -57,34 +37,32 @@
 
     
     </ion-row>
-
     <ion-row size="6">
-
       <ion-col size="6">
         <ion-button *ngIf="!comidaCerrada || !cenaCerrada" (click)="addReserva()" color="danger" expand="block">      
           <ion-icon slot="start" name="add-circle-outline"></ion-icon>   
            Servicio
-          </ion-button>
-          
+          </ion-button>          
       </ion-col>
-
       <ion-col  size="6">
         <ion-button  *ngIf="!comidaCerrada || !cenaCerrada" (click)="addReserva()" color="danger" expand="block">         
           <ion-icon slot="start" name="add-circle-outline"></ion-icon>  
            Encargo 
-          </ion-button>
-          
+          </ion-button>          
       </ion-col>
-
     </ion-row>
+  </ion-grid>
 
+  <ion-grid *ngIf="selectedTime && (lstReservas && lstReservas.length == 0)">
     <ion-row>
-      <ion-col size="12">
-
-        
-
-      </ion-col>
+      <ion-col size="3"></ion-col>
+      <ion-col size="6" class="NoHayReservas">No hay reservas</ion-col>
+      <ion-col size="3"></ion-col>
     </ion-row>
+  </ion-grid>
+
+
+  <ion-grid *ngIf="selectedTime && (lstReservas && lstReservas.length > 0)">
 
     <ion-row class="resumen">
       <ion-col>día</ion-col>

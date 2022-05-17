@@ -25,8 +25,6 @@
         "@mobiscroll/angular": "https://npm.mobiscroll.com/@mobiscroll/angular-trial/-/angular-trial-5.13.0.tgz",
         "date-fns": "^2.28.0",
         "firebase": "^9.0.0",
-        "ion2-calendar": "^3.5.0",
-        "ionic2-calendar": "^0.6.9",
         "moment": "^2.29.1",
         "rxfire": "^6.0.0",
         "rxjs": "~6.6.0",
