@@ -136,29 +136,38 @@ export class AureDateComponent implements OnInit {
   selectChangedMonth(item){
     this.currentMonth = parseInt(item.detail.value);
     this.dateParaMontarCalendar.setMonth(this.currentMonth);
-    this.dateSelected = null;
+    if(this.currentMonth != this.dateSelected.getMonth()){
+      //vengo de setToday
+      this.dateSelected = null;
+    }
+    
     this.refreshEnvents.emit(this.dateParaMontarCalendar);
     this.getDiasMes();
 
   }
 
-
   selectChangedYear(item){
     this.currentYear = parseInt(item.detail.value);
     this.dateParaMontarCalendar.setFullYear(this.currentYear);
-    this.dateSelected = null;
+
+    if(this.currentYear != this.dateSelected.getFullYear()){
+      //vengo de setToday
+      this.dateSelected = null;
+    }
+
     this.refreshEnvents.emit(this.dateParaMontarCalendar);
     this.getDiasMes();
   }
 
   SetToday()
-  {
+  {    
     this.dateParaMontarCalendar= new Date(new Date().getFullYear(), new Date().getMonth(),new Date().getDate());
     this.currentMonth = this.dateParaMontarCalendar.getMonth();
-    this.currentYear = this.dateParaMontarCalendar.getFullYear();
-   this.getDiasMes();
-    this.dateSelected = null;
+    this.currentYear = this.dateParaMontarCalendar.getFullYear();   
+    this.getDiasMes();    
+    this.dateSelected = new Date(new Date().getFullYear(), new Date().getMonth(),new Date().getDate());
     this.refreshEnvents.emit(this.dateParaMontarCalendar);
+    this.refreshSelectedDate.emit(this.dateSelected);
   }
 
   
