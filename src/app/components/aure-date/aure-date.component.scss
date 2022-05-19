@@ -52,7 +52,7 @@
     justify-content: center;
      min-height: 40px;
      border-radius: 3px;
-     background-color:#E0E6F8 ;
+    //  background-color:#E0E6F8 ;
 }
 
 
@@ -66,19 +66,25 @@
     color : #0B3B0B;
 }
 
-.diaSeleccionado{
-    font-weight: bold;
-    color : red;
-}
+
 .diasConEnventos{
-    font-weight: bold;
+   
     color : black;
-    background-color:#5858FA ;
-    box-shadow: 5px 2px 2px black;
+    background-color:#6E6E6E ;
+    color : white;
 }
 
 .Sub_Sup{
-    font-size: 10px;
-    color: #0A0A2A;
+    font-size: 8px;
+}
+
+.diasConEnventosSeleccionado{
+    background-color: #BDBDBD;
+    color : black;
+}
+
+.diasSinConEnventosSeleccionado{
+    background-color: #BDBDBD;
+    color : white;
 }
 
