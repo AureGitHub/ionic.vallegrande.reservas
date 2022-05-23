@@ -22,7 +22,9 @@ import { CookieService } from './services/cookie.servie';
 import { SpeechRecognition } from '@ionic-native/speech-recognition/ngx';
 import { ShareCommunicationService } from './services/share-communication.servies';
 
-registerLocaleData(es);
+import { MyLibModule } from 'my-lib';
+
+registerLocaleData(es);   
 @NgModule({
   declarations: [
     AppComponent, 
@@ -31,6 +33,7 @@ registerLocaleData(es);
   ],
     
   imports: [ 
+    MyLibModule,
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,

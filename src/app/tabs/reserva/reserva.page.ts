@@ -27,12 +27,14 @@ export class ReservaPage implements OnInit {
 
   filtercomida: ReservaModel;
   filtercena: ReservaModel;
+  filterencargo: ReservaModel;
 
   openAltaEdit = false;
 
   servicio = {
     comida: new Totales(),
     cena: new Totales(),
+    encargos : 0
 
   }
 
@@ -74,6 +76,9 @@ export class ReservaPage implements OnInit {
     this.filtercomida.servicio ='comida';
     this.filtercena=new ReservaModel();
     this.filtercena.servicio ='cena';
+
+    this.filterencargo=new ReservaModel();
+    this.filterencargo.servicio ='encargo';
 
   }
   ngOnInit(): void {
@@ -192,6 +197,22 @@ export class ReservaPage implements OnInit {
 
   }
 
+
+
+  addEncargo(){
+    let navigationExtras: NavigationExtras = {
+      state: {
+        selectedTime: this.selectedTime,
+        reserva: null,
+        comidaCerrada: this.comidaCerrada,
+        cenaCerrada: this.cenaCerrada
+      }
+    };
+
+    this.router.navigate(['/tabs/encargo-update'], navigationExtras);
+  }
+
+
   updateReserva(reserva: ReservaModel) {
     let navigationExtras: NavigationExtras = {
       state: {
@@ -204,6 +225,21 @@ export class ReservaPage implements OnInit {
 
     this.router.navigate(['/tabs/reserva-update'], navigationExtras);
   }
+
+
+  updateEncargo(reserva: ReservaModel) {
+    let navigationExtras: NavigationExtras = {
+      state: {
+        selectedTime: null,
+        reserva,
+        comidaCerrada: this.comidaCerrada,
+        cenaCerrada: this.cenaCerrada
+      }
+    };
+
+    this.router.navigate(['/tabs/encargo-update'], navigationExtras);
+  }
+  
 
   onViewTitleChanged(title) {
     this.viewTitle = title;
@@ -245,9 +281,9 @@ export class ReservaPage implements OnInit {
     this.servicio = {
       comida: new Totales(),
       cena: new Totales(),
+      encargos : 0
 
     }
-
 
 
     this.lstReservas.forEach(reserva => {
@@ -258,14 +294,20 @@ export class ReservaPage implements OnInit {
   
       };
 
-      for (const property in this.servicio.comida) { //comida es igual que cena...mismos campos
-        if (reserva[property]) {
-          servicioReserva[reserva['servicio']][property] += parseInt(reserva[property]);
-          this.servicio[reserva['servicio']][property] += parseInt(reserva[property]);
-        }
-        reserva['Adultos']=servicioReserva[reserva['servicio']].Adultos;
+      if(reserva['servicio']=='encargo'){
+        this.servicio.encargos++;
       }
-      this.servicio[reserva['servicio']].mesas++;
+      else{
+        for (const property in this.servicio.comida) { //comida es igual que cena...mismos campos
+          if (reserva[property]) {
+            servicioReserva[reserva['servicio']][property] += parseInt(reserva[property]);
+            this.servicio[reserva['servicio']][property] += parseInt(reserva[property]);
+          }
+          reserva['Adultos']=servicioReserva[reserva['servicio']].Adultos;
+        }
+        this.servicio[reserva['servicio']].mesas++;
+      }
+
     });
   }
 

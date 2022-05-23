@@ -40,15 +40,15 @@
     <ion-col  *ngFor="let item of week"  
     class="dias" 
     [ngClass]="{
-      'diasConEnventos': item?.TotalComidas + item?.TotalCenas >0 &&  !(item?.fecha && item?.fecha.getTime() === dateSelected?.getTime()),
-      'diasConEnventosSeleccionado': item?.TotalComidas + item?.TotalCenas >0 && (item?.fecha && item?.fecha.getTime() === dateSelected?.getTime()),
+      'diasConEnventos': item?.TotalComidas + item?.TotalCenas  + item?.TotalEncargos > 0 &&  !(item?.fecha && item?.fecha.getTime() === dateSelected?.getTime()),
+      'diasConEnventosSeleccionado': item?.TotalComidas + item?.TotalCenas  + item?.TotalEncargos >0 && (item?.fecha && item?.fecha.getTime() === dateSelected?.getTime()),
       'diasSinConEnventosSeleccionado': item?.TotalComidas + item?.TotalCenas ==0 && (item?.fecha && item?.fecha.getTime() === dateSelected?.getTime())
   }"  
     (click)="selectDay(item)">
 
     <ion-grid  style="width: 99%;padding:0;margin:0">
       <ion-row>
-        <ion-col>{{item?.dia}}</ion-col>
+        <ion-col>{{item?.dia}} <sup><span *ngIf="item?.TotalEncargos>0" class="Sub_Sup">{{item?.TotalEncargos}}</span></sup> </ion-col>
       </ion-row>
       <ion-row class="Sub_Sup">
         <ion-col *ngIf="item?.TotalComidas>0">{{item?.TotalComidas}}</ion-col>

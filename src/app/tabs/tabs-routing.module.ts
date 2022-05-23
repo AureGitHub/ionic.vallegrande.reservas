@@ -11,7 +11,6 @@ const routes: Routes = [
         path: 'reserva',
         loadChildren: () => import('./reserva/reserva.module').then(m => m.ReservaPageModule)
       },
-
       {
         path: 'resumen',
         loadChildren: () => import('./resumen/resumen.module').then(m => m.ResumenModule)
@@ -25,6 +24,10 @@ const routes: Routes = [
       {
         path: 'reserva-update',
         loadChildren: () => import('./reserva-update/reserva-update.module').then(m => m.ReservaUpdatePageModule)
+      },
+            {
+        path: 'encargo-update',
+        loadChildren: () => import('./encargo-update/encargo-update.module').then(m => m.EncargoUpdatePageModule)
       },
       {
         path: 'users',

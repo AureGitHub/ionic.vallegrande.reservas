@@ -20,6 +20,7 @@ public icon = {
   information_i: 'information-outline',
   baja_user : 'thumbs-down-outline',
   alta_user : 'thumbs-up-outline',
+  encargo : 'alarm-outline',
 
   };
 

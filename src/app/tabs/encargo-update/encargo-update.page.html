@@ -1,0 +1,196 @@
+<ion-header>
+  <ion-title>
+    <ion-grid>
+      <ion-row>
+        <ion-col size="3">
+          Encargo 
+        </ion-col>       
+
+        <ion-col size="1">  
+        </ion-col>
+
+        <ion-col size="3">
+          <ion-icon name="save-outline"  size="large"  color="success" [disabled]="!formGroup.valid" (click)="submit()"></ion-icon>
+        </ion-col>
+        <ion-col size="1">
+        </ion-col>
+
+        <ion-col size="3">
+          <ion-icon size="large" name="caret-back-outline" color="warning" (click)="volver()"></ion-icon>
+        </ion-col>
+
+        <ion-col size="1">
+          <ion-icon  (click)="vocal()" color="success" name="volume-high-outline"></ion-icon>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-title>
+</ion-header>
+
+
+<ion-content>
+
+
+  <form class="form" [formGroup]="formGroup" (ngSubmit)="submit()">
+
+
+    <ion-grid>
+
+      <div class="validation-errors">
+        <ng-container *ngFor="let validation of validation_messages.id">
+          <div class="error-message" *ngIf="formGroup.get('id').hasError(validation.type)">
+            {{ validation.message }}
+          </div>
+        </ng-container>
+      </div>
+
+     
+
+      <div class="validation-errors">
+        <ng-container *ngFor="let validation of validation_messages.usuario">
+          <div class="error-message" *ngIf="formGroup.get('usuario').hasError(validation.type)">
+            {{ validation.message }}
+          </div>
+        </ng-container>
+      </div>
+
+      <ion-row>
+        <ion-col>
+          <cerrado-component [cerrado]="comidaCerrada"></cerrado-component>
+          <cerrado-component [cerrado]="cenaCerrada"></cerrado-component>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size="12">
+          <ion-item>
+            <ion-label color="primary">Fecha</ion-label>
+            <ion-input  value="{{ this.formGroup.controls['fecha'].value | date: 'dd/MM/yyyy' }}"  id="date"   class="ion-text-end"  ></ion-input>
+            <ion-popover trigger="date" size="cover">
+              <ng-template>
+                <ion-datetime
+                locale="es-ES" 
+                first-day-of-week="1"
+                #popoverDatetime2
+                value="{{formGroup.controls['fecha']?.value == null ? null : formGroup.controls['fecha']?.value.toISOString()}}"
+                presentation="date"
+                  (ionChange)="this.formGroup.controls['fecha'].setValue(formatDate(popoverDatetime2.value)); popoverDatetime2.confirm(true);"
+                ></ion-datetime>
+              </ng-template>
+            </ion-popover>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <div class="validation-errors">
+        <ng-container *ngFor="let validation of validation_messages.fecha">
+          <div class="error-message" *ngIf="formGroup.get('fecha').hasError(validation.type)">
+            {{ validation.message }}
+          </div>
+        </ng-container>
+      </div>
+
+
+
+      <ion-row>
+        <ion-col size="12">
+          <ion-item>
+            <ion-label color="primary">Hora</ion-label>
+            <ion-datetime formControlName="hora" presentation="time"></ion-datetime>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <div class="validation-errors">
+        <ng-container *ngFor="let validation of validation_messages.hora">
+          <div class="error-message" *ngIf="formGroup.get('hora').hasError(validation.type)">
+            {{ validation.message }}
+          </div>
+        </ng-container>
+      </div>
+     
+    
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label position="floating" color="primary">Nombre</ion-label>
+            <ion-input type="text" formControlName="nombre"></ion-input>
+          </ion-item>
+          <div class="validation-errors">
+            <ng-container *ngFor="let validation of validation_messages.nombre">
+              <div class="error-message" *ngIf="formGroup.get('nombre').hasError(validation.type)">
+                {{ validation.message }}
+              </div>
+            </ng-container>
+          </div>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label position="floating" color="primary">Teléfono</ion-label>
+            <ion-input type="tel" formControlName="telefono"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label>Observaciones</ion-label>
+            <ion-textarea position="stacked" rows="8" cols="20" formControlName="observaciones"></ion-textarea>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    
+    <ion-row>
+      <ion-col> 
+      
+      </ion-col>
+    </ion-row>
+
+
+      <ion-row>
+        <ion-col>
+          <ion-button expand="block" color="success" type="submit" [disabled]="!formGroup.valid">
+            <ion-label>
+              <ion-spinner *ngIf="loadingSubmit"></ion-spinner> Guardar
+            </ion-label>
+          </ion-button>
+          <label class="error-message">{{errorMessage}}</label>
+        </ion-col>
+      </ion-row>
+
+
+        <ion-row *ngIf="isUpdate">
+          <ion-col>
+            <ion-button expand="block" color="danger" (click)="borrar()">
+              <ion-label>
+                <ion-spinner *ngIf="loadingBorrar"></ion-spinner> Cancelar
+              </ion-label>
+            </ion-button>
+          </ion-col>
+
+        </ion-row>
+
+        <ion-row>
+          <ion-col>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col>
+            <ion-button expand="block" color="warning" (click)="volver()">
+              <ion-label>
+                Volver
+              </ion-label>
+            </ion-button>
+          </ion-col>
+
+        </ion-row>
+
+
+    </ion-grid>
+  </form>
+</ion-content>

@@ -117,6 +117,16 @@ export class AureDateComponent implements OnInit {
       
             }).length;
 
+
+            day.TotalEncargos = value.filter(a=> a.servicio=='encargo').filter(a=> {      
+              if(a.fecha.getTime() === day.fecha.getTime()){        
+                return true;      
+              }      
+              return false;
+      
+            }).length;
+
+
           }
           
 
