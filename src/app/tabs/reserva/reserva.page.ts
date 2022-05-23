@@ -1,7 +1,6 @@
 import { Component, OnInit} from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
-import { CalendarMode, Step } from 'ionic2-calendar/calendar';
 import { AuthService } from 'src/app/services/auth.service';
 import { DataServiceCerrado } from 'src/app/services/bd/dataservice/data.service.cerrado';
 import { DataServiceReserva } from 'src/app/services/bd/dataservice/data.service.reserva';
@@ -48,13 +47,7 @@ export class ReservaPage implements OnInit {
   viewTitle;
 
 
-  isToday: boolean;
-  calendar = {
-    mode: 'month' as CalendarMode,
-    step: 30 as Step,
-    currentDate: new Date(),
 
-  };
   selectedTime: Date;
   TodayDate : Date;
 
@@ -219,13 +212,9 @@ export class ReservaPage implements OnInit {
     console.log('Event selected:' + event.startTime + '-' + event.endTime + ',' + event.title);
   }
 
-  changeMode(mode) {
-    this.calendar.mode = mode;
-  }
 
-  today() {
-    this.calendar.currentDate = new Date();
-  }
+
+
 
   async onTimeSelected(ev) {
 
@@ -279,14 +268,6 @@ export class ReservaPage implements OnInit {
   }
 
 
-  onCurrentDateChanged(event: Date) {
-    var today = new Date();
-    today.setHours(0, 0, 0, 0);
-    event.setHours(0, 0, 0, 0);
-    this.isToday = today.getTime() === event.getTime();
-  }
-
-
 
   onRangeChanged(ev) {
     console.log('range changed: startTime: ' + ev.startTime + ', endTime: ' + ev.endTime);
@@ -297,8 +278,6 @@ export class ReservaPage implements OnInit {
     current.setHours(0, 0, 0);
     return date < current;
   };
-
-
 
   async abrirServicio(servicioCerrado: CerradoModel){
 

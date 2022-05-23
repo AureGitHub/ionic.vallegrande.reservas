@@ -3,7 +3,6 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router';
 import { SpeechRecognition } from '@ionic-native/speech-recognition/ngx';
 import { AlertController } from '@ionic/angular';
-import { CalendarMode, Step } from 'ionic2-calendar/calendar';
 import { AuthService } from 'src/app/services/auth.service';
 import { DataServiceReserva } from 'src/app/services/bd/dataservice/data.service.reserva';
 import { CerradoModel } from 'src/app/services/bd/models/cerrado.model';
@@ -19,13 +18,6 @@ import { CustomValidator, isLess } from 'src/app/util/custom.validators';
 
 export class ReservaUpdatePage implements OnInit {
 
-  isToday: boolean;
-  calendar = {
-    mode: 'month' as CalendarMode,
-    step: 30 as Step,
-    currentDate: new Date(),
-
-  };
 
   servicio : string ='aure;' 
   copiarAwhatsapp: string;
@@ -502,24 +494,6 @@ export class ReservaUpdatePage implements OnInit {
         } catch (err) {}
       }
     }
-
-    onCurrentDateChanged(event: Date) {
-      var today = new Date();
-      today.setHours(0, 0, 0, 0);
-      event.setHours(0, 0, 0, 0);
-      this.isToday = today.getTime() === event.getTime();
-    }
-
-    onViewTitleChanged(title) {
-      this.viewTitle = title;
-    }
-
-    async onTimeSelected(ev) {
-
-      this.selectedTime = ev.selectedTime;
-  
-    }
-  
 
 
 
