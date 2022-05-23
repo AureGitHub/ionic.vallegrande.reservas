@@ -38,6 +38,29 @@ export class DataService {
 
   }
 
+  getAllObsParams(collectionName: string, queryConstraints: QueryConstraint[]): Observable<any[]> {
+
+    if(queryConstraints){
+      return collectionData<any>(
+        query<any>(collection(this.firestore, collectionName) as CollectionReference<any>, ...queryConstraints)
+        );
+
+    }
+    else{
+      return collectionData<any>(
+        query<any>(
+          collection(this.firestore, collectionName) as CollectionReference<any>,
+        ),
+      );
+
+    }
+
+    
+
+  }
+
+
+
   async getAll(collectionName: string, queryConstraints: QueryConstraint[] ): Promise<any[]> {
 
     return new Promise<any[]>(async (resolve, reject) => {

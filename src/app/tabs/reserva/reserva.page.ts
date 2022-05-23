@@ -111,7 +111,7 @@ export class ReservaPage implements OnInit {
 
     //this.selectedTime = new Date(date.getFullYear(),date.getMonth(),date.getDate());
    
-    this.dataServiceReserva.getReservasByMonth(date).then(data => {
+    this.dataServiceReserva.getReservasObsByMonth(date).subscribe(data => {
       this.eventSourceNew = [];
       data.forEach(reserva => {
         var fecha = new Date(reserva.fecha.toDate().getFullYear(),reserva.fecha.toDate().getMonth() ,reserva.fecha.toDate().getDate()) ;
@@ -125,6 +125,28 @@ export class ReservaPage implements OnInit {
       });
     });
     
+
+  }
+
+  loadEvents() {
+    //this.eventSource = this.createRandomEvents();
+
+
+    this.dataServiceReserva.getReservasObs().subscribe(data => {
+      this.eventSource = [];
+      data.forEach(reserva => {
+        this.eventSource.push({
+          title: reserva.nombre,
+          startTime: reserva.fecha.toDate(),
+          endTime: reserva.fecha.toDate(),
+          allDay: false
+        });
+
+      });
+    });
+
+
+
 
   }
 
@@ -151,27 +173,7 @@ export class ReservaPage implements OnInit {
 
 
 
-  loadEvents() {
-    //this.eventSource = this.createRandomEvents();
 
-
-    this.dataServiceReserva.getReservasObs().subscribe(data => {
-      this.eventSource = [];
-      data.forEach(reserva => {
-        this.eventSource.push({
-          title: reserva.nombre,
-          startTime: reserva.fecha.toDate(),
-          endTime: reserva.fecha.toDate(),
-          allDay: false
-        });
-
-      });
-    });
-
-
-
-
-  }
 
   addReserva() {
 

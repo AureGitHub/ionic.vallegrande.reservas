@@ -22,6 +22,24 @@ import { DataService } from "./data.service";
         return this.getAll(this.collectionName,null);
     }
 
+
+    getReservasObsByMonth(fecha: Date): Observable<any[]> {
+
+        if (!fecha) {                 
+            return null;
+        }
+      
+        var startDay = new Date(fecha.getFullYear(), fecha.getMonth(), 1);
+        var endDay = new Date(fecha.getFullYear(), fecha.getMonth()+1, 1);
+
+        return this.getAllObsParams(this.collectionName,
+            [
+                where('fecha', '>=', startDay),
+                where('fecha', '<', endDay),
+            ]
+            );
+    }
+
     
     getReservasByMonth(fecha: Date): Promise<ReservaModel[]> {
 
