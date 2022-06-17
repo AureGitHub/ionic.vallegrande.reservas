@@ -126,6 +126,17 @@ export class AppComponent {
         url   : '/usuarios',  
         icon  : 'people'   
       },  
+       {  
+        perfil : 'all',
+        title : 'VIPs',  
+        url   : '/home',  
+        icon  : 'beer'   
+      },  
+      {  
+        title : 'público',  
+        url   : '/home',  
+        icon  : 'accessibility'   
+      },  
      
     ];  
 
