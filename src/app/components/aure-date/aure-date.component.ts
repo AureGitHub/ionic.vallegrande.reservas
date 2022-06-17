@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { LanguageService } from './languaje.service';
 
 @Component({
@@ -9,11 +9,19 @@ import { LanguageService } from './languaje.service';
 export class AureDateComponent implements OnInit {
 
 
+  slideOpts = {
+    initialSlide: 1,
+    speed: 400
+  };
+
+  @ViewChild('slider') slider: any;  
+
   @Output() refreshEnvents = new EventEmitter<any>();
 
   @Output() refreshSelectedDate = new EventEmitter<any>();
 
   @Input()  lan : string;
+  TodayDesc: any;
 
   @Input() set eventSource(value) {
 
@@ -55,6 +63,9 @@ export class AureDateComponent implements OnInit {
     this.getDiasMes();
     this.refreshEnvents.emit(this.dateParaMontarCalendar);
     this.refreshSelectedDate.emit(this.dateSelected);
+
+    this.TodayDesc = this.languageService['today'][this.lan]['des'];
+
   }
 
 
@@ -90,6 +101,20 @@ export class AureDateComponent implements OnInit {
       this.getDiasMes();
 
 
+  }
+
+  async sliderChanges()
+  {
+
+    const index = await this.slider.getActiveIndex();
+    if(index==2){
+      this.changeDate('add','month');
+    }else 
+    if(index==0){
+      this.changeDate('sub','month');
+    }
+    this.slider.slideTo(1);
+    // this.changeDate('add','month')
   }
 
 

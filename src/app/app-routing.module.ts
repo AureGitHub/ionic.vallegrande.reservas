@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { RolGuard } from './guard/rol.guard';
 import { IntroPage } from './intro/intro.page';
-import { LoginPage } from './login/login.page';
+import { LoginPage } from './pages//login/login.page';
 
 const routes: Routes = [
   {

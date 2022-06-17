@@ -1,5 +1,49 @@
 
 <ion-app>
+  <ion-menu side="start" content-id="main-content">
+    <ion-header>
+      <ion-toolbar translucent>
+        <ion-title>C. Valle Grande  {{name}} </ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <ion-list>
 
-  <ion-router-outlet></ion-router-outlet>
+        <ion-menu-toggle auto-hide="false" >
+
+        <ion-item *ngIf="!user" [routerLink]="['/login']" routerDirection="root">
+          <ion-icon color="success"  name="power-outline" slot="start"></ion-icon>
+          <ion-label>login</ion-label>
+        </ion-item>
+      </ion-menu-toggle>
+        <ion-item *ngIf="user" (click)="logout()" >
+          <ion-icon color="danger"  name="power-outline" slot="start"></ion-icon>
+          <ion-label>logout</ion-label>
+        </ion-item>
+        <ion-menu-toggle auto-hide="false" *ngFor="let pages of Pages; let i = index">
+          <ion-item  routerDirection="root" [routerLink]="[pages.url]" lines="none"
+            detail="false" [class.selected]="activeIndex == i">
+            <ion-icon slot="start" [ios]="pages.icon + '-outline'" [md]="pages.icon + '-sharp'"></ion-icon>
+            <ion-label>{{ pages.title }}</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+  
+  <div class="ion-page" id="main-content">
+    <ion-header   >
+      <ion-toolbar>
+        <ion-buttons slot="start" >
+          <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-title class="TitleMenu">Complejo Valle Grande</ion-title>
+      </ion-toolbar>
+    </ion-header>    
+    <ion-router-outlet id="main"></ion-router-outlet>
+  </div>
+  
+  
 </ion-app>
+
+

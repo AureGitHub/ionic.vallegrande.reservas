@@ -1,0 +1,9 @@
+:root {
+    --main-bg-color: navy;
+  }
+
+
+ion-toolbar{
+    color: navy;  
+    background-color: var(--main-bg-color);
+}

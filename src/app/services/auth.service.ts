@@ -4,34 +4,43 @@ import {
   Auth,
   signOut,
   signInWithEmailAndPassword,
-  createUserWithEmailAndPassword} from '@angular/fire/auth';
+  createUserWithEmailAndPassword,
+  authState} from '@angular/fire/auth';
 // import { collection, doc, Firestore, setDoc } from 'firebase/firestore';
 import {
-  Firestore, collection, doc, setDoc, query, getDocs, getDoc
+  Firestore, collection, doc, setDoc, query, getDocs, getDoc, docSnapshots
 } from '@angular/fire/firestore';
 import { UserModel } from './bd/models/user.model';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
 @Injectable()
 export class AuthService {
 
 
-  userData: any;
+  dataUserObs: BehaviorSubject<any> = new BehaviorSubject<any>(null);
+  userData: import("@angular/fire/auth").User;
+
+
+  changedStateUser: Subject<any> = new Subject();
+
+
 
   constructor(
     private firestore: Firestore,
     private auth: Auth) {
 
-    // authState(this.auth).subscribe(async user => {
-    //   if (user) {
-    //     // const document = doc(this.firestore, `users/${user.uid}`);
-    //     // let extraData = await docSnapshots(document).toPromise();
-    //     // this.userData = user;
-    //     // localStorage.setItem('user', JSON.stringify(this.userData));
-    //   } else {
-    //     localStorage.setItem('user', null);
-    //   }
-    // })
+    authState(this.auth).subscribe(async user => {
+      let userInCache = null;
+      if (user) {       
+         userInCache = JSON.parse(localStorage.getItem('user'));
+      } else {
+        localStorage.setItem('user', null);
+      }
+      this.changedStateUser.next(userInCache);
+    })
   }
+
+
 
   get isLoggedIn(): boolean {
     const user = JSON.parse(localStorage.getItem('user'));
@@ -57,6 +66,10 @@ export class AuthService {
     return user;
   }
 
+  UserRefresh() {
+    localStorage.setItem('user', null);
+    
+  }
 
   async login(email: string, password: string): Promise<any> {
 
@@ -82,6 +95,10 @@ export class AuthService {
         // this.userData['perfil'] = data['perfil'];
   
         localStorage.setItem('user', JSON.stringify(userKeep));
+
+        this.changedStateUser.next(userKeep);
+
+
         resolve(null);
       }
       catch(error){

@@ -1,10 +1,16 @@
 
+<ion-slides #slider  (ionSlideTouchEnd)="sliderChanges()"  [options]="slideOpts">
 
 
+  <ion-slide style="background-color: red;">
+    Mes anterior
+  </ion-slide>
+
+<ion-slide>
 <ion-grid>
   <ion-row class="CabeceraDetalle" >
     <ion-col size="1" class="CabeceraFilaDetalle"  > 
-      <span  (click)="SetToday()" style="font-size: 10px;background-color: green; ">{{languageService['today'][lan]['des']}}</span></ion-col>
+      <span  (click)="SetToday()" style="font-size: 10px;background-color: green; ">{{TodayDesc}}</span></ion-col>
     <!-- <ion-col size="1" (click)="SetToday()" >
       <span *ngIf="dateSelected">{{dateSelected?.getDate()}}</span>
       <ion-icon *ngIf="!dateSelected" color="success" size="small"  name="arrow-redo"></ion-icon>
@@ -60,3 +66,11 @@
     </ion-col>
   </ion-row>
 </ion-grid>
+</ion-slide>
+
+<ion-slide style="background-color: green;">
+  Mes siguiente
+</ion-slide>
+
+
+</ion-slides>
