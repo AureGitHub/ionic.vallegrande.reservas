@@ -1,0 +1,100 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Gestión camareros
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <ion-grid >
+    <ion-row >
+      <ion-col size="12">
+        <ion-grid >
+          <ion-row>
+            <ion-col size="9">
+              Nombre/usuario 11
+            </ion-col>            
+            <ion-col>              
+            </ion-col>            
+            <ion-col>              
+            </ion-col>      
+          </ion-row>
+
+          <ion-row *ngFor="let user of users">
+            <ion-col  size="9">
+              {{ user.email}} <br>{{ user.contrasena }}
+            </ion-col>
+            <ion-col>
+              <ion-icon (click)="cambiarEstado(user,'B')" *ngIf="user?.perfil!='A' && user?.perfil!='B'" color="success"  name="{{icon.baja_user}}"></ion-icon>
+              <ion-icon (click)="cambiarEstado(user,'C')" *ngIf="user?.perfil!='A' && user?.perfil=='B'" color="warning" name="{{icon.alta_user}}"></ion-icon>
+            </ion-col>            
+            <ion-col>              
+              <ion-icon *ngIf="user?.perfil!='A'" color="danger" name="{{icon.borrar}}"></ion-icon>
+            </ion-col>   
+          </ion-row>
+
+        </ion-grid>
+
+     
+      </ion-col>
+    </ion-row>    
+    <ion-row>
+      <ion-col>
+        <h3>Crear usuario</h3>
+        <form class="form" [formGroup]="formGroup" (ngSubmit)="submit()">
+
+
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+                <ion-item>
+                  <ion-label position="floating" color="primary">Nombre</ion-label>
+                  <ion-input type="text" formControlName="nombre"></ion-input>
+                </ion-item>
+                <div class="validation-errors">
+                  <ng-container *ngFor="let validation of validation_messages.nombre">
+                    <div class="error-message" *ngIf="formGroup.get('nombre').hasError(validation.type)">
+                      {{ validation.message }}
+                    </div>
+                  </ng-container>
+                </div>
+              </ion-col>
+            </ion-row>
+
+            <ion-row>
+              <ion-col>
+                <ion-item>
+                  <ion-label position="floating" color="primary">contraseña</ion-label>
+                  <ion-input type="text" formControlName="contrasena"></ion-input>
+                </ion-item>
+                <div class="validation-errors">
+                  <ng-container *ngFor="let validation of validation_messages.contrasena">
+                    <div class="error-message" *ngIf="formGroup.get('contrasena').hasError(validation.type)">
+                      {{ validation.message }}
+                    </div>
+                  </ng-container>
+                </div>
+              </ion-col>
+            </ion-row>
+      
+      
+            <ion-row>
+              <ion-col>
+                <ion-button expand="block" color="success" type="submit" [disabled]="!formGroup.valid">
+                  <ion-label>
+                    <ion-spinner *ngIf="loadingSubmit"></ion-spinner> Añadir
+                  </ion-label>
+                </ion-button>
+              </ion-col>
+            </ion-row>
+      
+          </ion-grid>
+        </form>
+      </ion-col>
+    </ion-row>
+  
+  </ion-grid>
+</ion-content>
+

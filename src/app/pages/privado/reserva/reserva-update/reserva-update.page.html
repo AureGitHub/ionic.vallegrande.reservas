@@ -1,0 +1,292 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>reservas-update</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+
+
+  <ion-grid>
+    <ion-row>
+      <ion-col size="4">         
+      </ion-col>       
+
+      <ion-col size="3">
+        <ion-icon name="save-outline"  size="large"  color="success"  (click)="submit()"></ion-icon>
+        <!-- [disabled]="!formGroup.valid" -->
+      </ion-col>
+      <ion-col size="1">
+      </ion-col>
+
+      <ion-col size="3">
+        <ion-icon size="large" name="caret-back-outline" color="warning" (click)="volver()"></ion-icon>
+      </ion-col>
+
+      <ion-col size="1">
+        <ion-icon  (click)="vocal()" color="success" name="volume-high-outline"></ion-icon>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <br>
+
+  <form class="form" [formGroup]="formGroup" (ngSubmit)="submit()">
+
+
+    <ion-grid>
+
+      <div class="validation-errors">
+        <ng-container *ngFor="let validation of validation_messages.id">
+          <div class="error-message" *ngIf="formGroup.get('id').hasError(validation.type)">
+            {{ validation.message }}
+          </div>
+        </ng-container>
+      </div>
+
+     
+
+      <div class="validation-errors">
+        <ng-container *ngFor="let validation of validation_messages.usuario">
+          <div class="error-message" *ngIf="formGroup.get('usuario').hasError(validation.type)">
+            {{ validation.message }}
+          </div>
+        </ng-container>
+      </div>
+
+      <ion-row>
+        <ion-col>
+          <cerrado-component [cerrado]="comidaCerrada"></cerrado-component>
+          <cerrado-component [cerrado]="cenaCerrada"></cerrado-component>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size="12">
+          <ion-item>
+            <ion-label color="primary">Fecha</ion-label>
+            <ion-input  value="{{ this.formGroup.controls['fecha'].value | date: 'dd/MM/yyyy' }}"  id="date"   class="ion-text-end"  ></ion-input>
+            <ion-popover trigger="date" size="cover">
+              <ng-template>
+                <ion-datetime
+                locale="es-ES" 
+                first-day-of-week="1"
+                #popoverDatetime2
+                value="{{formGroup.controls['fecha']?.value == null ? null : formGroup.controls['fecha']?.value.toISOString()}}"
+                presentation="date"
+                  (ionChange)="this.formGroup.controls['fecha'].setValue(formatDate(popoverDatetime2.value)); popoverDatetime2.confirm(true);"
+                ></ion-datetime>
+<!-- {{viewTitle}}
+                <calendar [showEventDetail]=false [startingDayMonth]="1" [startingDayWeek]="1" [eventSource]="eventSource"
+          [calendarMode]="calendar.mode" [currentDate]="calendar.currentDate"
+          (onCurrentDateChanged)="onCurrentDateChanged($event)" 
+          (onTitleChanged)="onViewTitleChanged($event)" (onTimeSelected)="onTimeSelected($event)"
+          [step]="calendar.step">
+        </calendar> -->
+
+              </ng-template>
+            </ion-popover>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <div class="validation-errors">
+        <ng-container *ngFor="let validation of validation_messages.fecha">
+          <div class="error-message" *ngIf="formGroup.get('fecha').hasError(validation.type)">
+            {{ validation.message }}
+          </div>
+        </ng-container>
+      </div>
+    
+
+
+
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label color="primary">Servicio</ion-label>
+          </ion-item>
+
+        </ion-col>
+
+        <ion-col>
+          <ion-item [disabled]="comidaCerrada">
+            <span *ngIf="checkComida" (click)="clickComida()">
+              <ion-icon name="checkbox-outline"></ion-icon>&nbsp;Comida
+            </span>
+            <span *ngIf="!checkComida" (click)="clickComida()">
+              <ion-icon name="square-outline"></ion-icon>&nbsp;Comida
+            </span>
+          </ion-item>
+        </ion-col>
+        <ion-col>
+          <ion-item [disabled]="cenaCerrada">
+            <span *ngIf="checkCena" (click)="clickCena()">
+              <ion-icon name="checkbox-outline"></ion-icon>&nbsp;Cena
+            </span>
+            <span *ngIf="!checkCena" (click)="clickCena()">
+              <ion-icon name="square-outline"></ion-icon>&nbsp;Cena
+            </span>
+          </ion-item>
+        </ion-col>
+
+        <!-- <ion-item>
+                <ion-label position="floating" color="primary">Servicio</ion-label>
+                <ion-select placeholder="Servicio"  formControlName="tipo"  interface="popover">
+                  <ion-select-option value="comida">Comida</ion-select-option>
+                  <ion-select-option value="cena">Cena</ion-select-option>
+                </ion-select>
+              </ion-item> -->
+      </ion-row>
+      <div class="validation-errors">
+        <ng-container *ngFor="let validation of validation_messages.servicio">
+          <div class="error-message" *ngIf="formGroup.get('servicio').hasError(validation.type)">
+            {{ validation.message }}
+          </div>
+        </ng-container>
+      </div>
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label position="floating" color="primary">Nombre</ion-label>
+            <ion-input type="text" formControlName="nombre"></ion-input>
+          </ion-item>
+          <div class="validation-errors">
+            <ng-container *ngFor="let validation of validation_messages.nombre">
+              <div class="error-message" *ngIf="formGroup.get('nombre').hasError(validation.type)">
+                {{ validation.message }}
+              </div>
+            </ng-container>
+          </div>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label position="floating" color="primary">Teléfono</ion-label>
+            <ion-input type="tel" formControlName="telefono"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label position="floating" color="primary">día</ion-label>
+            <ion-input type="number" formControlName="dia" (click)="clickSelect($event)"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col>
+          <ion-item>
+            <ion-label position="floating" color="primary">mer</ion-label>
+            <ion-input type="number" formControlName="mercado" (click)="clickSelect($event)"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col>
+          <ion-item>
+            <ion-label position="floating" color="primary">deg</ion-label>
+            <ion-input type="number" formControlName="degustacion" (click)="clickSelect($event)"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col>
+          <ion-item>
+            <ion-label position="floating" color="primary">coc</ion-label>
+            <ion-input type="number" formControlName="cochinillo" (click)="clickSelect($event)"></ion-input>
+          </ion-item>
+        </ion-col>
+
+        <ion-col>
+          <ion-item>
+            <ion-label position="floating" color="primary">carta</ion-label>
+            <ion-input type="number" formControlName="carta" (click)="clickSelect($event)"></ion-input>
+          </ion-item>
+        </ion-col>
+
+        <ion-col>
+          <ion-item>
+            <ion-label position="floating" color="primary">Niños</ion-label>
+            <ion-input type="number" formControlName="ninos" (click)="clickSelect($event)"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label position="floating" color="primary">Boda</ion-label>
+            <ion-input type="number" formControlName="boda" (click)="clickSelect($event)"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col>
+          <ion-item>
+            <ion-label position="floating" color="primary">Bautizo</ion-label>
+            <ion-input type="number" formControlName="bautizo" (click)="clickSelect($event)"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col>
+          <ion-item>
+            <ion-label position="floating" color="primary">Comunion</ion-label>
+            <ion-input type="number" formControlName="comunion" (click)="clickSelect($event)"></ion-input>
+            <!-- (click)="$event.target?.select()" -->
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label>Observaciones</ion-label>
+            <ion-textarea position="stacked" rows="6" cols="20" formControlName="observaciones"></ion-textarea>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    
+    <ion-row>
+      <ion-col> 
+      
+      </ion-col>
+    </ion-row>
+
+
+      <ion-row>
+        <ion-col>
+          <ion-button expand="block" color="success" type="submit" [disabled]="!formGroup.valid">
+            <ion-label>
+              <ion-spinner *ngIf="loadingSubmit"></ion-spinner> Guardar
+            </ion-label>
+          </ion-button>
+          <label class="error-message">{{errorMessage}}</label>
+        </ion-col>
+      </ion-row>
+
+
+        <ion-row *ngIf="isUpdate">
+          <ion-col>
+            <ion-button expand="block" color="danger" (click)="borrar()">
+              <ion-label>
+                <ion-spinner *ngIf="loadingBorrar"></ion-spinner> Cancelar
+              </ion-label>
+            </ion-button>
+          </ion-col>
+
+        </ion-row>
+
+        <ion-row>
+          <ion-col>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col>
+            <ion-button expand="block" color="warning" (click)="volver()">
+              <ion-label>
+                Volver
+              </ion-label>
+            </ion-button>
+          </ion-col>
+
+        </ion-row>
+
+
+    </ion-grid>
+  </form>
+</ion-content>

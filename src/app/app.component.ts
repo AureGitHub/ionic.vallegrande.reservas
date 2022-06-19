@@ -103,27 +103,43 @@ export class AppComponent {
       { 
        
         perfil : 'all',
+        title : 'Inicio',
+        url   : '/privado',
+        icon  : 'storefront' 
+        }, 
+      { 
+       
+        perfil : 'all',
         title : 'Reservas',
-        url   : '/reservas',
+        url   : '/privado/reservas',
         icon  : 'calendar' 
         }, 
 
         { 
+       
+          perfil : 'all',
+          title : 'Encargos',
+          url   : '/privado/reservas',
+          icon  : 'calendar' 
+          }, 
+
+
+        { 
         perfil : 'all',
         title : 'Resumen',
-        url   : '/resumen',
+        url   : '/privado/resumen',
         icon  : 'restaurant' 
         },
       { 
         perfil : 'all',
         title : 'Tareas',  
-        url   : '/tareas',  
+        url   : '/privado/tareas',  
         icon  : 'document-text'  
       },   
       {  
         perfil : 'A',
         title : 'Usuarios',  
-        url   : '/usuarios',  
+        url   : '/privado/users',  
         icon  : 'people'   
       },  
        {  

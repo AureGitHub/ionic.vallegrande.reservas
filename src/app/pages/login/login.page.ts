@@ -67,7 +67,7 @@ export class LoginPage implements OnInit {
         this.cookieService.setCookie('VALLEGRANDE_PASSWORD', value.password,10000);
 
         if(!data){
-          this.router.navigateByUrl('/tabs', { replaceUrl: true });
+          this.router.navigateByUrl('/privado', { replaceUrl: true });
         }
         else{
           alert(data);

@@ -15,12 +15,12 @@ const routes: Routes = [
   },
   {
     path: 'login',
-    component: LoginPage,
+    loadChildren: () => import('./pages/login/login.module').then(m => m.LoginModule),
   },
+
   {
-    path: 'tabs',
-    loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule),
-    canActivate: [RolGuard]
+    path: 'privado',
+    loadChildren: () => import('./pages/privado/privado-routing.module').then( m => m.PrivadoRoutingModule)
   },
  
 ];
