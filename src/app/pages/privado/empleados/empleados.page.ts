@@ -7,11 +7,11 @@ import { UserModel } from 'src/app/services/bd/models/user.model';
 import { ShareService } from 'src/app/services/share.servies';
 
 @Component({
-  selector: 'app-users',
-  templateUrl: 'users.page.html',
-  styleUrls: ['users.page.scss']
+  selector: 'empleados',
+  templateUrl: 'empleados.page.html',
+  styleUrls: ['empleados.page.scss']
 })
-export class UsersPage  implements OnInit {
+export class EmpleadosPage  implements OnInit {
 
   formGroup: FormGroup;
   loadingSubmit: boolean;
@@ -43,7 +43,8 @@ export class UsersPage  implements OnInit {
  
     ngOnInit(): void {
 
-     
+      this.shareService.changedTitleMenu.next('Empleados');
+
       this.actualizaLista();
       this.formGroup = this.formBuilder.group({
        

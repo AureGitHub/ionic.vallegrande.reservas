@@ -7,6 +7,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { DataServiceReserva } from 'src/app/services/bd/dataservice/data.service.reserva';
 import { CerradoModel } from 'src/app/services/bd/models/cerrado.model';
 import { ReservaModel } from 'src/app/services/bd/models/reserva.model';
+import { ShareService } from 'src/app/services/share.servies';
 import { CustomValidator, isLess } from 'src/app/util/custom.validators';
 
 @Component({
@@ -78,10 +79,11 @@ export class ReservaUpdatePage implements OnInit {
       public alertController: AlertController,
       private speechRecognition: SpeechRecognition,
       private _ngZone: NgZone,
+      private shareService : ShareService,
      
       ) {
 
-
+        this.shareService.changedTitleMenu.next('Mod. Reservas');
         
         this.route.queryParams.subscribe(params => {
           if (this.router.getCurrentNavigation().extras.state) {

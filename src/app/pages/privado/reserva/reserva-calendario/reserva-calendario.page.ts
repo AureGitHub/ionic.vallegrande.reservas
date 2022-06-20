@@ -68,6 +68,9 @@ export class ReservaCalendarioPage implements OnInit {
     private authService: AuthService
   ) {
 
+
+    this.shareService.changedTitleMenu.next('Reservas');
+
     this.isAdmin = this.authService.isAdmin;
 
     this.icon = this.shareService.icon;

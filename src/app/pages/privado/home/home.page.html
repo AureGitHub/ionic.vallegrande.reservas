@@ -3,8 +3,8 @@
     <ion-title>home</ion-title>
   </ion-toolbar>
 </ion-header>
-
 <ion-content>
+
   <div (click)="irA('/privado/reservas')" >
   <ion-card>
     <ion-card-header>
@@ -16,7 +16,7 @@
   </ion-card>
 </div>
 
-
+<div (click)="irA('/privado/comandas')" >
   <ion-card>
     <ion-card-header>
       <ion-card-title>COMANDAS</ion-card-title>
@@ -25,5 +25,17 @@
       Gestión de comandas
     </ion-card-content>
   </ion-card>
+</div>
+
+<div (click)="irA('/privado/carta')" >
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>CARTA</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      Gestión de la carta
+    </ion-card-content>
+  </ion-card>
+</div>
 
 </ion-content>

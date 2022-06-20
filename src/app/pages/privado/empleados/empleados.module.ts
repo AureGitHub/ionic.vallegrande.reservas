@@ -3,13 +3,13 @@ import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { UsersPage } from './users.page';
+import { EmpleadosPage } from './empleados.page';
 
 
 const routes: Routes = [
   {
     path: '',
-    component: UsersPage,
+    component: EmpleadosPage,
   }
 ];
 
@@ -23,6 +23,6 @@ const routes: Routes = [
     ReactiveFormsModule,
     FormsModule,
   ],
-  declarations: [UsersPage]
+  declarations: [EmpleadosPage]
 })
-export class UsersModule {}
+export class EmpleadosModule {}

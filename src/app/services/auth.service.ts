@@ -17,7 +17,6 @@ import { BehaviorSubject, Observable, Subject } from 'rxjs';
 export class AuthService {
 
 
-  dataUserObs: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   userData: import("@angular/fire/auth").User;
 
 

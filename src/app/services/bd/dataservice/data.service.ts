@@ -90,6 +90,11 @@ export class DataService {
 
   }
 
+  AddSinId(obj: any,collectionName: string ){
+    const document = doc(collection(this.firestore, collectionName));
+    return setDoc(document, obj);
+  }
+
 
   Add(obj: any,collectionName: string ){
     obj.id = '';

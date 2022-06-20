@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>home</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  
+
+  <ion-list>
+    <ion-item *ngFor="let item of lstItem; let i = index"> 
+      <ion-label>
+        <a [routerLink]="['/privado/carta/gestion', item.key, item.title]">{{item.title}} </a>
+      </ion-label>
+    </ion-item>
+  
+  </ion-list>
+
+  
+
+</ion-content>

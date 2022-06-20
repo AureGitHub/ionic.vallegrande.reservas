@@ -14,18 +14,23 @@ const routes: Routes = [
   },
   {
     path: 'resumen',
-    loadChildren: () => import('./resumen/resumen.module').then(m => m.ResumenPageModule),
+    loadChildren: () => import('./resumen/resumen.module').then(m => m.ResumenModule),
   },
 
 
   {
-    path: 'users',
-    loadChildren: () => import('./users/users.module').then(m => m.UsersModule),
+    path: 'empleados',
+    loadChildren: () => import('./empleados/empleados.module').then(m => m.EmpleadosModule),
   },
 
-    {
+  {
     path: 'tareas',
     loadChildren: () => import('./tarea/tarea.module').then(m => m.TareaModule),
+  },
+
+  {
+    path: 'carta',
+    loadChildren: () => import('./carta/carta.module').then(m => m.CartaModule),
   },
 
 ];

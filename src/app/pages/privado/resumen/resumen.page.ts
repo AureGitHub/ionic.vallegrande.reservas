@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ShareService } from 'src/app/services/share.servies';
 
 @Component({
   selector: 'resumen',
@@ -10,9 +11,11 @@ export class ResumenPage implements OnInit {
 
   constructor(
     private router: Router,
+    private shareService: ShareService
   ) { }
 
   ngOnInit() {
+    this.shareService.changedTitleMenu.next('Resumen');
   }
 
   irA(url){

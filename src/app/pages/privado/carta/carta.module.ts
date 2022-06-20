@@ -3,27 +3,25 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
-import { ResumenPage } from './resumen.page';
-import { ResumenReservaPage } from './resumen-reserva/resumen-reserva.page';
-import { CerradoComponent } from '../reserva/components/cerrado/cerrado.component';
-import { ReservaComponent } from '../reserva/components/reserva/reserva.component';
+import { CartaPage } from './carta.page';
+import { GestionItemsPage } from './gestion-items/gestion-items.page';
 
 
 const routes: Routes = [
   {
     path: '',
-    component: ResumenPage,
+    component: CartaPage,
   },
   {
-    path: 'reservas',
-    component: ResumenReservaPage,
-  }
+    path: 'gestion/:key/:title',
+    component: GestionItemsPage,
+  },
+
 ];
 
 
 @NgModule({
-  declarations: [ CerradoComponent,
-    ReservaComponent,ResumenPage, ResumenReservaPage ],
+  declarations: [ CartaPage,GestionItemsPage ],
   imports: [
    
     IonicModule,
@@ -37,4 +35,4 @@ const routes: Routes = [
     
     
 })
-export class ResumenModule {}
+export class CartaModule {}

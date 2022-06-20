@@ -4,6 +4,7 @@ import { AlertController, Platform, MenuController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { ShareService } from './services/share.servies';
 
 @Component({
   selector: 'app-root',
@@ -17,6 +18,8 @@ export class AppComponent {
   name: string = '';
   isAdmin: boolean;
 
+  titleOption : string ='';
+
   user : any;
 
   constructor(
@@ -29,8 +32,15 @@ export class AppComponent {
     private authService: AuthService,
     public alertController: AlertController,
     private router: Router,
+    private shareService: ShareService
 
   ) {
+
+
+    this.shareService.changedTitleMenu.subscribe(title => {
+      this.titleOption = title
+
+    });
 
     this.initializeApp();
 
@@ -123,6 +133,12 @@ export class AppComponent {
           icon  : 'calendar' 
           }, 
 
+          { 
+            perfil : 'all',
+            title : 'Carta',
+            url   : '/privado/carta',
+            icon  : 'clipboard' 
+            },
 
         { 
         perfil : 'all',
@@ -138,8 +154,8 @@ export class AppComponent {
       },   
       {  
         perfil : 'A',
-        title : 'Usuarios',  
-        url   : '/privado/users',  
+        title : 'Empleados',  
+        url   : '/privado/empleados',  
         icon  : 'people'   
       },  
        {  

@@ -57,6 +57,7 @@ export class TareaPage implements OnInit {
   }
 
   ngOnInit(): void {
+    this.shareService.changedTitleMenu.next('Tareas');
   }
 
   addTarea() {

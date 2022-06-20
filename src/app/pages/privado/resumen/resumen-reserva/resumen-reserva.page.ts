@@ -3,6 +3,7 @@ import { DataServiceCerrado } from 'src/app/services/bd/dataservice/data.service
 import { DataServiceReserva } from 'src/app/services/bd/dataservice/data.service.reserva';
 import { CerradoModel } from 'src/app/services/bd/models/cerrado.model';
 import { ReservaModel } from 'src/app/services/bd/models/reserva.model';
+import { ShareService } from 'src/app/services/share.servies';
 
 
 
@@ -43,11 +44,13 @@ export class ResumenReservaPage  implements OnInit {
   constructor(   
     private dataServiceReserva: DataServiceReserva,
     private dataServiceCerrado: DataServiceCerrado,
+    private shareService: ShareService
     ) {
    
     }
  
     ngOnInit(): void {
+      this.shareService.changedTitleMenu.next('R. Reservas');
     }
 
     ionViewWillEnter(){
