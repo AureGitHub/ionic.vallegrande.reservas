@@ -7,6 +7,8 @@ import { IonicModule } from '@ionic/angular';
 
 import { HomePage } from './home.page';
 import { RouterModule, Routes } from '@angular/router';
+import { CartaService } from '../../privado/carta/servicios/carta.service';
+import { DataServiceItemCarta } from '../../privado/carta/data-service/data.service.item-carta';
 
 const routes: Routes = [
   {
@@ -23,6 +25,7 @@ const routes: Routes = [
     ReactiveFormsModule,
     RouterModule.forChild(routes),
   ],
-  declarations: [HomePage]
+  declarations: [HomePage],
+  providers: [CartaService,DataServiceItemCarta]
 })
 export class HomeModule {}

@@ -10,7 +10,7 @@ import { CerradoComponent } from './components/cerrado/cerrado.component';
 import { ReservaComponent } from './components/reserva/reserva.component';
 import { ReservaUpdatePage } from './reserva-update/reserva-update.page';
 import { EncargoUpdatePage } from './encargo-update/encargo-update.page';
-
+import { ComponentsReservaModule } from './components/components-reserva.module';
 
 const routes: Routes = [
   {
@@ -28,9 +28,6 @@ const routes: Routes = [
     component: EncargoUpdatePage,
   },
 
-  
-
-
 ];
 
 @NgModule({
@@ -42,11 +39,11 @@ const routes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     ComponentsModule,
+    ComponentsReservaModule,
     
   ],
   declarations: [
-    CerradoComponent,
-    ReservaComponent,
+    
     ReservaCalendarioPage,
     ReservaUpdatePage,
     EncargoUpdatePage,

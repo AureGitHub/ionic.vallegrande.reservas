@@ -6,17 +6,17 @@
 
 <ion-content>
 
-  
+  <!-- <buscador-comanda-component></buscador-comanda-component> -->
 
-  <ion-list>
-    <ion-item *ngFor="let item of lstItem; let i = index"> 
-      <ion-label>
-        <a [routerLink]="['/privado/carta/gestion', item.key, item.title]">{{item.title}} </a>
-      </ion-label>
-    </ion-item>
-  
-  </ion-list>
+  <div class="box">
+     <ion-card style="width: 60%;" *ngFor="let item of lstItem; let i = index" [routerLink]="['/privado/carta/gestion', item.key, item.title]"
+  [ngStyle]="{'background-color': (i % 2) ?  '#F5D0A9' : '#CED8F6'}"
+  >
+    <ion-card-header>
+      <ion-card-title  [ngStyle]="{'color': (i % 2) ? '#0B0B3B' : '#8A2908'}">{{item.title}}</ion-card-title>
+    </ion-card-header>
+  </ion-card>
 
-  
+</div>
 
 </ion-content>

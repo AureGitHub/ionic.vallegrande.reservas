@@ -5,13 +5,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 
-import { HomePage } from './home.page';
 import { RouterModule, Routes } from '@angular/router';
+import { CartaService } from '../../privado/carta/servicios/carta.service';
+import { DataServiceItemCarta } from '../../privado/carta/data-service/data.service.item-carta';
+import { CartaPage } from './carta.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: HomePage,
+    component: CartaPage,
   },
 ];
 
@@ -23,6 +25,7 @@ const routes: Routes = [
     ReactiveFormsModule,
     RouterModule.forChild(routes),
   ],
-  declarations: [HomePage]
+  declarations: [CartaPage],
+  providers: [CartaService,DataServiceItemCarta]
 })
-export class HomeModule {}
+export class CartaModule {}

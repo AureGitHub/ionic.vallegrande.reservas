@@ -5,8 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { ResumenPage } from './resumen.page';
 import { ResumenReservaPage } from './resumen-reserva/resumen-reserva.page';
-import { CerradoComponent } from '../reserva/components/cerrado/cerrado.component';
-import { ReservaComponent } from '../reserva/components/reserva/reserva.component';
+import { ComponentsReservaModule } from '../reserva/components/components-reserva.module';
 
 
 const routes: Routes = [
@@ -20,18 +19,16 @@ const routes: Routes = [
   }
 ];
 
-
 @NgModule({
-  declarations: [ CerradoComponent,
-    ReservaComponent,ResumenPage, ResumenReservaPage ],
+  declarations: [ ResumenPage, ResumenReservaPage ],
   imports: [
    
     IonicModule,
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule.forChild(routes)
-
+    RouterModule.forChild(routes),
+    ComponentsReservaModule
   ],
   exports: [RouterModule]
     

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ShareService } from 'src/app/services/share.servies';
+import { CartaService } from './servicios/carta.service';
 
 @Component({
   selector: 'carta',
@@ -9,20 +10,13 @@ import { ShareService } from 'src/app/services/share.servies';
 })
 export class CartaPage implements OnInit {
 
-  lstItem = [
-    {title : 'Menus', key : 'menus'},
-    {title : 'Para Compartir', key : 'paracompartir'},
-    {title : 'Raciones', key : 'raciones'},
-    {title : 'Ensaladas', key : 'ensaladas'},
-    {title : 'Pizzas', key : 'pizzas'},
-    {title : 'Bocadillos', key : 'bocadillos'},
-    {title : 'Hamburguesas', key : 'hamburguesas'},
-
-  ];
+  lstItem = this.cartaService.lstItemOpcionesCarta;
 
   constructor(
     private router: Router,
-    private shareService: ShareService
+    private shareService: ShareService,
+    private cartaService: CartaService,
+    
   ) { }
 
   ngOnInit() {
@@ -35,3 +29,4 @@ export class CartaPage implements OnInit {
   }
 
 }
+

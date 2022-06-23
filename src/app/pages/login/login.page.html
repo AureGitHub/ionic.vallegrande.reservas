@@ -7,7 +7,6 @@
         <div class="ion-text-center" >
           <h2>COMPLEJO VALLE GRANDE</h2>
           Gestión de reservas
-          <lib-my-lib></lib-my-lib> 
         </div>
       </ion-col>
     </ion-row>
@@ -23,7 +22,7 @@
     <ion-row>
       <ion-col>
         <div class="ion-text-center " >
-          <form class="form" [formGroup]="validations_form" (ngSubmit)="tryLogin(validations_form.value)">
+          <form class="form" [formGroup]="validations_form" novalidate  (ngSubmit)="tryLogin(validations_form.value)">
             <ion-item>
               <ion-label position="floating" color="primary">Nombre</ion-label>
               <ion-input type="text" formControlName="email"   (click)="clickSelect($event)"></ion-input>

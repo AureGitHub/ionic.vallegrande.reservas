@@ -4,9 +4,47 @@
     
 }
 
-ion-row{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
+.itemCarta{
+    border-color: black;
+    margin-bottom: 10px;
+    box-shadow: 2px 5px gray;
+    width: 99%;
 }
+
+.itemCarta .title {
+   
+    color: black;
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  .itemCarta .titleSegundoPrecio {
+   
+    color: black;
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  
+
+  .itemCarta .precio {
+   
+    color: black;
+    font-size: 16px;
+    font-weight: bold;
+  }
+
+  .descripcion{
+    color: black;
+    font-size: 14px;
+  }
+
+
+  .motivoPrecio{
+    color: black;
+    font-size: 16px;
+    font-weight: bold;
+  }
+
+  
+

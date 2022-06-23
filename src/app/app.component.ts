@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { ShareService } from './services/share.servies';
+import { environment } from '../environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -66,7 +67,27 @@ export class AppComponent {
   }
 
   async ngOnInit() {
+
+    this.ForzarReloadWhenDeploy();
     
+  }
+
+
+  ForzarReloadWhenDeploy(){
+    const version = JSON.parse(localStorage.getItem('version'));
+
+    if(!version || version!= environment.version){
+      alert('se va a actualizar a la versión ' + environment.version);
+
+      localStorage.setItem('version', JSON.stringify(environment.version));
+
+      window.location.reload();
+
+    }
+
+
+
+
   }
 
   async logout() {
@@ -84,6 +105,19 @@ export class AppComponent {
         text: 'Salir',
         handler: () => {
           this.authService.logout().then(data => {
+
+            var req = indexedDB.deleteDatabase('firebaseLocalStorageDb');      
+            
+            req.onsuccess = function () {
+              console.log("Deleted database successfully");
+          };
+          req.onerror = function () {
+              console.log("Couldn't delete database");
+          };
+          req.onblocked = function () {
+              console.log("Couldn't delete database due to the operation being blocked");
+          };
+
             this.router.navigateByUrl('/', { replaceUrl: true });
             this.menuController.close();
           }
@@ -135,7 +169,7 @@ export class AppComponent {
 
           { 
             perfil : 'all',
-            title : 'Carta',
+            title : 'Modificar Carta',
             url   : '/privado/carta',
             icon  : 'clipboard' 
             },
@@ -166,7 +200,7 @@ export class AppComponent {
       },  
       {  
         title : 'público',  
-        url   : '/home',  
+        url   : '/public',  
         icon  : 'accessibility'   
       },  
      

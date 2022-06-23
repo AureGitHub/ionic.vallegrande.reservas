@@ -20,7 +20,6 @@ const routes: Routes = [
     IonicModule,
     CommonModule,
     FormsModule,
-    LoginPage,
     ReactiveFormsModule,
     RouterModule.forChild(routes)
 

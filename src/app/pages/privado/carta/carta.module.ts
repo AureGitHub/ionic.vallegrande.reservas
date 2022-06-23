@@ -5,6 +5,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { CartaPage } from './carta.page';
 import { GestionItemsPage } from './gestion-items/gestion-items.page';
+import { CartaService } from './servicios/carta.service';
+import { BuscadorComandaComponent } from './components/buscador-comanda/buscador-comanda.component';
 
 
 const routes: Routes = [
@@ -21,7 +23,7 @@ const routes: Routes = [
 
 
 @NgModule({
-  declarations: [ CartaPage,GestionItemsPage ],
+  declarations: [ CartaPage,GestionItemsPage, BuscadorComandaComponent ],
   imports: [
    
     IonicModule,
@@ -31,7 +33,9 @@ const routes: Routes = [
     RouterModule.forChild(routes)
 
   ],
-  exports: [RouterModule]
+  exports: [RouterModule, BuscadorComandaComponent]
+  ,
+  providers: [CartaService]
     
     
 })

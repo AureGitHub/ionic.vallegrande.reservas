@@ -1,0 +1,24 @@
+<ion-button (click)="isModalOpen=true">
+  <ion-icon slot="start" name="cart"></ion-icon>
+  Buscador de comandas
+</ion-button>
+
+
+<ion-modal [isOpen]="isModalOpen">
+  <ng-template>
+      <ion-header translucent>
+        <ion-toolbar>
+          <ion-title></ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="isModalOpen=false">cerrar</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>    
+      <div class="boxOpciones">
+        <div class="itemOpcion" *ngFor="let itemOpcion of lstItemOpcionesCarta; let i = index" (click)="verItems(itemOpcion)">
+          {{itemOpcion.title}}
+        </div>
+      </div> 
+
+  </ng-template>
+</ion-modal>

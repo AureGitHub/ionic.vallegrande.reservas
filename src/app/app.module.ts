@@ -8,7 +8,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { environment } from 'src/environments/environment';
 import { provideFirebaseApp, initializeApp} from '@angular/fire/app';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
-import { LoginPage } from './pages/login/login.page';
 import { getAuth, provideAuth } from '@angular/fire/auth';
 import { AuthService } from './services/auth.service';
 import { IntroPage } from './intro/intro.page';
@@ -22,20 +21,18 @@ import { CookieService } from './services/cookie.servie';
 import { SpeechRecognition } from '@ionic-native/speech-recognition/ngx';
 import { ShareCommunicationService } from './services/share-communication.servies';
 
-import { MyLibModule } from 'my-lib';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { GlobalErrorHandler } from './services/global-error-handler';
 
 registerLocaleData(es);   
 @NgModule({
   declarations: [
     AppComponent, 
-    LoginPage,
     IntroPage,
   ],
     
   imports: [ 
-    MyLibModule,
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
@@ -50,6 +47,7 @@ registerLocaleData(es);
     RolGuard,
     { provide: LOCALE_ID, useValue: 'es-ES' },
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    // { provide: ErrorHandler, useClass: GlobalErrorHandler },
     AuthService,
     ShareService,
     CookieService,

@@ -5,7 +5,7 @@ import { ItemCartaModel } from "../models/item-carta.model";
 @Injectable({
     providedIn: 'root'
   })
-  export class DataServiceTarea extends DataService {
+  export class DataServiceItemCarta extends DataService {
   
 
     async getItemCarta(collectionName: string): Promise<ItemCartaModel[]> {
@@ -13,7 +13,24 @@ import { ItemCartaModel } from "../models/item-carta.model";
     }
 
     saveItemNew(itemCarta: ItemCartaModel, collectionName: string ){
-        return this.AddSinId(itemCarta,collectionName);
+
+        for (const pp in itemCarta) {
+            if(itemCarta[pp]==null){
+                delete itemCarta[pp];
+            }
+          
+          }
+          
+
+        if(!itemCarta['id']){  
+            // si no tiene id, es un alta. Borro la propiedad para que no la cree
+            delete itemCarta['id'];
+            return this.AddSinId(itemCarta,collectionName);
+        }
+        else{
+            return this.Update(itemCarta,collectionName);
+        }
+        
 
     }
 

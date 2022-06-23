@@ -32,8 +32,11 @@ export class DataService {
 
     return collectionData<any>(
       query<any>(
-        collection(this.firestore, collectionName) as CollectionReference<any>,
-      ),
+        collection(
+         
+          this.firestore, collectionName) as CollectionReference<any>,
+        
+        ),
     );
 
   }
