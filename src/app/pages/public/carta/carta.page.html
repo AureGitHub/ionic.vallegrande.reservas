@@ -11,6 +11,8 @@
   </ion-toolbar>
 </ion-header>
 <ion-content fullscreen="true">
+
+  
   <div class="fondo">
     <ion-router-link color="secondary" [routerLink]="['/public']">volver</ion-router-link>
     
@@ -18,13 +20,15 @@
       <p >CARTA</p>
     </div>
     
-
-    <div class="boxOpciones">
-      <div class="itemOpcion" *ngFor="let itemOpcion of lstItemOpcionesCarta; let i = index" (click)="getItemsCarta(itemOpcion)">
-        {{itemOpcion.title}}
-      </div>
-    </div> 
- 
+    <ion-slides [options]="slideOptions" #slideWithNav
+    (ionSlideDidChange)="SlideDidChange(sliderOne,slideWithNav)">
+    <ion-slide></ion-slide>
+    <ion-slide [ngClass]="{'Selected': i === indexSelected , 'itemSlide': i != indexSelected}"  *ngFor="let itemOpcion of lstItemOpcionesCarta; let i = index">
+      <span >{{itemOpcion.title}}</span>
+      
+    </ion-slide>
+    <ion-slide></ion-slide>
+  </ion-slides>
 <br>
 
   <div *ngIf="isloading" style="text-align: center;">
