@@ -21,7 +21,7 @@
     </div>
     
     <ion-slides [options]="slideOptions" #slideWithNav
-    (ionSlideDidChange)="SlideDidChange(sliderOne,slideWithNav)">
+    (ionSlideDidChange)="SlideDidChange()">
     <ion-slide></ion-slide>
     <ion-slide [ngClass]="{'Selected': i === indexSelected , 'itemSlide': i != indexSelected}"  *ngFor="let itemOpcion of lstItemOpcionesCarta; let i = index">
       <span >{{itemOpcion.title}}</span>

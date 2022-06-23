@@ -50,7 +50,7 @@ export class CartaPage implements OnInit {
 
 
   //Method called when slide is changed by drag or navigation
-  SlideDidChange(object, slideView) {
+  SlideDidChange() {
     this.slideWithNav.getActiveIndex().then(index => {
       this.getItemsCarta(this.lstItemOpcionesCarta[index]);
       this.indexSelected = index;

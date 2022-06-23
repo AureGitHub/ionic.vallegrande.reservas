@@ -77,10 +77,7 @@ export class AppComponent {
     const version = JSON.parse(localStorage.getItem('version'));
 
     if(!version || version!= environment.version){
-      alert('se va a actualizar a la versión ' + environment.version);
-
       localStorage.setItem('version', JSON.stringify(environment.version));
-
       window.location.reload();
 
     }
