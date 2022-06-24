@@ -16,7 +16,7 @@
   <div class="fondo">
     <ion-grid>
       <ion-row>
-        <ion-col size="11" class="titulo">CARTA</ion-col>
+        <ion-col size="11" class="cartaTitulo">CARTA</ion-col>
         <ion-col size="1" style="text-align: left;">
           <ion-icon [routerLink]="['/public']"  name="chevron-back-outline"></ion-icon>
         </ion-col>
@@ -30,13 +30,16 @@
         </ion-col>
         <ion-col size="10">
           <ion-slides [options]="slideOptions" #slideWithNav  class="ion-slides"
-          (ionSlideDidChange)="SlideDidChange()">
-          <ion-slide></ion-slide>
-          <ion-slide [ngClass]="{'Selected': i === indexSelected , 'itemSlide': i != indexSelected}"  *ngFor="let itemOpcion of lstItemOpcionesCarta; let i = index">
+          (ionSlideDidChange)="SlideDidChangeAure()">
+          <!-- <ion-slide [ngClass]="{'Selected': i === indexSelected , 'itemSlide': i != indexSelected}"  *ngFor="let itemOpcion of lstItemOpcionesCarta; let i = index">
             <span >{{itemOpcion.title}}</span>
-            
-          </ion-slide>
-          <ion-slide></ion-slide>
+          </ion-slide> --> 
+
+   
+   <ion-slide style="background-color: azure;" *ngFor="let itemOpcion of lstItemOpcionesCarta">
+            <img src="assets/carta/carta_{{itemOpcion.key}}.png" width="70%">  
+         </ion-slide>
+
         </ion-slides>
         </ion-col>
         <ion-col size="1">
