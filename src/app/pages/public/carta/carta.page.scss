@@ -6,31 +6,24 @@
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: center;
-  padding: 5px;
-  
+  padding: 5px;  
  }
-.Selected{
-  border: 5px solid black;
-  height: 70px;
-}
+
+ .ion-slides{
+  width: 85%;
+
+ }
+
+
 
  .titulo{
   text-align: center;
   font-weight: bold;
-  font-size: 20px;
+  font-size: 18px;
+  text-decoration: underline;
  }
 
- .boxOpciones {
-  background-image: url('../../../../assets/madera.jpg');
-  width: 100%;
-  display: flex;
-  flex-direction:row;  
-  flex-wrap: wrap;
-  padding: 5px;
-  border-radius: 16px;
-  background-color: #E6E6E6
- 
-}
+
 
 .itemOpcion{
   
@@ -46,17 +39,18 @@
 
 .itemSlide{
   height: 50px;
-  background-color: azure;
-  color:black;
-  font-weight: bold;
+  background-color: rgb(201, 212, 212);
+  color:#424242;
+  font-size: 13px;
+  font-style: italic;
 }
 
 .Selected{
-  border: 3px solid black;
   height: 50px;
-  background-color:black ;
+  background-color:#B43104 ;
   color:azure;
-  font-weight: bold;
+  font-weight: bold;    
+  font-size: 17px;
 }
 
 .itemCarta{

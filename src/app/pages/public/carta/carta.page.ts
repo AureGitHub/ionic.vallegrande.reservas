@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { IonSlides } from '@ionic/angular';
+import { ShareService } from 'src/app/services/share.servies';
 import { DataServiceItemCarta } from '../../privado/carta/data-service/data.service.item-carta';
 import { ItemCartaModel } from '../../privado/carta/models/item-carta.model';
 import { CartaService } from '../../privado/carta/servicios/carta.service';
@@ -36,18 +37,25 @@ export class CartaPage implements OnInit {
   constructor(
     private cartaService: CartaService,
     private dataServiceItemCarta: DataServiceItemCarta,
+     private shareService: ShareService,
   ) { 
 
     
   }
 
   ngOnInit() {
-
+    this.shareService.changedTitleMenu.next('Complejo VALLE GRANDE');
    
   }
   
 
+  swipePrev(){
+    this.slideWithNav.slidePrev();
+  }
 
+  swipeNext(){
+    this.slideWithNav.slideNext();
+  }
 
   //Method called when slide is changed by drag or navigation
   SlideDidChange() {

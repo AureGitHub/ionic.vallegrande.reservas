@@ -16,13 +16,14 @@ export class HomePage implements OnInit {
 
   lstItemCarta : ItemCartaModel[] = [];
   constructor(
-    private router: Router,
     private shareService: ShareService,
     private cartaService: CartaService,
     private dataServiceItemCarta: DataServiceItemCarta,
   ) { }
 
   ngOnInit() {
+    this.shareService.changedTitleMenu.next('Complejo VALLE GRANDE');
+
   }
 
 
