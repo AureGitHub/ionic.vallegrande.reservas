@@ -10,9 +10,7 @@
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
-<ion-content fullscreen="true">
-
-  
+<ion-content>
   <div class="fondo">
     <ion-grid>
       <ion-row>
@@ -65,7 +63,7 @@
             {{item.titulo}}
           </ion-col>
           <ion-col size="2" class="precio" style="text-align: right;">
-            {{item.precio}} €
+            {{item.precio | number : '1.2-2'}} €
           </ion-col>
         </ion-row>      
 
@@ -87,7 +85,7 @@
             {{item.motivoprecio}}
           </ion-col>
           <ion-col size="2" class="precio" style="text-align: right;">
-            {{item.precio}} €
+            {{item.precio | number : '1.2-2'}} €
           </ion-col>
         </ion-row>      
 
@@ -99,7 +97,7 @@
             {{item.motivoprecio1}}
           </ion-col>
           <ion-col size="2" class="precio" style="text-align: right;">
-            {{item.precio1}} €
+            {{item.precio1 | number : '1.2-2' }} €
           </ion-col>
         </ion-row>      
 

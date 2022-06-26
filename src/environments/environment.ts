@@ -7,20 +7,20 @@ export const environment = {
   production: false,
   firebase: {
 
-    // apiKey: "AIzaSyBi0aVXwZfuspPHpJH1OxLWt0SgQ6Mv8Xs",
-    // authDomain: "vallegrande-reservas.firebaseapp.com",
-    // projectId: "vallegrande-reservas",
-    // storageBucket: "vallegrande-reservas.appspot.com",
-    // messagingSenderId: "296367724752",
-    // appId: "1:296367724752:web:d57eb27341709f63af26d5"
+    apiKey: "AIzaSyBi0aVXwZfuspPHpJH1OxLWt0SgQ6Mv8Xs",
+    authDomain: "vallegrande-reservas.firebaseapp.com",
+    projectId: "vallegrande-reservas",
+    storageBucket: "vallegrande-reservas.appspot.com",
+    messagingSenderId: "296367724752",
+    appId: "1:296367724752:web:d57eb27341709f63af26d5"
 
-  apiKey: "AIzaSyCxqVXki6NbZT3YP1xcqcuKjICLPezLjPM",
-  authDomain: "vallegrande-reservas-test.firebaseapp.com",
-  projectId: "vallegrande-reservas-test",
-  storageBucket: "vallegrande-reservas-test.appspot.com",
-  messagingSenderId: "1087683026748",
-  appId: "1:1087683026748:web:627649bbe1233a2f420839",
-  measurementId: "G-SFZHRF3CKL"
+  // apiKey: "AIzaSyCxqVXki6NbZT3YP1xcqcuKjICLPezLjPM",
+  // authDomain: "vallegrande-reservas-test.firebaseapp.com",
+  // projectId: "vallegrande-reservas-test",
+  // storageBucket: "vallegrande-reservas-test.appspot.com",
+  // messagingSenderId: "1087683026748",
+  // appId: "1:1087683026748:web:627649bbe1233a2f420839",
+  // measurementId: "G-SFZHRF3CKL"
   }
 };
 
