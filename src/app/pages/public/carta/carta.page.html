@@ -11,103 +11,88 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <div class="fondo">
-    <ion-grid>
-      <ion-row>
-        <ion-col size="11" class="cartaTitulo">CARTA</ion-col>
-        <ion-col size="1" style="text-align: left;">
-          <ion-icon [routerLink]="['/public']"  name="chevron-back-outline"></ion-icon>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-    <br>
-    <ion-grid>
-      <ion-row>
-        <ion-col size="1">
-          <ion-icon *ngIf="indexSelected!=0" (click)="swipePrev()"  size="large" name="chevron-back-outline"></ion-icon>
-        </ion-col>
-        <ion-col size="10">
-          <ion-slides [options]="slideOptions" #slideWithNav  class="ion-slides"
-          (ionSlideDidChange)="SlideDidChangeAure()">
-          <!-- <ion-slide [ngClass]="{'Selected': i === indexSelected , 'itemSlide': i != indexSelected}"  *ngFor="let itemOpcion of lstItemOpcionesCarta; let i = index">
-            <span >{{itemOpcion.title}}</span>
-          </ion-slide> --> 
 
-   
-   <ion-slide style="background-color: azure;" *ngFor="let itemOpcion of lstItemOpcionesCarta">
-            <img src="assets/carta/carta_{{itemOpcion.key}}.png" width="70%">  
-         </ion-slide>
-
-        </ion-slides>
-        </ion-col>
-        <ion-col size="1">
-          <ion-icon *ngIf="indexSelected < 6" (click)="swipeNext()" size="large" name="chevron-forward-outline"></ion-icon>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-
-  
-<br>
+  <div  class="carta">CARTA</div>
 
   <div *ngIf="isloading" style="text-align: center;">
     <ion-spinner></ion-spinner>
   </div>
 
-  <div class="itemCarta"  *ngFor="let item of lstItemCarta; let i = index" >
+
+  <div   *ngFor="let itemOpcion of lstItemOpcionesCarta; let i = index"  (click)="selectOptionCarta(i)" 
+   [ngClass]="{'divOptionCarta' :selectedOptionCarta != i, 'divOptionCartaSelected' :selectedOptionCarta == i}">
+    <ion-grid  *ngIf="!isloading">
+      <ion-row>
+        <ion-col size="11">{{itemOpcion.title}}</ion-col>
+        <ion-col size="1">
+          <ion-icon *ngIf="selectedOptionCarta != i" name="chevron-down-outline"></ion-icon>
+          <ion-icon *ngIf="selectedOptionCarta == i" name="chevron-up-outline"></ion-icon>
+        </ion-col>
+      </ion-row>
+    </ion-grid>    
+
+    <div *ngIf="lstItemCarta && lstItemCarta[itemOpcion.key] && selectedOptionCarta == i">
+
+    <div class="itemCarta"  *ngFor="let item of lstItemCarta[itemOpcion.key]; let i = index" >
    
-    <!-- {{item.titulo.padEnd(60-item.titulo.length, '.')}}  -->
-      <ion-grid>
-        <ion-row *ngIf="!(item?.motivoprecio || item?.motivoprecio1)">
-          <ion-col  size="10">
-            <!-- {{item.titulo.padEnd(55-item.titulo.length, '.')}}        -->
-            {{item.titulo}}
-          </ion-col>
-          <ion-col size="2" class="precio" style="text-align: right;">
-            {{item.precio | number : '1.2-2'}} €
-          </ion-col>
-        </ion-row>      
+        <ion-grid>
+          <ion-row *ngIf="!(item?.motivoprecio || item?.motivoprecio1)">
+            <ion-col  size="10">
+              {{item.titulo}}
+            </ion-col>
+            <ion-col size="2" class="precio" style="text-align: right;">
+              {{item.precio | number : '1.2-2'}} €
+            </ion-col>
+          </ion-row>      
+  
+  
+          <ion-row *ngIf="item?.motivoprecio || item?.motivoprecio1">
+            <ion-col  size="10">
+              {{item.titulo}}              
+            </ion-col>
+            <ion-col size="2">          
+            </ion-col>
+          </ion-row>      
+  
+  
+          <ion-row *ngIf="item?.motivoprecio">
+            <ion-col  size="2">            
+            </ion-col>
+            <ion-col class="motivoPrecio" size="8">
+              {{item.motivoprecio}}
+            </ion-col>
+            <ion-col size="2" class="precio" style="text-align: right;">
+              {{item.precio | number : '1.2-2'}} €
+            </ion-col>
+          </ion-row>      
+  
+          <ion-row *ngIf="item?.motivoprecio1">
+            <ion-col  size="2">            
+            </ion-col>
+            <ion-col class="motivoPrecio" size="8">
+              {{item.motivoprecio1}}
+            </ion-col>
+            <ion-col size="2" class="precio" style="text-align: right;">
+              {{item.precio1 | number : '1.2-2' }} €
+            </ion-col>
+          </ion-row>      
+  
+          <ion-row *ngIf="item.descripcion">
+            <ion-col size="12" class="descripcion">
+              {{item.descripcion}}
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+  
+    </div>
 
-
-        <ion-row *ngIf="item?.motivoprecio || item?.motivoprecio1">
-          <ion-col  size="10">
-            {{item.titulo}}              
-          </ion-col>
-          <ion-col size="2">          
-          </ion-col>
-        </ion-row>      
-
-
-        <ion-row *ngIf="item?.motivoprecio">
-          <ion-col  size="2">            
-          </ion-col>
-          <ion-col class="motivoPrecio" size="8">
-            <!-- {{item.motivoprecio.padEnd(55-item.motivoprecio.length, '.')}}                -->
-            {{item.motivoprecio}}
-          </ion-col>
-          <ion-col size="2" class="precio" style="text-align: right;">
-            {{item.precio | number : '1.2-2'}} €
-          </ion-col>
-        </ion-row>      
-
-        <ion-row *ngIf="item?.motivoprecio1">
-          <ion-col  size="2">            
-          </ion-col>
-          <ion-col class="motivoPrecio" size="8">
-            <!-- {{item.motivoprecio1.padEnd(55-item.motivoprecio1.length, '.')}}                -->
-            {{item.motivoprecio1}}
-          </ion-col>
-          <ion-col size="2" class="precio" style="text-align: right;">
-            {{item.precio1 | number : '1.2-2' }} €
-          </ion-col>
-        </ion-row>      
-
-        <ion-row *ngIf="item.descripcion">
-          <ion-col size="12" class="descripcion">
-            {{item.descripcion}}
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-
+   
+    </div>
   </div>
-</div>
+
+
+
+
+
+   
 </ion-content>

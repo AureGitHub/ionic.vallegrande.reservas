@@ -1,76 +1,35 @@
-.fondo {
-  color: white; 
-  background-color: navy;
-  width: 100%;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-position: center;
-  padding: 5px;  
- }
-
- .cartaTitulo{
+.carta{
   font-weight: bold;
-  border-style: solid;
-  border-width: 1px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-   min-height: 40px;
-   border-radius: 30px;
-   color: black;
-   background-color: white;
-}
-
- .ion-slides{
-  width: 85%;
-
- }
-
-
-
- .titulo{
-  text-align: center;
-  font-weight: bold;
-  font-size: 18px;
+  font-size: 25px;
   text-decoration: underline;
- }
-
-
-
-.itemOpcion{
-  
-  // border: 5px;
-  // background-color: navy;
-  margin: 7px;
-  padding: 5px;
-  // border: 1px solid;
-  font-weight: bold;
-  font-size: 12px;
-  text-decoration: underline;
-}
-
-.itemSlide{
-  height: 50px;
-  background-color: rgb(201, 212, 212);
-  color:#424242;
-  font-size: 13px;
   font-style: italic;
+  text-align: center;
+  padding: 10px;
+}
+.divOptionCarta{
+  font-size: 14px;
+  background-color: #F2F2F2;
+  padding: 10px;  
+  border-bottom: 1px solid  black;
 }
 
-.Selected{
-  height: 50px;
-  background-color:#B43104 ;
-  color:azure;
-  font-weight: bold;    
-  font-size: 17px;
+.divOptionCartaSelected{
+  font-size: 18px;
+  background-color: #F2F2F2;
+  font-weight: bold;
+  color: black;
+  border-bottom: 1px solid  black;
 }
+
 
 .itemCarta{
-  color: white;
-  margin-bottom: 10px;
-  border-bottom: 2px solid white;
+  background-color:#FBFBEF ;
+  color: black;
+  margin-bottom: 2px;
+  border-bottom: 1px solid white;
   width: 99%;
    font-size: 16px;
+   font-weight: normal;
 }
 
 .itemCarta .title {
@@ -85,6 +44,7 @@
  
  
   font-weight: bold;
+  font-size: 13px;
 }
 
 .descripcion{

@@ -30,7 +30,6 @@ import { ItemCartaModel } from "../models/item-carta.model";
         else{
             return this.Update(itemCarta,collectionName);
         }
-        
 
     }
 
