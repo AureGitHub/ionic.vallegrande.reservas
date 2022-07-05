@@ -20,6 +20,10 @@ export class AureDateComponent implements OnInit {
 
   @Output() refreshSelectedDate = new EventEmitter<any>();
 
+  @Output() getDateSelected = new EventEmitter<any>();
+
+  
+
   @Input()  lan : string;
   TodayDesc: any;
 
@@ -313,6 +317,7 @@ export class AureDateComponent implements OnInit {
   selectDay(item){
     this.dateSelected = item && item.fecha ? item.fecha : this.dateSelected;
     this.refreshSelectedDate.emit(this.dateSelected);
+    this.getDateSelected.emit(this.dateSelected);
     // this.getDiasMes();
   }
 

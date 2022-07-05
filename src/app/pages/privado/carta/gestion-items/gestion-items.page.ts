@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AlertController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
 import { ShareService } from 'src/app/services/share.servies';
 import { DataServiceItemCarta } from '../data-service/data.service.item-carta';
 import { ItemCartaModel } from '../models/item-carta.model';
@@ -35,6 +35,7 @@ export class GestionItemsPage implements OnInit {
     private formBuilder: FormBuilder,
     private dataServiceItemCarta: DataServiceItemCarta,
     public alertController: AlertController,
+    private modalController: ModalController
   ) { }
 
   ngOnInit() {
@@ -49,9 +50,15 @@ export class GestionItemsPage implements OnInit {
 
   }
 
+  @HostListener('window:popstate', ['$event'])
+  dismissModal() {
+    this.modalController.dismiss();
+  }
+
   ionViewWillEnter() {
     this.getItemsCarta();
   }
+
 
   crearForm(){
     this.formGroup = this.formBuilder.group({     

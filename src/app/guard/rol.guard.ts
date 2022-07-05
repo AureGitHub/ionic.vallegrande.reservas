@@ -39,14 +39,12 @@ export class RolGuard implements CanActivate {
     // }
 
     // //cualquiera
-    // if (next.data.Rol.some(a => a === this.enumService.enumRoles.all)) {
-    //   return true;
-    // }
+
 
     // // rol del usuario
-    // if (next.data.Rol.some(a => a === currentUser.Rol)) {
-    //   return true;
-    // }
+    if (next.data?.Rol && next.data.Rol.some(a => a === 'A')) {
+      return this.authService.isAdmin;
+    }
 
     return true;
   }

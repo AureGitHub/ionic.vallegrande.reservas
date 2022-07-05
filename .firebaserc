@@ -4,7 +4,11 @@
       "hosting": {
         "app": [
           "vallegrande-reservas"
-        ]
+        ],
+        "rewrites": [ {
+          "source": "**",
+          "destination": "/index.html"
+        } ]
       }
     }
   },

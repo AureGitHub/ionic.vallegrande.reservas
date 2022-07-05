@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>comandas</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-grid>    
+    <ion-row>
+      <ion-col size="12">                     
+        <aure-date *ngIf="verCalendario" [lan]="'ES'" (getDateSelected)="getDateSelected($event)" ></aure-date>
+        <ion-button expand="block" (click)="verCalendario = true">Añadir Día</ion-button>
+      </ion-col>      
+      
+    </ion-row>
+    
+  </ion-grid>
+
+  <div class="box">
+
+
+    <div *ngIf="isLoading" style="text-align: center;">
+      <ion-spinner></ion-spinner>
+    </div>
+
+    <!-- [routerLink]="['/privado/carta/gestion', item.key, item.title]" -->
+    <ion-card style="width: 60%;" *ngFor="let comanda of lstComandas let i = index" 
+ [ngStyle]="{'background-color': (i % 2) ?  '#F5D0A9' : '#CED8F6'}"
+ >
+   <ion-card-header>
+     <ion-card-title  [ngStyle]="{'color': (i % 2) ? '#0B0B3B' : '#8A2908'}">{{comanda.titulo}}</ion-card-title>
+   </ion-card-header>
+ </ion-card>
+
+</div>
+
+
+</ion-content>

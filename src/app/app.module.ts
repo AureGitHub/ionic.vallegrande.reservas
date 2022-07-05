@@ -10,7 +10,6 @@ import { provideFirebaseApp, initializeApp} from '@angular/fire/app';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { getAuth, provideAuth } from '@angular/fire/auth';
 import { AuthService } from './services/auth.service';
-import { IntroPage } from './intro/intro.page';
 
 import es from '@angular/common/locales/es';
 import { registerLocaleData } from '@angular/common';
@@ -24,12 +23,13 @@ import { ShareCommunicationService } from './services/share-communication.servie
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { GlobalErrorHandler } from './services/global-error-handler';
+// import { AngularFireModule } from 'angularfire2';
+// import { AngularFireDatabaseModule } from 'angularfire2/database';
 
 registerLocaleData(es);   
 @NgModule({
   declarations: [
     AppComponent, 
-    IntroPage,
   ],
     
   imports: [ 
@@ -41,6 +41,11 @@ registerLocaleData(es);
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideFirestore(() => getFirestore()),
     provideAuth(() => getAuth()),
+
+
+
+    // AngularFireModule.initializeApp(environment.firebase),
+    // AngularFireDatabaseModule,
     
   ],
   providers: [

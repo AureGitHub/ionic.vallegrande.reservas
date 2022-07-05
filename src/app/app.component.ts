@@ -7,6 +7,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { ShareService } from './services/share.servies';
 import { environment } from '../environments/environment';
 
+
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -15,13 +16,13 @@ import { environment } from '../environments/environment';
 export class AppComponent {
 
 
-  Pages: any[];  
+  Pages: any[];
   name: string = '';
   isAdmin: boolean;
 
-  titleOption : string ='';
+  titleOption: string = '';
 
-  user : any;
+  user: any;
 
   constructor(
 
@@ -45,14 +46,14 @@ export class AppComponent {
 
     this.initializeApp();
 
-   
+
 
     this.authService.changedStateUser.subscribe(user => {
-     
+
       this.user = user;
 
-      this.name = !user ? '' : '(' +  user.email.split('@')[0] + ')';
-      this.sideMenu(); 
+      this.name = !user ? '' : '(' + user.email.split('@')[0] + ')';
+      this.sideMenu();
 
     })
 
@@ -69,14 +70,14 @@ export class AppComponent {
   async ngOnInit() {
 
     this.ForzarReloadWhenDeploy();
-    
+
   }
 
 
-  ForzarReloadWhenDeploy(){
+  ForzarReloadWhenDeploy() {
     const version = JSON.parse(localStorage.getItem('version'));
 
-    if(!version || version!= environment.version){
+    if (!version || version != environment.version) {
       localStorage.setItem('version', JSON.stringify(environment.version));
       window.location.reload();
 
@@ -93,7 +94,7 @@ export class AppComponent {
     const alert = await this.alertController.create({
       header: '¿Salir de la aplicación?',
       message: 'Va a salir de la aplicación',
-      buttons: [ {
+      buttons: [{
         text: 'Cancelar',
         role: 'Cancelar',
         cssClass: 'secondary',
@@ -103,17 +104,17 @@ export class AppComponent {
         handler: () => {
           this.authService.logout().then(data => {
 
-            var req = indexedDB.deleteDatabase('firebaseLocalStorageDb');      
-            
+            var req = indexedDB.deleteDatabase('firebaseLocalStorageDb');
+
             req.onsuccess = function () {
               console.log("Deleted database successfully");
-          };
-          req.onerror = function () {
+            };
+            req.onerror = function () {
               console.log("Couldn't delete database");
-          };
-          req.onblocked = function () {
+            };
+            req.onblocked = function () {
               console.log("Couldn't delete database due to the operation being blocked");
-          };
+            };
 
             this.router.navigateByUrl('/', { replaceUrl: true });
             this.menuController.close();
@@ -127,101 +128,115 @@ export class AppComponent {
 
 
 
-   
-   
+
+
   }
 
 
 
-  sideMenu() {  
+  sideMenu() {
 
 
-    this.Pages =[];
+    this.Pages = [];
 
-    var lstOptions=    
-    [ 
-     
-      { 
-       
-        perfil : 'all',
-        title : 'Inicio',
-        url   : '/privado',
-        icon  : 'storefront' 
-        }, 
-      { 
-       
-        perfil : 'all',
-        title : 'Reservas',
-        url   : '/privado/reservas',
-        icon  : 'calendar' 
-        }, 
+    var lstOptions =
+      [
 
-        { 
-       
-          perfil : 'all',
-          title : 'Encargos',
-          url   : '/privado/reservas',
-          icon  : 'calendar' 
-          }, 
+        {
 
-          { 
-            perfil : 'all',
-            title : 'Modificar Carta',
-            url   : '/privado/carta',
-            icon  : 'clipboard' 
-            },
-
-        { 
-        perfil : 'all',
-        title : 'Resumen',
-        url   : '/privado/resumen',
-        icon  : 'restaurant' 
+          perfil: 'all',
+          title: 'Inicio',
+          url: '/privado',
+          icon: 'storefront'
         },
-      { 
-        perfil : 'all',
-        title : 'Tareas',  
-        url   : '/privado/tareas',  
-        icon  : 'document-text'  
-      },   
-      {  
-        perfil : 'A',
-        title : 'Empleados',  
-        url   : '/privado/empleados',  
-        icon  : 'people'   
-      },  
-       {  
-        perfil : 'all',
-        title : 'VIPs',  
-        url   : '/home',  
-        icon  : 'beer'   
-      },  
-      {  
-        title : 'público',  
-        url   : '/public',  
-        icon  : 'accessibility'   
-      },  
-     
-    ];  
+        {
+
+          perfil: 'all',
+          title: 'Reservas',
+          url: '/privado/reservas',
+          icon: 'calendar'
+        },
+
+        {
+
+          perfil: 'all',
+          title: 'Encargos',
+          url: '/privado/reservas',
+          icon: 'calendar'
+        },
+
+
+        {
+
+          perfil: 'all',
+          title: 'Gestión Comandas',
+          url: '/privado/comandas',
+          icon: 'pencil'
+        },
+
+        {
+          perfil: 'A',
+          title: 'Modificar Carta',
+          url: '/privado/carta',
+          icon: 'clipboard'
+        },
+
+        {
+          perfil: 'all',
+          title: 'Resumen',
+          url: '/privado/resumen',
+          icon: 'restaurant'
+        },
+        {
+          perfil: 'all',
+          title: 'Tareas',
+          url: '/privado/tareas',
+          icon: 'document-text'
+        },
+        {
+          perfil: 'A',
+          title: 'Empleados',
+          url: '/privado/empleados',
+          icon: 'people'
+        },
+        {
+          perfil: 'all',
+          title: 'VIPs',
+          url: '/home',
+          icon: 'beer'
+        },
+        {
+          title: 'público',
+          url: '/public',
+          icon: 'accessibility'
+        },
+        {
+          title: 'atualizar',
+          url: '/reload',
+          icon: 'refresh'
+        },
+
+      ];
 
     lstOptions.forEach(item => {
-      if(item.perfil){
+      if (item.perfil) {
         // requiere perfil (Estar conectado)
-        if(this.user){
-          if(item.perfil == 'all'){
+        if (this.user) {
+          if (item.perfil == 'all') {
             this.Pages.push(item);
           }
-          else{
-            if(this.user.perfil == item.perfil){
+          else {
+            if (this.user.perfil == item.perfil) {
               this.Pages.push(item);
             }
           }
         }
       }
-      else{
+      else {
         // Público. Todos lo ve
         this.Pages.push(item);
       }
 
     });
-  }  
+  }
 }

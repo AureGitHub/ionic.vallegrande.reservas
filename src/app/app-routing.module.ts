@@ -1,16 +1,15 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { RolGuard } from './guard/rol.guard';
-import { IntroPage } from './intro/intro.page';
 
 const routes: Routes = [
   {
-    path: 'intro',
-    component: IntroPage,
+    path: 'reload',
+    loadChildren: () => import('./pages/reload/reload.module').then( m => m.ReloadModule)
   },
    {
     path: '',
-    loadChildren: () => import('./pages/public/public-routing.module').then( m => m.PublicRoutingModule)
+    loadChildren: () => import('./pages/reload/reload.module').then( m => m.ReloadModule)
   },
   {
     path: 'login',

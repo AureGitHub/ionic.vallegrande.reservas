@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { RolGuard } from 'src/app/guard/rol.guard';
 
 
 const routes: Routes = [
@@ -19,7 +20,7 @@ const routes: Routes = [
 
   {
     path: 'empleados',
-    loadChildren: () => import('./empleados/empleados.module').then(m => m.EmpleadosModule),
+    loadChildren: () => import('./empleados/empleados.module').then(m => m.EmpleadosModule), canActivate: [RolGuard],  data: {Rol: ['A'] }
   },
 
   {
@@ -29,7 +30,11 @@ const routes: Routes = [
 
   {
     path: 'carta',
-    loadChildren: () => import('./carta/carta.module').then(m => m.CartaModule),
+    loadChildren: () => import('./carta/carta.module').then(m => m.CartaModule), canActivate: [RolGuard],  data: {Rol: ['A'] }
+  },
+  {
+    path: 'comandas',
+    loadChildren: () => import('./comandas/comandas.module').then( m => m.ComandasPageModule)
   },
 
 ];
