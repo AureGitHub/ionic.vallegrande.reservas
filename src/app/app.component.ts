@@ -6,6 +6,12 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { ShareService } from './services/share.servies';
 import { environment } from '../environments/environment';
+import { BaseService } from './firestore/services/base.service';
+import { CartaService } from './pages/privado/carta/servicios/carta.service';
+import { CartaItemService } from './firestore/services/carta.item.service';
+import { CartaOptionService } from './firestore/services/carta.option.service';
+import CartaOptionI from './firestore/interfaces/carta.option.interface';
+import CartaItemI from './firestore/interfaces/carta.item.interface';
 
 
 @Component({
@@ -23,6 +29,9 @@ export class AppComponent {
   titleOption: string = '';
 
   user: any;
+  lstItemOpcionesCarta: CartaOptionI[];
+
+  lstCartaItem : CartaItemI[];
 
   constructor(
 
@@ -34,7 +43,11 @@ export class AppComponent {
     private authService: AuthService,
     public alertController: AlertController,
     private router: Router,
-    private shareService: ShareService
+    private shareService: ShareService,
+
+    private cartaOptionService: CartaOptionService,
+    private cartaItemService: CartaItemService,
+    
 
   ) {
 
@@ -70,6 +83,15 @@ export class AppComponent {
   async ngOnInit() {
 
     this.ForzarReloadWhenDeploy();
+
+    // this.setOptioncarta();
+
+   // await this.setItemcarta();
+
+    this.lstCartaItem = await this.cartaItemService.getAllByKey('bocadillos');
+
+   
+
 
   }
 
@@ -239,4 +261,63 @@ export class AppComponent {
 
     });
   }
+
+  setOptioncarta(){
+
+    var lstItemOpcionesCarta = [
+      {title : 'Primeros Platos', key : 'primerosplatos', sinPrecio : true, carta : false},
+      {title : 'Segundos Platos', key : 'segundosplatos', sinPrecio : true, carta : false},
+      {title : 'Menus', key : 'menus', carta : true},
+      {title : 'Para Compartir', key : 'paracompartir', carta : true},
+      {title : 'Raciones', key : 'raciones', carta : true},
+      {title : 'Ensaladas', key : 'ensaladas', carta : true},
+      {title : 'Pizzas', key : 'pizzas', carta : true},
+      {title : 'Bocadillos', key : 'bocadillos', carta : true},
+      {title : 'Hamburguesas', key : 'hamburguesas', carta : true},
+  
+    ];
+
+    lstItemOpcionesCarta.forEach(item =>{
+      this.cartaOptionService.add<CartaOptionI>(item);
+    });
+
+  }
+
+
+  async setItemcarta(){
+
+
+    // var promesa = this.cartaOptionService.getAll<CartaOptionI>().pipe().toPromise();
+
+    // promesa.then(data=> {
+    //   console.log(data)
+    // });
+
+    // this.lstItemOpcionesCarta = await promesa;
+    // var a=10;
+
+    //return;
+
+    this.cartaOptionService.getAll<CartaOptionI>().subscribe(data => {      
+      this.lstItemOpcionesCarta =  data;
+
+      this.lstItemOpcionesCarta.forEach(async cartaOption => {
+        const lstItemCarta = await this.cartaOptionService.getItemBycollectionName<CartaItemI>(cartaOption.key);
+
+        lstItemCarta.forEach(async cartaItem=>{
+          cartaItem.key = cartaOption.key;
+          await this.cartaItemService.add<CartaItemI>(cartaItem);
+
+        });
+
+        var a='';
+      })
+
+
+      
+
+    });
+
+  }
+
 }
